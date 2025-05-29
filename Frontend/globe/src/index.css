@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+html,body,#root { height:100%; margin:0; }
+body { background:#00061a; color:white; }
+::-webkit-scrollbar { display:none; }
+
+/* Any other global styles you might have can remain */
