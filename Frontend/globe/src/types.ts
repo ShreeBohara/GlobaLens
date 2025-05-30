@@ -1,17 +1,13 @@
 // src/types.ts
 
-// This interface now reflects the data from MongoDB
 export interface NewsPoint {
-  _id: { $oid: string }; // MongoDB ObjectId
-  GLOBALEVENTID: number;
-  // Use the URL as the title, as requested
-  title: string;
-  // A short summary or description (we can use Actor names for this)
-  summary: string;
-  url: string;
-  latitude: number;
-  longitude: number;
-  timestamp: string;      // From SQLDATE
-  // Use AvgTone as the primary category/metric
-  avgTone: number;
+  _id: { $oid: string }; // MongoDB ObjectId, primary key
+  title: string;          // From articles.title
+  summary: string;        // From articles.summary or articles.text
+  url: string;            // From articles.url
+  latitude: number;       // From articles.latitude
+  longitude: number;      // From articles.longitude
+  timestamp: string;      // From articles.SQLDATE
+  // GLOBALEVENTID is removed, use _id.$oid for keys
+  // avgTone is removed, assumed not available in 'articles' collection
 }

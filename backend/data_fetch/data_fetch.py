@@ -11,9 +11,9 @@ load_dotenv() # Load variables from the .env file
 
 MONGO_URI = os.getenv("MONGODB_URI")
 DB_NAME = "news_database" # Your database name
-COLLECTION_NAME = "filtered_data" # Your collection name
+COLLECTION_NAME = "articles" # UPDATED: Use the 'articles' collection
 # Default limit for specific searches, not for initial full load
-MAX_RESULTS_LIMIT_FOR_SPECIFIC_SEARCH = 5000 # Updated limit
+MAX_RESULTS_LIMIT_FOR_SPECIFIC_SEARCH = 5000 
 
 # --- Flask App Initialization ---
 app = Flask(__name__)
@@ -37,7 +37,7 @@ else:
         print(f"✅ Successfully connected to MongoDB Atlas. Database: '{DB_NAME}', Collection: '{COLLECTION_NAME}'.")
     except pymongo_errors.ConfigurationError as ce:
         print(f"❌ MongoDB Configuration Error: {ce}. Check your MONGO_URI.")
-    except pymongo_errors.ConnectionFailure as cfe: # Corrected variable name for ConnectionFailure
+    except pymongo_errors.ConnectionFailure as cfe: 
         print(f"❌ MongoDB Connection Failure: {cfe}. Check network/firewall and Atlas IP Whitelist.")
     except Exception as e:
         print(f"❌ An unexpected error occurred connecting to MongoDB Atlas: {e}")
@@ -52,6 +52,7 @@ def get_news_filtered():
     - Fetching all data if fetchAll=true is passed and no other specific filters.
     - Filtering by keyword (using Atlas Search), start date, and end date.
     - Applying a limit for specific filtered searches or if no parameters (and no fetchAll=true) are provided.
+    - Queries the 'articles' collection.
     """
     if collection is None or client is None:
         return jsonify({"error": "Database connection not established. Check backend logs."}), 500
@@ -63,9 +64,6 @@ def get_news_filtered():
 
     is_specific_filter_active = bool(query_keyword or date_from or date_to)
 
-    # Determine if we should fetch all data without a limit.
-    # This is true ONLY if fetchAll=true is explicitly passed 
-    # AND no other specific search/date filters are active.
     fetch_all_unlimited_requested = fetch_all_param and not is_specific_filter_active
 
     pipeline = []
@@ -75,42 +73,56 @@ def get_news_filtered():
     if query_keyword:
         pipeline.append({
             '$search': {
-                'index': 'default', # IMPORTANT: Replace 'default' with your Atlas Search index name
+                # IMPORTANT: Ensure 'default' is the correct Atlas Search index name for your 'articles' collection.
+                # This index should be configured to search fields like 'title', 'summary', 'text', 'keywords' etc.
+                'index': 'default', 
                 'text': {
                     'query': query_keyword,
-                    'path': {'wildcard': '*'}, 
+                    'path': {'wildcard': '*'}, # Searches all indexed text fields
                     'fuzzy': {} 
                 }
             }
         })
 
     # --- Stage 2: Filter by date and location (using $match) ---
+    # Ensure 'latitude' and 'longitude' fields exist and are queryable in the 'articles' collection.
     match_conditions = {
-        'ActionGeo_Lat': {'$ne': None, '$exists': True},
-        'ActionGeo_Long': {'$ne': None, '$exists': True}
+        'latitude': {'$ne': None, '$exists': True},
+        'longitude': {'$ne': None, '$exists': True}
     }
     date_filter_conditions = {}
     if date_from:
+        # Assuming SQLDATE is stored as YYYY-MM-DD string or a format comparable with strings.
+        # For BSON dates, you'd convert date_from/date_to to datetime objects.
         date_filter_conditions['$gte'] = date_from
     if date_to:
         date_filter_conditions['$lte'] = date_to
 
     if date_filter_conditions:
-        match_conditions['SQLDATE'] = date_filter_conditions
+        match_conditions['SQLDATE'] = date_filter_conditions # SQLDATE is used for timestamp
 
     pipeline.append({'$match': match_conditions})
 
     # --- Stage 3: Project only the fields we need ---
-    projection_stage = {
-        '$project': {
-            '_id': 1, 'GLOBALEVENTID': 1, 'SOURCEURL': 1, 'Actor1Name': 1,
-            'Actor2Name': 1, 'GoldsteinScale': 1, 'SQLDATE': 1, 'AvgTone': 1,
-            'ActionGeo_Lat': 1, 'ActionGeo_Long': 1,
-        }
+    # Adjust fields based on the 'articles' collection structure and frontend needs
+    projection_fields = {
+        '_id': 1,
+        'title': 1,       # From 'articles' collection
+        'summary': '$summary', # Assuming 'text' field from articles is the main summary
+                            # Or use '$summary' if that's the preferred summary field
+        'url': 1,         # From 'articles' collection
+        'latitude': 1,    # From 'articles' collection
+        'longitude': 1,   # From 'articles' collection
+        'SQLDATE': 1,     # Timestamp field
+        # Add any other fields from 'articles' that are needed by the frontend.
+        # e.g., 'keywords': 1, 'SOURCEURL': 1 (if different from 'url' and needed)
+        # 'avgTone' is removed as it's assumed not to be in 'articles'.
+        # 'GLOBALEVENTID' is removed, _id will be used.
     }
     if query_keyword:
-        projection_stage['$project']['score'] = {'$meta': 'searchScore'}
-    pipeline.append(projection_stage)
+        projection_fields['score'] = {'$meta': 'searchScore'}
+    
+    pipeline.append({'$project': projection_fields})
 
     # --- Optional Stage: Sort by relevance score if keyword search was done ---
     if query_keyword:
@@ -118,9 +130,6 @@ def get_news_filtered():
 
     # --- Stage 4: Limit the number of results ---
     if not fetch_all_unlimited_requested:
-        # Apply limit if it's NOT an explicit "fetch all unlimited" request.
-        # This means it's either a specific query (keyword/date) 
-        # OR an implicit query with no parameters and fetchAll=false (e.g. /api/news called without params).
         limit_to_apply = MAX_RESULTS_LIMIT_FOR_SPECIFIC_SEARCH
         pipeline.append({'$limit': limit_to_apply})
         print(f"Applying limit of {limit_to_apply}. fetch_all_unlimited_requested: {fetch_all_unlimited_requested}, is_specific_filter_active: {is_specific_filter_active}")
@@ -128,7 +137,7 @@ def get_news_filtered():
         print(f"Fetching results without limit. fetch_all_unlimited_requested: {fetch_all_unlimited_requested}")
 
     try:
-        print(f"Executing MongoDB Aggregation Pipeline: {json.dumps(pipeline, indent=2)}")
+        print(f"Executing MongoDB Aggregation Pipeline on '{COLLECTION_NAME}': {json.dumps(pipeline, indent=2)}")
         news_data = list(collection.aggregate(pipeline))
         results_count = len(news_data)
         print(f"MongoDB query returned {results_count} documents.")
@@ -142,7 +151,11 @@ def get_news_filtered():
     except pymongo_errors.OperationFailure as ofe:
         print(f"❌ MongoDB Operation Failure (e.g., Atlas Search issue): {ofe}")
         print(f"Details: {ofe.details}")
-        return jsonify({"error": f"Database operation failed: {ofe.details.get('errmsg', str(ofe))}"}), 500
+        # Try to provide a more specific error message if available
+        error_message = ofe.details.get('errmsg', str(ofe)) if ofe.details else str(ofe)
+        if "index not found" in error_message.lower():
+             error_message += f". Please ensure an Atlas Search index named 'default' (or as configured) exists for the '{DB_NAME}.{COLLECTION_NAME}' collection and is properly configured."
+        return jsonify({"error": f"Database operation failed: {error_message}"}), 500
     except Exception as e:
         print(f"❌ An unexpected error occurred during data fetching: {e}")
         return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
