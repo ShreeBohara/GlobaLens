@@ -18,7 +18,7 @@ VECTOR_INDEX_NAME = os.getenv("VECTOR_INDEX_NAME", "vector_index")
 
 # --- Constants ---
 DB_NAME = "news_database"
-COLLECTION_NAME = "articles"
+COLLECTION_NAME = "temp"
 MAX_RESULTS_LIMIT = 5000 
 # UPDATED: Increased the search limit to 500
 VECTOR_SEARCH_LIMIT = 500
