@@ -1,193 +1,169 @@
+"""
+app.py  ─ Flask + MongoDB backend with:
+  • /api/news          → capped text/date/keyword query (≤2 000 docs)
+  • /api/vector_search → semantic search via Atlas Vector Search + SBERT
+
+Environment vars expected:
+  MONGO_URI            Atlas cluster URI
+  HF_TOKEN             HuggingFace auth (optional but recommended)
+  VECTOR_INDEX_NAME    Atlas vector index name   (default: vector_index)
+"""
+import os, json
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from pymongo import MongoClient, errors as pymongo_errors
 from bson import json_util
-import json
-import os
 from dotenv import load_dotenv
 from sentence_transformers import SentenceTransformer
 from huggingface_hub import login
 
-# --- Configuration & Initialization ---
 load_dotenv()
 
-# --- Environment Variables ---
-MONGO_URI = os.getenv("MONGO_URI")
-HF_TOKEN = os.getenv('HF_TOKEN')
-VECTOR_INDEX_NAME = os.getenv("VECTOR_INDEX_NAME", "vector_index") 
+# ──────────────── ENV & CONSTANTS ─────────────────────────────────────────────
+MONGO_URI          = os.getenv("MONGO_URI")
+HF_TOKEN           = os.getenv("HF_TOKEN")
+VECTOR_INDEX_NAME  = os.getenv("VECTOR_INDEX_NAME", "vector_index")
 
-# --- Constants ---
-DB_NAME = "news_database"
-COLLECTION_NAME = "temp"
-MAX_RESULTS_LIMIT = 5000 
-# UPDATED: Increased the search limit to 500
-VECTOR_SEARCH_LIMIT = 500
-# NEW: Set the number of candidates for the search index to query
-VECTOR_SEARCH_CANDIDATES = 2000 # Should be higher than the limit
+DB_NAME            = "news_database"
+COLLECTION_NAME    = "articles"          # <- adjust if your collection differs
+MAX_RESULTS_LIMIT  = 2_000               # hard cap for /api/news
+VECTOR_LIMIT       = 500                 # default limit for /api/vector_search
+VECTOR_CANDIDATES  = 2_000               # numCandidates should exceed limit
 
-# --- Hugging Face Login ---
-if HF_TOKEN:
-    print("Attempting to log in to Hugging Face...")
-    login(token=HF_TOKEN)
-    print("Hugging Face login successful or token already present.")
-
-# --- Flask App Initialization ---
+# ──────────────── FLASK APP ───────────────────────────────────────────────────
 app = Flask(__name__)
 CORS(app)
 
-# --- Embedding Model Initialization ---
+# ──────────────── EMBEDDING MODEL ─────────────────────────────────────────────
 embedding_model = None
 try:
-    print("Loading Sentence Transformer model...")
-    embedding_model = SentenceTransformer('all-mpnet-base-v2')
-    print("✅ Sentence Transformer model loaded successfully.")
+    if HF_TOKEN:
+        login(token=HF_TOKEN)
+    print("Loading SentenceTransformer (all-mpnet-base-v2)…")
+    embedding_model = SentenceTransformer("all-mpnet-base-v2")
+    print("✅  SentenceTransformer ready.")
 except Exception as e:
-    print(f"❌ Failed to load Sentence Transformer model: {e}")
+    print("❌  Could not load embedding model:", e)
 
-# --- MongoDB Connection ---
-client = None
-if not MONGO_URI:
-    print("❌ MONGO_URI environment variable not set.")
-else:
-    try:
-        client = MongoClient(MONGO_URI)
-        client.admin.command('ping')
-        db = client[DB_NAME]
-        collection = db[COLLECTION_NAME]
-        print(f"✅ Successfully connected to MongoDB Atlas. Using DB: '{DB_NAME}', Collection: '{COLLECTION_NAME}'.")
-    except (pymongo_errors.ConfigurationError, pymongo_errors.ConnectionFailure) as e:
-        print(f"❌ MongoDB Connection Error: {e}")
-        client = None
-
-# --- Helper Function for Embeddings ---
-def get_embeddings(text):
+def embed(text: str):
+    """Return list[float] or None."""
     if not embedding_model:
-        print("❌ Embedding model is not available.")
         return None
     try:
-        embedding = embedding_model.encode(text)
-        return embedding.tolist()
-    except Exception as e:
-        print(f"Error getting sentence transformer embedding: {e}")
+        return embedding_model.encode(text).tolist()
+    except Exception as exc:
+        print("Embedding error:", exc)
         return None
 
-# --- Common Projection for Frontend ---
-FRONTEND_PROJECTION = {
-    '_id': 1, 'title': 1, 'summary': 1, 'url': 1,
-    'latitude': 1, 'longitude': 1, 'SQLDATE': 1, 'SOURCEURL': 1
+# ──────────────── MONGODB ─────────────────────────────────────────────────────
+client = None
+collection = None
+try:
+    client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=4_000)
+    client.admin.command("ping")
+    collection = client[DB_NAME][COLLECTION_NAME]
+    print(f"✅  Mongo connected • DB={DB_NAME} • Col={COLLECTION_NAME}")
+except Exception as e:
+    print("❌  Mongo connection failed:", e)
+
+# ──────────────── COMMON HELPERS ──────────────────────────────────────────────
+PROJECTION = {
+    "_id": 1, "title": 1, "summary": 1, "url": 1,
+    "latitude": 1, "longitude": 1, "SQLDATE": 1, "SOURCEURL": 1
 }
+def _j(d):
+    """BSON-safe JSON response."""
+    return json.loads(json_util.dumps(d))
 
-# --- API Routes ---
+# ──────────────── ROUTES ──────────────────────────────────────────────────────
 @app.route("/api/news")
-def get_news_filtered():
-    # This function remains the same
+def api_news():
     if collection is None:
-        return jsonify({"error": "Database connection not established."}), 500
-    # ... (rest of the function is unchanged)
-    query_keyword = request.args.get('q', default=None, type=str)
-    date_from = request.args.get('from', default=None, type=str)
-    date_to = request.args.get('to', default=None, type=str)
-    fetch_all = request.args.get('fetchAll', 'false').lower() == 'true'
-    is_specific_filter = bool(query_keyword or date_from or date_to)
-    fetch_all_unlimited = fetch_all and not is_specific_filter
-    pipeline = []
-    if query_keyword:
-        pipeline.append({
-            '$search': {'index': 'default', 'text': {'query': query_keyword, 'path': {'wildcard': '*'}}}
-        })
-    match_conditions = {'latitude': {'$ne': None}, 'longitude': {'$ne': None}}
-    date_filter = {}
-    if date_from: date_filter['$gte'] = date_from
-    if date_to: date_filter['$lte'] = date_to
-    if date_filter: match_conditions['SQLDATE'] = date_filter
-    pipeline.append({'$match': match_conditions})
-    projection = {**FRONTEND_PROJECTION}
-    if query_keyword:
-        projection['score'] = {'$meta': 'searchScore'}
-    pipeline.append({'$project': projection})
-    if query_keyword:
-        pipeline.append({'$sort': {'score': -1}})
-    limit_to_apply = None
-    if not fetch_all_unlimited:
-        limit_to_apply = MAX_RESULTS_LIMIT
-        pipeline.append({'$limit': limit_to_apply})
-    try:
-        results = list(collection.aggregate(pipeline))
-        count = len(results)
-        return json.loads(json_util.dumps({
-            "results": results, "count": count,
-            "limit_applied": limit_to_apply if limit_to_apply and count >= limit_to_apply else None
-        }))
-    except pymongo_errors.OperationFailure as e:
-        return jsonify({"error": f"Database operation failed: {e.details.get('errmsg', str(e))}"}), 500
-    except Exception as e:
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
+        return jsonify({"error": "DB not ready"}), 503
 
+    # ---------- query params ----------
+    q   = request.args.get("q")
+    frm = request.args.get("from")
+    to  = request.args.get("to")
+    limit_req = request.args.get("limit", type=int) or MAX_RESULTS_LIMIT
+    limit = min(max(limit_req, 100), MAX_RESULTS_LIMIT)
+
+    # ---------- aggregation pipeline ----------
+    pipe = []
+
+    if q:
+        pipe += [
+            {"$search": {
+                "index": "default",
+                "text": {"path": {"wildcard": "*"}, "query": q}
+            }},
+            {"$addFields": {"score": {"$meta": "searchScore"}}},
+            {"$sort": {"score": -1}}
+        ]
+
+    match = {"latitude": {"$ne": None}, "longitude": {"$ne": None}}
+    if frm or to:
+        date_range = {}
+        if frm: date_range["$gte"] = frm
+        if to:  date_range["$lte"] = to
+        match["SQLDATE"] = date_range
+    pipe.append({"$match": match})
+
+    pipe.append({"$project": PROJECTION})
+    pipe.append({"$limit": limit})
+
+    # ---------- run ----------
+    try:
+        docs = list(collection.aggregate(pipe))
+        return _j({
+            "results": docs,
+            "count": len(docs),
+            "limit_applied": len(docs) >= limit
+        })
+    except pymongo_errors.OperationFailure as e:
+        return jsonify({"error": e.details.get("errmsg", str(e))}), 500
 
 @app.route("/api/vector_search")
-def vector_search_news():
+def api_vector():
     if collection is None or embedding_model is None:
-        return jsonify({"error": "Backend service not ready (DB or AI Model)."}), 503
+        return jsonify({"error": "Service not ready"}), 503
 
-    query = request.args.get('q', default=None, type=str)
-    if not query:
-        return jsonify({"error": "A 'q' parameter is required for vector search."}), 400
-    
-    print(f"\n--- New Vector Search ---")
-    print(f"Received query: '{query}'")
-    print(f"Using vector index name: '{VECTOR_INDEX_NAME}'")
+    q  = request.args.get("q")
+    if not q:
+        return jsonify({"error": "Missing ?q"}), 400
 
-    query_vector = get_embeddings(query)
-    if not query_vector:
-        return jsonify({"error": "Failed to generate query embedding."}), 500
+    limit = request.args.get("limit", type=int) or VECTOR_LIMIT
+    limit = min(max(limit, 50), VECTOR_LIMIT)   # clamp 50-500
 
-    # UPDATED Pipeline with score filtering
-    pipeline = [
-        {
-            '$vectorSearch': {
-                'index': VECTOR_INDEX_NAME, 
-                'path': 'summary_embedding', 
-                'queryVector': query_vector, 
-                'numCandidates': VECTOR_SEARCH_CANDIDATES, 
-                'limit': VECTOR_SEARCH_LIMIT
-            }
-        },
-        # Project the score into a field so we can filter on it
-        {
-            '$project': {
-                **FRONTEND_PROJECTION,
-                'score': {'$meta': 'vectorSearchScore'}
-            }
-        },
-        # NEW: Add a $match stage to filter by the similarity score
-        {
-            '$match': {
-                'score': {
-                    '$gt': 0.7
-                }
-            }
-        }
+    vec = embed(q)
+    if vec is None:
+        return jsonify({"error": "Embedding failed"}), 500
+
+    pipe = [
+        {"$vectorSearch": {
+            "index": VECTOR_INDEX_NAME,
+            "path": "summary_embedding",        # field holding your vectors
+            "queryVector": vec,
+            "numCandidates": max(VECTOR_CANDIDATES, limit * 4),
+            "limit": limit
+        }},
+        {"$project": {**PROJECTION, "score": {"$meta": "vectorSearchScore"}}},
+        {"$match": {"score": {"$gt": 0.7}}}      # similarity threshold
     ]
-    
-    print(f"Executing Vector Search pipeline with score > 0.6 and limit {VECTOR_SEARCH_LIMIT}...")
-    try:
-        results = list(collection.aggregate(pipeline))
-        count = len(results)
-        print(f"Found {count} results matching the criteria.")
-        return json.loads(json_util.dumps({"results": results, "count": count, "limit_applied": None}))
-    except pymongo_errors.OperationFailure as e:
-        err_msg = e.details.get('errmsg', str(e))
-        print(f"❌ Vector Search DB Error: {err_msg}")
-        if "index not found" in err_msg.lower():
-            err_msg = f"Vector Search index '{VECTOR_INDEX_NAME}' not found. Please check your .env file and Atlas configuration."
-        return jsonify({"error": f"Database operation failed: {err_msg}"}), 500
-    except Exception as e:
-        print(f"❌ An unexpected error occurred: {e}")
-        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
 
-# --- Main Execution ---
-if __name__ == '__main__':
-    if client is None or embedding_model is None:
-        print("❌ Backend cannot start: MongoDB or Embedding Model failed to initialize.")
+    try:
+        docs = list(collection.aggregate(pipe))
+        return _j({"results": docs, "count": len(docs), "limit_applied": None})
+    except pymongo_errors.OperationFailure as e:
+        msg = e.details.get("errmsg", str(e))
+        if "index not found" in msg.lower():
+            msg += f" — check VECTOR_INDEX_NAME='{VECTOR_INDEX_NAME}' in Atlas."
+        return jsonify({"error": msg}), 500
+
+# ──────────────── MAIN ────────────────────────────────────────────────────────
+if __name__ == "__main__":
+    ready = client is not None and embedding_model is not None
+    if not ready:
+        print("Backend cannot start: DB or embedding model missing.")
     else:
-        app.run(host='0.0.0.0', port=5001, debug=False)
+        app.run(host="0.0.0.0", port=5001, debug=False)
