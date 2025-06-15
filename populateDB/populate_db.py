@@ -23,8 +23,6 @@ MONGO_URI = os.getenv("MONGODB_URI")
 
 # --- Configuration ---
 # IMPORTANT: Replace with your actual MongoDB connection string
-#MONGO_URI="mongodb+srv://shreetbohara:shree123@cluster0.lazj4.mongodb.net/news_database?retryWrites=true&w=majority"
-#MONGO_URI = "mongodb+srv://shreeb:shree123@cluster0.xoxwy.mongodb.net/news_database?retryWrites=true&w=majority&appName=Cluster0";
 DB_NAME = "news_database"
 COLLECTION_NAME = "temp"
 NUM_DOCUMENTS = 300000
