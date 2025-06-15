@@ -12,7 +12,7 @@ from huggingface_hub import login
 load_dotenv()
 
 # --- Environment Variables ---
-MONGO_URI = os.getenv("MONGODB_URI")
+MONGO_URI = os.getenv("MONGO_URI")
 HF_TOKEN = os.getenv('HF_TOKEN')
 VECTOR_INDEX_NAME = os.getenv("VECTOR_INDEX_NAME", "vector_index") 
 
