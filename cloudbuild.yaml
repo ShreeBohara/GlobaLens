@@ -1,0 +1,55 @@
+steps:
+# --- Backend Build & Deploy ---
+
+# 1. Build the backend Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/globalens/globalens/backend:latest', './backend/data_fetch' ]
+  id: 'Build Backend Image'
+
+# 2. Push the backend image to Google Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'push', 'us-central1-docker.pkg.dev/globalens/globalens/backend:latest' ]
+  id: 'Push Backend Image'
+
+# 3. Deploy the backend image to Cloud Run, injecting your secrets
+- name: 'gcr.io/google-cloud-sdk/gcloud'
+  args:
+    - 'run'
+    - 'deploy'
+    - 'globalens-backend'
+    - '--image=us-central1-docker.pkg.dev/globalens/globalens/backend:latest'
+    - '--region=us-central1'
+    - '--platform=managed'
+    - '--allow-unauthenticated'
+    - '--set-secrets=MONGO_URI=MONGO_URI:latest,HF_TOKEN=HF_TOKEN:latest,VECTOR_INDEX_NAME=VECTOR_INDEX_NAME:latest,DB_NAME=DB_NAME:latest'
+  id: 'Deploy Backend Service'
+  waitFor: ['Push Backend Image']
+
+# --- Frontend Build & Deploy ---
+
+# 4. Install frontend dependencies
+- name: 'node:18'
+  entrypoint: 'npm'
+  args: ['install']
+  dir: 'Frontend/globe'
+  id: 'Install Frontend Dependencies'
+
+# 5. Build the production version of the React app
+- name: 'node:18'
+  entrypoint: 'npm'
+  args: ['run', 'build']
+  dir: 'Frontend/globe'
+  id: 'Build Frontend App'
+  waitFor: ['Install Frontend Dependencies']
+
+# 6. Deploy the frontend to Firebase Hosting
+- name: "gcr.io/google-cloud-sdk/gcloud"
+  entrypoint: 'firebase'
+  args: ['deploy', '--only=hosting', '--project=globalens']
+  dir: 'Frontend/globe'
+  id: 'Deploy Frontend to Firebase'
+  waitFor: ['Build Frontend App', 'Deploy Backend Service']
+
+# Store the final backend image in Artifact Registry
+images:
+- 'us-central1-docker.pkg.dev/globalens/globalens/backend:latest'
