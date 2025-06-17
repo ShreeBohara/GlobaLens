@@ -1,4 +1,0 @@
-# cloudbuild.yaml (for testing only)
-steps:
-- name: 'ubuntu'
-  args: ['echo', 'Hello, World! The build process is working.']

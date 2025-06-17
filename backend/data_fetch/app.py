@@ -25,7 +25,7 @@ HF_TOKEN           = os.getenv("HF_TOKEN")
 VECTOR_INDEX_NAME  = os.getenv("VECTOR_INDEX_NAME", "vector_index")
 
 DB_NAME            = "news_database"
-COLLECTION_NAME    = "articles"          # <- adjust if your collection differs
+COLLECTION_NAME    = "temp"          # <- adjust if your collection differs
 MAX_RESULTS_LIMIT  = 2_000               # hard cap for /api/news
 VECTOR_LIMIT       = 500                 # default limit for /api/vector_search
 VECTOR_CANDIDATES  = 2_000               # numCandidates should exceed limit
