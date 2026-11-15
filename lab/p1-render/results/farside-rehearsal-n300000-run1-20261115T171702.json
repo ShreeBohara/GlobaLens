@@ -1,0 +1,333 @@
+{
+ "kind": "farside",
+ "state": {
+  "pageCommit": "2e4e324+uncommitted",
+  "url": "http://127.0.0.1:5173/?mode=farside&n=300000&w=1440&h=900&limit=4&label=rehearsal&run=1",
+  "dateUtc": "2026-11-15T17:17:02.052Z",
+  "versions": {
+   "maplibre": "6.18.0",
+   "deck": "9.4.1",
+   "flechette": "2.8.0"
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "webglRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M3 Pro, Unspecified Version)",
+  "webglVendor": "Google Inc. (Apple)",
+  "devicePixelRatio": 2,
+  "mapPixelRatio": 2,
+  "screen": {
+   "width": 1512,
+   "height": 982
+  },
+  "window": {
+   "innerWidth": 1512,
+   "innerHeight": 949
+  },
+  "viewport": {
+   "width": 1440,
+   "height": 900,
+   "clipped": false
+  },
+  "drawingBuffer": {
+   "width": 2880,
+   "height": 1800
+  },
+  "antialias": true,
+  "hardwareConcurrency": 11,
+  "deviceMemory": 16,
+  "battery": {
+   "charging": true,
+   "level": 1
+  },
+  "sample": {
+   "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8",
+   "bytes": 4801706,
+   "rows": 300000,
+   "languages": 64,
+   "decodeMs": 3.6999998092651367
+  },
+  "params": {
+   "mode": "farside",
+   "n": 300000,
+   "w": 1440,
+   "h": 900,
+   "dpr": null,
+   "hide": true,
+   "billboard": false,
+   "arcs": false,
+   "labels": false,
+   "arcHeight": 0.3,
+   "discDepth": false,
+   "arcDepth": false,
+   "run": "1",
+   "label": "rehearsal",
+   "standin": false,
+   "post": true
+  },
+  "refresh": {
+   "medianIntervalMs": 8.300000000000182,
+   "hz": 120.48192771084074,
+   "frames": 121
+  },
+  "orbit": {
+   "zoom": 2.7398,
+   "targetDiameterPx": 810,
+   "limbDiameterPx": 809.9824104643159,
+   "globeRadiusPx": 544.3171966769046,
+   "cameraDistanceRadii": 3.480171503384142
+  }
+ },
+ "partial": true,
+ "stopsRun": 4,
+ "violations": 0,
+ "controlFailures": 0,
+ "threshold": "zero violations at every stop, in each of three runs; controls must hold",
+ "arcHeight": 0.3,
+ "labelControl": "MapLibre offers no switch that shows far-side labels; the near set is the only control",
+ "voidEvents": [],
+ "mapErrors": [],
+ "stops": [
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 2.5942235340354074,
+   "globeRadiusPx": 846.8072206805203,
+   "horizonDeg": 67.32696706164847,
+   "oracleMaxDiffPx": 0.000025355175893772404,
+   "sets": {
+    "near": 2116,
+    "limbFar": 10945,
+    "farCap": 159560
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 125599,
+    "nearPixelsOn": 9890,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 9890,
+    "hiddenInViewIfTransparent": 166928
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07678508918558484,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 9709,
+    "nearPixelsOn": 21921,
+    "nearPixelsOff": 21921
+   },
+   "labels": {
+    "hidden": 295,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 2,
+    "nearInView": 2,
+    "nearPixels": 364,
+    "nearQueried": 2
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 3.480171503384142,
+   "globeRadiusPx": 544.3171966769046,
+   "horizonDeg": 73.30109820840029,
+   "oracleMaxDiffPx": 0.0000146416751379505,
+   "sets": {
+    "near": 120172,
+    "limbFar": 8077,
+    "farCap": 13464
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 20356,
+    "nearPixelsOn": 177654,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 177654,
+    "hiddenInViewIfTransparent": 21541
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07150501398725019,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 9333,
+    "nearPixelsOn": 30787,
+    "nearPixelsOff": 30787
+   },
+   "labels": {
+    "hidden": 37,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 208,
+    "nearInView": 208,
+    "nearPixels": 29897,
+    "nearQueried": 208
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 1.6655661691059525,
+   "globeRadiusPx": 2028.3482885156852,
+   "horizonDeg": 53.10170408734979,
+   "oracleMaxDiffPx": 0.00008051057153732438,
+   "sets": {
+    "near": 588,
+    "limbFar": 4164,
+    "farCap": 159560
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 65862,
+    "nearPixelsOn": 0,
+    "nearProbes": 0,
+    "nearReturned": 0,
+    "nearPixelsOff": 0,
+    "hiddenInViewIfTransparent": 159560
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07653796495803059,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 5823,
+    "nearPixelsOn": 0,
+    "nearPixelsOff": 0
+   },
+   "labels": {
+    "hidden": 280,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 1,
+    "nearInView": 0,
+    "nearPixels": 0,
+    "nearQueried": 0
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 2.035437113773716,
+   "globeRadiusPx": 1303.7971906182108,
+   "horizonDeg": 60.57426872567169,
+   "oracleMaxDiffPx": 0.00004437274066327864,
+   "sets": {
+    "near": 51915,
+    "limbFar": 17809,
+    "farCap": 13464
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 14299,
+    "nearPixelsOn": 70460,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 70460,
+    "hiddenInViewIfTransparent": 19753
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07458915879705443,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 11048,
+    "nearPixelsOn": 12911,
+    "nearPixelsOff": 12911
+   },
+   "labels": {
+    "hidden": 62,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 83,
+    "nearInView": 21,
+    "nearPixels": 3974,
+    "nearQueried": 22
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  }
+ ],
+ "host": {
+  "label": "rehearsal",
+  "notedUtc": "2026-11-15T17:16:47.406Z",
+  "model": "MacBook Pro",
+  "modelIdentifier": "Mac15,6",
+  "chip": "Apple M3 Pro",
+  "cores": "11 (5 Performance and 6 Efficiency)",
+  "memory": "18 GB",
+  "os": "macOS 27.0.1 (26A434)",
+  "chrome": "Google Chrome 157.0.8103.52",
+  "displays": [
+   {
+    "builtIn": true,
+    "pixels": "3024 x 1964",
+    "resolution": "1512 x 982 @ 120.00Hz",
+    "main": true,
+    "online": true
+   },
+   {
+    "builtIn": false,
+    "pixels": "3440 x 1440",
+    "resolution": "3440 x 1440 @ 85.00Hz",
+    "main": false,
+    "online": true
+   }
+  ],
+  "externalDisplayAttached": true,
+  "powerSource": "AC Power",
+  "batteryPercent": 100,
+  "lowPowerMode": false,
+  "thermal": {
+   "cpuSpeedLimit": null,
+   "schedulerLimit": null,
+   "noThermalWarning": true
+  },
+  "visibleApplications": 12,
+  "pinned": false
+ },
+ "receivedUtc": "2026-11-15T17:17:02.057Z"
+}

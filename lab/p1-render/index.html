@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GlobaLens P1 render spike</title>
+<link rel="stylesheet" href="/vendor/maplibre/maplibre-gl.css">
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; color: #d7dbe3; font: 12px/1.4 ui-monospace, Menlo, monospace; }
+  #map { position: absolute; left: 0; top: 0; }
+  #hud { position: absolute; left: 8px; bottom: 8px; z-index: 5; max-width: 60ch; padding: 6px 8px; background: rgba(11, 13, 18, 0.82); white-space: pre-wrap; pointer-events: none; }
+  #result { position: absolute; inset: 0; z-index: 10; margin: 0; padding: 12px; overflow: auto; background: #0b0d12; display: none; white-space: pre-wrap; word-break: break-all; }
+</style>
+<script type="importmap">{ "imports": { "maplibre-gl": "/vendor/maplibre/maplibre-gl.mjs" } }</script>
+</head>
+<body>
+<div id="map"></div>
+<div id="hud">loading</div>
+<pre id="result"></pre>
+<script type="module" src="/dist/app.js"></script>
+</body>
+</html>
