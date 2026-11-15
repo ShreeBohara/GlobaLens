@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 // Writes what prereg §5.7 asks to be noted with every run and the page cannot see:
-// the machine, the OS, Chrome, the displays, the power source and the thermal state.
+// the machine, the OS, Chrome, the displays, the power source, the thermal state and the load average.
 // It records no serial number, no user name and no names of other applications.
 //
 //   node tools/host-state.mjs <out.json> [--label <text>]
 import { execFileSync } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
+import os from 'node:os';
 
 const sh = (cmd, args) => { try { return execFileSync(cmd, args, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch { return ''; } };
 const pick = (text, re) => (re.exec(text) || [])[1]?.trim() ?? null;
@@ -50,7 +51,9 @@ const state = {
     schedulerLimit: pick(therm, /CPU_Scheduler_Limit\s*=\s*(\d+)/),
     noThermalWarning: /No thermal warning level has been recorded/.test(therm)
   },
-  visibleApplications: visibleApps || null
+  visibleApplications: visibleApps || null,
+  // 1, 5 and 15 minute load averages: other work on the machine shows here (§5.7, "other apps closed").
+  loadAverage: os.loadavg().map((x) => Math.round(x * 100) / 100)
 };
 state.pinned = !state.externalDisplayAttached && state.powerSource === 'AC Power' && !state.lowPowerMode;
 writeFileSync(out, JSON.stringify(state, null, 1) + '\n');
