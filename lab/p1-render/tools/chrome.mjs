@@ -71,7 +71,9 @@ process.on('SIGINT', () => cleanup(130));
 
 async function connectCdp() {
   const portFile = path.join(profile, 'DevToolsActivePort');
-  for (let i = 0; i < 100 && !existsSync(portFile); i++) await sleep(100);
+  // A fresh profile's first start can take 15 s or more before the port is written.
+  for (let i = 0; i < 600 && !existsSync(portFile); i++) await sleep(100);
+  if (!existsSync(portFile)) throw new Error('Chrome did not open its DevTools port within 60 s');
   const port = readFileSync(portFile, 'utf8').split('\n')[0].trim();
   let target = null;
   for (let i = 0; i < 50 && !target; i++) {
