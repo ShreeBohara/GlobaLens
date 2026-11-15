@@ -18,6 +18,14 @@ window.__lib = core; // for looking at the scene by hand
 async function main() {
   hud('measuring the display');
   const refresh = await measureRefresh(1000);
+  // A hidden or covered window gets a few frames a second, and a timed run would crawl for minutes and
+  // be void anyway (prereg §5.7). Say so at once instead. Found when a suite was started while the Mac was in use.
+  if (P.mode !== 'view' && P.mode !== 'makepicks' && (document.visibilityState !== 'visible' || !(refresh.hz >= 20))) {
+    const reason = `the window is hidden or covered (visibility: ${document.visibilityState}; ${refresh.hz ? refresh.hz.toFixed(1) : 0} frames a second while idle)`;
+    hud(`void: ${reason}`);
+    await report(resultName(`void-${P.mode}`), { kind: P.mode, void: true, reason, refresh, dateUtc: new Date().toISOString(), params: { ...P } });
+    return;
+  }
   hud('loading the sample');
   const sample = await loadSample();
   const n = Math.min(P.n, sample.total);

@@ -46,8 +46,13 @@ open_page() {
   local label="$1" token="$2" query="$3"; shift 3
   node tools/host-state.mjs "$STATE" --label "$label" > /dev/null
   echo "$(date -u +%H:%M:%S) ${label} run ${token}: ${query}"
-  $NODE tools/chrome.mjs --url "${BASE}/?${query}&label=${label}&run=${token}" --wait-file "run${token}-" "$@" \
-    | tr '\n' ' '; echo
+  local out
+  out="$($NODE tools/chrome.mjs --url "${BASE}/?${query}&label=${label}&run=${token}" --wait-file "run${token}-" "$@" | tr '\n' ' ')" || true
+  echo "$out"
+  case "$out" in
+    *'"resultFile": "void-'*) die "the page reported a void run: its window was hidden or covered. A timed run needs the screen to itself; leave the Mac alone and start the suite again." ;;
+    *'"timeout": true'*) die "the page did not finish in time; see data/.server.log" ;;
+  esac
 }
 
 orbit_five() { # <label> <query> [options...]: five page loads, 60 s apart (§5.2)
