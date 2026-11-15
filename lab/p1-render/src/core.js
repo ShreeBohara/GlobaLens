@@ -345,6 +345,15 @@ export async function measureRefresh(ms = 1000) {
   return { medianIntervalMs: med, hz: med ? 1000 / med : null, frames: stamps.length };
 }
 
+// A fixed piece of main-thread work, timed. It shows whether CPU throttling was applied (the stand-in,
+// prereg §5.7): under a 6× throttle it takes about six times as long as without one.
+export function cpuProbe() {
+  const t0 = performance.now();
+  let x = 0;
+  for (let i = 1; i <= 20_000_000; i++) x += Math.sqrt(i);
+  return { ms: Math.round((performance.now() - t0) * 10) / 10, check: Math.round(x) };
+}
+
 export async function pageState(map, sample, extra = {}) {
   const gl = map.getCanvas().getContext('webgl2');
   const dbg = gl.getExtension('WEBGL_debug_renderer_info');
@@ -374,6 +383,7 @@ export async function pageState(map, sample, extra = {}) {
     battery,
     sample: { sha256: sample.sha256, bytes: sample.bytes, rows: sample.total, languages: sample.languages, decodeMs: sample.decodeMs },
     params: { ...P },
+    cpuProbe: cpuProbe(),
     ...extra
   };
 }

@@ -8,6 +8,7 @@
 #   ./run.sh desktop      the desktop half: C1 (orbit), C3 (picks), C4 (far side), C5 (labels)
 #   ./run.sh standin      the phone stand-in: 100k points, 412 × 915 at pixel ratio 2.625, 6× CPU throttle
 #   ./run.sh projtile     the projectTile() smoke test (§5.6)
+#   ./run.sh preview      one full pass of every check, in any machine state; never a gating run
 #   ./run.sh rehearsal    one short run of each kind, in any machine state; never a gating run
 #   ./run.sh phone        how to run the phone half
 #
@@ -59,6 +60,13 @@ orbit_five() { # <label> <query> [options...]: five page loads, 60 s apart (§5.
 
 GATING=(--foreground --fullscreen)   # plain Chrome, fresh profile, nothing attached to the page
 DESK="w=1440&h=900"
+STANDIN="n=100000&w=412&h=915&dpr=2.625&standin=1"
+
+is_pinned() { node tools/host-state.mjs "$STATE" --label preflight > /dev/null; node -e "process.exit(JSON.parse(require('fs').readFileSync('$STATE','utf8')).pinned ? 0 : 1)"; }
+build_clean() { # the page is rebuilt from the checked-out commit, and that commit is in every result (§5.1)
+  local out; out="$(node build.mjs 2>&1 | tail -1)"; echo "$out"
+  case "$out" in *uncommitted*) die "the page has uncommitted changes; commit them first, so the results name one commit" ;; esac
+}
 
 case "${1:-}" in
   build)
@@ -75,20 +83,14 @@ case "${1:-}" in
     shasum -a 256 picks.json
     ;;
   desktop)
-    node tools/host-state.mjs "$STATE" --label preflight > /dev/null
     LABEL=desktop
-    if ! node -e "process.exit(JSON.parse(require('fs').readFileSync('$STATE','utf8')).pinned ? 0 : 1)"; then
+    if ! is_pinned; then
       [ "${SPIKE_ALLOW_UNPINNED:-0}" = 1 ] || die "not in the pinned state (external display attached, not on mains power, or low-power mode on). See the top of this file."
       LABEL=unpinned
       echo "run.sh: NOT in the pinned state; results are labelled 'unpinned' and do not gate" >&2
     fi
     [ -f picks.json ] || die "picks.json is missing; run ./run.sh picks-list"
-    # One build (§5.1): the page is rebuilt from the checked-out commit, and that commit is in every result.
-    BUILD_OUT="$(node build.mjs 2>&1 | tail -1)"
-    echo "$BUILD_OUT"
-    case "$BUILD_OUT" in
-      *uncommitted*) [ "$LABEL" = unpinned ] || die "the page has uncommitted changes; commit them first, so the results name one commit" ;;
-    esac
+    build_clean
     start_server
     # C1: basemap and discs, 300k, at the device's own pixel ratio. This is the gating run.
     orbit_five "${LABEL}-c1" "n=300000&${DESK}" "${GATING[@]}"
@@ -103,13 +105,32 @@ case "${1:-}" in
     echo "desktop suite finished; results are in results/"
     ;;
   standin)
+    LABEL=standin-6x; is_pinned || LABEL=standin-6x-unpinned
+    build_clean
     start_server
     # CPU throttling needs the DevTools protocol attached; this is the stand-in, never a gating run.
-    orbit_five "standin-6x" "n=100000&w=412&h=915&dpr=2.625&standin=1" --foreground --fullscreen --cdp --throttle 6
+    orbit_five "$LABEL" "$STANDIN" --foreground --fullscreen --cdp --throttle 6
     ;;
   projtile)
+    LABEL=projtile; is_pinned || LABEL=projtile-unpinned
+    build_clean
     start_server
-    open_page projtile 1 "mode=projtile&n=300000&${DESK}" --timeout 600 "${GATING[@]}"
+    open_page "$LABEL" 1 "mode=projtile&n=300000&${DESK}" --timeout 600 "${GATING[@]}"
+    ;;
+  preview)
+    # One pass of everything, in whatever state the machine is in. It tells early whether a criterion
+    # is in trouble and proves the harness end to end. It never gates, whatever the state.
+    LABEL=preview; is_pinned || LABEL=preview-unpinned
+    [ -f picks.json ] || die "picks.json is missing; run ./run.sh picks-list"
+    build_clean
+    start_server
+    orbit_five "${LABEL}-standin-6x" "$STANDIN" --foreground --fullscreen --cdp --throttle 6
+    orbit_five "${LABEL}-c1" "n=300000&${DESK}" "${GATING[@]}"
+    open_page "${LABEL}-c4" 1 "mode=farside&n=300000&${DESK}" --timeout 900 "${GATING[@]}"
+    open_page "${LABEL}-c5" 1 "mode=labels&n=300000&${DESK}" --timeout 600 "${GATING[@]}"
+    open_page "${LABEL}-c3" 1 "mode=picks&n=300000&${DESK}" --timeout 3600 "${GATING[@]}"
+    open_page "${LABEL}-projtile" 1 "mode=projtile&n=300000&${DESK}" --timeout 600 "${GATING[@]}"
+    echo "preview finished; results are in results/"
     ;;
   rehearsal)
     start_server
