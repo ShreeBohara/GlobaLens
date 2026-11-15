@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frame 2 · The Lens list · GlobaLens 3.0 P1 visual target</title>
+<style>
+:root{
+  --void:#030509; --canvas:#070A10;
+  --surface-1:#0D1219; --surface-2:#141A22; --surface-3:#1C232C;
+  --border-subtle:#272E38; --border-strong:#38404B; --border-control:#676F7A;
+  --text-1:#EBEFF4; --text-2:#B4BBC5; --text-3:#8A939F;
+  --lens-500:#C3F344; --lens-300:#DEFF87; --lens-700:#759B21; --lens-900:#233407;
+  --danger:#FB575D; --warning:#FCB442;
+  --ocean:#030910; --land:#11181F; --coast:#2C3742; --atmosphere:#478CC4;
+  --att-0:#1A2029; --att-1:#8A6A3E; --att-2:#F9BE78; --att-3:#FFF1DC;
+  --sev-0:#24101A; --sev-1:#6B1D44; --sev-2:#C23A6E; --sev-3:#FF9EB8;
+  --exp-over:#FE9879; --exp-over2:#CB836D; --exp-mid:#767B81; --exp-under2:#5AA1CB; --exp-under:#59C3FE;
+  --f-ui:"Inter",system-ui,-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono","SF Mono",Menlo,Monaco,Consolas,monospace;
+  --f-chrome:"Newsreader","Iowan Old Style","Palatino",Georgia,serif;
+  --f-title:"Noto Serif","Iowan Old Style",Charter,Georgia,"Geeza Pro","Kohinoor Devanagari","PingFang SC","Hiragino Sans","Apple SD Gothic Neo",serif;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;background:#000;color:var(--text-1);font-family:var(--f-ui);-webkit-font-smoothing:antialiased}
+body{min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+.doc{font:450 12px/16px var(--f-ui);color:var(--text-3);padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#000;border-bottom:1px solid #11161d}
+.doc b{color:var(--text-1);font-weight:550;font-size:13px}
+.doc a{color:var(--text-2)}
+.doc .tag{font:500 10px/14px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--border-strong);border-radius:3px;padding:1px 6px;color:var(--text-2)}
+.doc .tag.p1{border-color:var(--lens-700);color:var(--lens-300)}
+.doc .tag.later{border-color:#5a4a2a;color:var(--warning)}
+.doc.foot{border-top:1px solid #11161d;border-bottom:0;margin-top:auto;line-height:18px}
+.stage{padding:14px 16px 18px}
+.fitbox{overflow:hidden}
+.fit{transform-origin:0 0}
+.bare .doc{display:none}
+.bare .stage{padding:0}
+.bare body{min-height:0}
+.frame{position:relative;overflow:hidden;background:var(--void);outline:1px solid #161c24}
+.frame svg.globe{position:absolute;inset:0;display:block}
+
+/* type tokens */
+.t-micro{font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase}
+.t-data{font:450 12px/16px var(--f-mono);font-variant-numeric:tabular-nums}
+.t-caption{font:450 12px/16px var(--f-ui)}
+.t-ui{font:550 13px/18px var(--f-ui)}
+.t-body{font:400 14px/21px var(--f-ui)}
+.t-headline-sm{font:550 17px/22px var(--f-chrome)}
+.t-headline{font:500 22px/28px var(--f-chrome)}
+.t-title{font:400 15px/21px var(--f-title)}
+
+/* top bar, 44px */
+.topbar{position:absolute;left:0;top:0;right:0;height:44px;background:var(--surface-1);border-bottom:1px solid var(--border-subtle);display:flex;align-items:center;padding:0 14px;gap:18px;z-index:5}
+.brand{display:flex;align-items:center;gap:8px;font:600 14px/18px var(--f-ui);letter-spacing:.01em}
+.brand i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--lens-500);position:relative;display:inline-block}
+.brand i::after{content:"";position:absolute;left:50%;top:50%;width:4px;height:4px;margin:-2px;border-radius:50%;background:var(--lens-500)}
+.nav{display:flex;gap:16px;font:450 13px/18px var(--f-ui);color:var(--text-2)}
+.nav .on{color:var(--text-1);box-shadow:0 13px 0 -11px var(--lens-500)}
+.spacer{flex:1}
+.seg{display:flex;border:1px solid var(--border-control);border-radius:6px;overflow:hidden}
+.seg span{font:500 11px/14px var(--f-mono);letter-spacing:.06em;padding:6px 10px;color:var(--text-2);border-right:1px solid var(--border-strong)}
+.seg span:last-child{border-right:0}
+.seg .on{background:var(--lens-900);color:var(--lens-300);box-shadow:inset 0 0 0 1px var(--lens-700)}
+.chips{display:flex;gap:4px}
+.chip{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 8px;border:1px solid var(--border-control);border-radius:13px;font:500 11px/14px var(--f-mono);letter-spacing:.05em;color:var(--text-2);background:transparent;white-space:nowrap}
+.chip kbd{font:inherit;color:var(--text-3)}
+.chip.on{border-color:var(--lens-500);color:var(--text-1);background:var(--lens-900)}
+.chip.on kbd{color:var(--lens-300)}
+.badge{display:inline-flex;align-items:center;gap:8px;height:26px;padding:0 10px;border:1px solid var(--border-strong);border-radius:4px;font:500 11px/14px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text-2);background:var(--surface-2);white-space:nowrap}
+.badge .dot{width:6px;height:6px;border-radius:50%;background:var(--lens-500)}
+.badge .sep{width:1px;height:12px;background:var(--border-strong)}
+.badge.warn{border-color:#6b5320;color:var(--warning)}
+.badge.warn .dot{background:var(--warning)}
+
+/* panel, 360px */
+.panel{position:absolute;left:0;top:44px;bottom:0;width:360px;background:rgba(13,18,25,.965);border-right:1px solid var(--border-subtle);display:flex;flex-direction:column;z-index:4}
+.panel header{padding:14px 16px 12px;border-bottom:1px solid var(--border-subtle)}
+.eyebrow{font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.place{font:550 17px/22px var(--f-chrome);margin:6px 0 2px}
+.coords{font:450 12px/16px var(--f-mono);color:var(--text-2);font-variant-numeric:tabular-nums}
+.coords em{font-style:normal;color:var(--lens-300)}
+.readouts{display:flex;gap:0;margin-top:12px;border:1px solid var(--border-subtle);border-radius:6px;background:var(--surface-2)}
+.readout{flex:1;padding:8px 10px;border-right:1px solid var(--border-subtle)}
+.readout:last-child{border-right:0}
+.readout b{display:block;font:450 18px/22px var(--f-mono);font-variant-numeric:tabular-nums;color:var(--text-1)}
+.readout span{font:500 10px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.honesty{margin-top:10px;font:450 12px/16px var(--f-ui);color:var(--text-2)}
+.honesty b{font-weight:550;color:var(--text-1)}
+.listhead{display:flex;justify-content:space-between;padding:10px 16px 6px;font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+ul.rows{list-style:none;margin:0;padding:0;overflow:hidden;flex:1}
+.row{padding:9px 16px 10px;border-top:1px solid #151b23}
+.row:first-child{border-top:0}
+.row .title{display:block;font:400 15px/21px var(--f-title);color:var(--text-1);text-decoration:none;unicode-bidi:plaintext}
+.row .meta{display:flex;align-items:center;gap:8px;margin-top:4px;font:500 11px/14px var(--f-mono);letter-spacing:.05em;color:var(--text-3)}
+.row .lang{color:var(--text-2);border:1px solid var(--border-strong);border-radius:3px;padding:0 4px;text-transform:uppercase}
+.row .out{margin-left:auto;color:var(--text-2)}
+.row .copies{display:inline-flex;align-items:center;gap:6px;margin-top:6px;height:22px;padding:0 8px;border:1px solid var(--border-strong);border-radius:11px;background:var(--surface-2);font:500 11px/14px var(--f-mono);letter-spacing:.04em;color:var(--text-2)}
+.row .copies::before{content:"";width:8px;height:8px;border:1px solid var(--text-3);box-shadow:2px -2px 0 -1px var(--surface-2),2px -2px 0 0 var(--text-3)}
+.row .gloss{margin-top:2px;font:400 14px/21px var(--f-ui);color:var(--text-2)}
+.mark{font:500 10px/14px var(--f-mono);letter-spacing:.05em;color:var(--text-3);border-bottom:1px dotted var(--text-3);margin-left:6px;white-space:nowrap}
+.group{display:flex;align-items:center;gap:10px;padding:9px 16px;border-top:1px solid #151b23;font:550 13px/18px var(--f-ui);color:var(--text-1)}
+.group .sw{width:14px;height:14px;border-radius:3px;background:rgba(249,190,120,.28);box-shadow:0 0 6px rgba(249,190,120,.45);flex:none}
+.group small{font:500 11px/14px var(--f-mono);letter-spacing:.05em;color:var(--text-3);text-transform:uppercase}
+.group .n{margin-left:auto;font:450 12px/16px var(--f-mono);color:var(--text-2)}
+.group .car{color:var(--text-3);font:500 11px/14px var(--f-mono)}
+.sect{padding:10px 16px 6px;border-top:1px solid var(--border-subtle);font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.panel footer{margin-top:auto;display:flex;gap:14px;padding:9px 16px;border-top:1px solid var(--border-subtle);font:450 12px/16px var(--f-ui);color:var(--text-3)}
+.more{margin:8px 16px 10px;height:32px;display:flex;align-items:center;justify-content:center;border:1px solid var(--border-control);border-radius:6px;font:550 13px/18px var(--f-ui);color:var(--text-1)}
+
+/* map chrome */
+.legend{position:absolute;z-index:3;background:rgba(13,18,25,.94);border:1px solid var(--border-subtle);border-radius:8px;padding:10px 12px;font:450 12px/16px var(--f-ui);color:var(--text-2);width:292px}
+.legend h4{margin:0 0 7px;font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.legend .li{display:flex;gap:9px;align-items:flex-start;margin-top:5px}
+.legend .li b{color:var(--text-1);font-weight:550}
+.legend .k{flex:none;width:16px;height:16px;display:grid;place-items:center;margin-top:0}
+.k.disc::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--att-3);box-shadow:0 0 7px 2px rgba(249,190,120,.75)}
+.k.tint::before{content:"";width:14px;height:12px;border-radius:3px;background:rgba(249,190,120,.3);filter:blur(1.2px)}
+.k.none::before{content:"";width:8px;height:8px;border-radius:50%;border:1px dashed var(--text-3)}
+.ramp{height:8px;border-radius:4px;margin-top:9px;background:linear-gradient(90deg,var(--att-0),var(--att-1),var(--att-2),var(--att-3))}
+.ramp.exp{background:linear-gradient(90deg,var(--exp-over),var(--exp-over2),var(--exp-mid),var(--exp-under2),var(--exp-under))}
+.rampl{display:flex;justify-content:space-between;margin-top:3px;font:500 10px/14px var(--f-mono);letter-spacing:.04em;text-transform:uppercase;color:var(--text-3)}
+.ctrl{position:absolute;z-index:3;display:flex;flex-direction:column;border:1px solid var(--border-control);border-radius:8px;overflow:hidden;background:rgba(13,18,25,.94)}
+.ctrl span{width:36px;height:36px;display:grid;place-items:center;font:450 17px/1 var(--f-ui);color:var(--text-1);border-bottom:1px solid var(--border-strong)}
+.ctrl span:last-child{border-bottom:0}
+.attrib{position:absolute;z-index:3;font:450 11px/14px var(--f-ui);color:var(--text-3);background:rgba(7,10,16,.8);padding:3px 8px;border-radius:4px}
+.hud{position:absolute;z-index:3;font:450 12px/16px var(--f-mono);color:var(--lens-300);font-variant-numeric:tabular-nums;white-space:nowrap;background:rgba(7,10,16,.78);border-radius:4px;padding:2px 7px}
+.hud small{color:var(--text-3);font:500 10px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;margin-left:6px}
+.note{position:absolute;z-index:6;font:450 11px/15px var(--f-ui);color:#0b0f14;background:var(--warning);border-radius:4px;padding:3px 7px}
+
+.board{position:absolute;inset:0;background:var(--canvas)}
+.col{position:absolute;top:22px;width:360px}
+.col h3{margin:0 0 3px;font:550 13px/18px var(--f-ui);color:var(--text-1)}
+.col p.sub{margin:0 0 10px;font:450 12px/16px var(--f-ui);color:var(--text-3);height:32px}
+.panel.free{position:relative;left:auto;top:auto;bottom:auto;width:360px;border:1px solid var(--border-subtle);border-radius:8px;overflow:hidden;background:var(--surface-1)}
+.panel.free ul.rows{flex:none}
+.flag{display:inline-block;margin-top:6px;font:450 11px/15px var(--f-ui);color:var(--warning);border:1px solid #6b5320;border-radius:4px;padding:2px 6px}
+.flag::before{content:"▲ ";font-size:9px}
+.sub2{padding:2px 16px 10px 40px}
+.sub2 .o{display:flex;justify-content:space-between;font:450 12px/20px var(--f-mono);color:var(--text-2)}
+.sub2 .o span:last-child{color:var(--text-3)}
+.copies.open{border-color:var(--lens-700)!important;color:var(--text-1)!important}
+.group.open{background:var(--surface-2)}
+.inset{background:#0A0F15;border-top:1px solid #151b23}
+.inset .row{padding-left:40px}
+.mini{font:450 12px/16px var(--f-ui);color:var(--text-3);padding:8px 16px 10px 40px}
+.state{border-top:1px solid var(--border-subtle);padding:12px 16px}
+.state .lab{font:500 10px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--lens-300);margin-bottom:7px}
+.state p{margin:0;font:400 14px/21px var(--f-ui);color:var(--text-2)}
+.state p b{color:var(--text-1);font-weight:550}
+.btn{display:inline-flex;align-items:center;height:32px;padding:0 12px;border:1px solid var(--border-control);border-radius:6px;font:550 13px/18px var(--f-ui);color:var(--text-1);margin-top:8px}
+.scan{display:flex;align-items:center;gap:8px;font:500 11px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--lens-300)}
+.scan i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--lens-500);box-shadow:0 0 0 4px rgba(195,243,68,.12),0 0 0 9px rgba(195,243,68,.05)}
+.frozen{opacity:.42}
+.sk{height:12px;border-radius:3px;background:linear-gradient(90deg,#141A22,#1C232C,#141A22);margin:6px 0}
+.anno{position:absolute;left:1176px;top:22px;width:240px}
+.anno h3{margin:0 0 8px;font:550 13px/18px var(--f-ui)}
+.anno dl{margin:0}
+.anno dt{font:500 10px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--lens-300);margin-top:11px}
+.anno dd{margin:3px 0 0;font:450 12px/17px var(--f-ui);color:var(--text-2)}
+.anno code{font:450 11px/16px var(--f-mono);color:var(--text-1);background:var(--surface-2);border-radius:3px;padding:0 3px}
+.tok{position:absolute;left:28px;right:28px;bottom:20px;height:150px;border:1px solid var(--border-subtle);border-radius:8px;background:var(--surface-1);padding:12px 16px;display:flex;gap:28px}
+.tok h4{margin:0 0 8px;font:500 10px/14px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--text-3)}
+.sws{display:flex;gap:6px}
+.sw2{width:36px}
+.sw2 i{display:block;height:34px;border-radius:5px;border:1px solid rgba(255,255,255,.08)}
+.sw2 span{display:block;margin-top:4px;font:450 9px/12px var(--f-mono);color:var(--text-3);white-space:nowrap;overflow:hidden}
+.spec{display:flex;flex-direction:column;gap:5px;color:var(--text-1)}
+.spec span{white-space:nowrap}
+.spec small{font:450 10px/12px var(--f-mono);color:var(--text-3);margin-left:8px}
+.prims{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.prims span{font:500 10px/14px var(--f-mono);letter-spacing:.05em;border:1px solid var(--border-strong);border-radius:3px;padding:1px 6px;color:var(--text-2)}
+</style>
+</head>
+<body>
+<div class="doc"><b>Frame 2 · The Lens list</b><span class="tag p1">P1 scope</span><span class="tag ">1440 × 900 board</span><span>Design frame, not the running app. Synthetic headlines and outlets; every readout is illustrative.</span><span class="spacer"></span><a href="index.html">← all frames</a></div>
+<div class="stage"><div class="fitbox"><div class="fit" data-w="1440" data-h="900" style="width:1440px;height:900px">
+
+<div class="frame" style="width:1440px;height:900px"><div class="board">
+
+<div class="col" style="left:28px">
+  <h3>A · Settled: every script, its own direction</h3>
+  <p class="sub">Titles keep their language tag and direction; outlet and time sit in &lt;bdi&gt; so they never reorder.</p>
+  <aside class="panel free">
+    <div class="listhead"><span>Headlines · newest first</span><span>50 of 214</span></div>
+    <ul class="rows"><li class="row "><a class="title" lang="ar" dir="auto">مجلس المدينة يقر خطة جديدة لإمدادات المياه</a><div class="meta"><span class="lang">ar</span><bdi>akhbar-alnil.example</bdi><bdi>14:02</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="hi" dir="auto">नगर निगम ने सर्दियों के लिए नई बस सेवा शुरू की</a><div class="meta"><span class="lang">hi</span><bdi>nagar-samachar.example</bdi><bdi>13:57</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="zh" dir="auto">市政府公布冬季供暖时间表</a><div class="meta"><span class="lang">zh</span><bdi>chengshi-ribao.example</bdi><bdi>13:49</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="he" dir="auto">מועצת העיר אישרה תוכנית חדשה לתחבורה ציבורית</a><div class="meta"><span class="lang">he</span><bdi>yom-ba-ir.example</bdi><bdi>13:44</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="uk" dir="auto">Міська рада затвердила графік опалення на зиму</a><div class="meta"><span class="lang">uk</span><bdi>kyiv-visnyk.example</bdi><bdi>13:40</bdi><span class="out" aria-hidden="true">↗</span></div><span class="copies">+11 copies · 4 outlets</span></li><li class="row"><a class="title" lang="ar" dir="auto">ACME تعلن عن افتتاح مصنع جديد في المنطقة الصناعية</a><div class="meta"><span class="lang">ar</span><bdi>souq-alyoum.example</bdi><bdi>13:36</bdi><span class="out">↗</span></div><span class="flag">P1 limit: starts with a Latin name, so dir="auto" lays it out left to right. P2 takes direction from the language.</span></li></ul>
+  </aside>
+</div>
+
+<div class="col" style="left:412px">
+  <h3>B · Expanded: copies, and a country group</h3>
+  <p class="sub">Exact copies collapse under one row. Country-level coverage is one group per country, loaded only when opened.</p>
+  <aside class="panel free">
+    <ul class="rows"><li class="row"><a class="title" lang="uk" dir="auto">Міська рада затвердила графік опалення на зиму</a><div class="meta"><span class="lang">uk</span><bdi>kyiv-visnyk.example</bdi><bdi>14:02</bdi><span class="out">↗</span></div><span class="copies open">+11 copies · 4 outlets ▾</span></li></ul>
+    <div class="sub2"><div class="o"><bdi>kyiv-visnyk.example</bdi><span>× 5 · first 13:31</span></div><div class="o"><bdi>stolytsia-24.example</bdi><span>× 3 · first 13:38</span></div><div class="o"><bdi>pivnich-info.example</bdi><span>× 2 · first 13:44</span></div><div class="o"><bdi>regional-wire.example</bdi><span>× 1 · 13:52</span></div></div>
+    <div class="sect">Country-level coverage · never drawn as points</div>
+    <div class="group open"><span class="sw"></span><span>Sudan <small>· country-level</small></span><span class="n">214</span><span class="car">▾</span></div>
+    <div class="inset"><ul class="rows"><li class="row "><a class="title" lang="ar" dir="auto">هيئة الأرصاد تتوقع أمطاراً خفيفة هذا الأسبوع</a><div class="meta"><span class="lang">ar</span><bdi>akhbar-alnil.example</bdi><bdi>13:55</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="en" dir="auto">National grain board sets out the season’s buying plan</a><div class="meta"><span class="lang">en</span><bdi>sudan-bulletin.example</bdi><bdi>13:41</bdi><span class="out" aria-hidden="true">↗</span></div></li><li class="row "><a class="title" lang="fr" dir="auto">Le ministère publie le calendrier scolaire de l’année</a><div class="meta"><span class="lang">fr</span><bdi>courrier-du-nil.example</bdi><bdi>13:20</bdi><span class="out" aria-hidden="true">↗</span></div></li></ul><div class="mini">Showing 3 of 214 · newest first</div></div>
+    <div class="more" style="margin-top:10px">Load older</div>
+  </aside>
+</div>
+
+<div class="col" style="left:796px">
+  <h3>C · While dragging, and the plain P1 states</h3>
+  <p class="sub">The list freezes during a drag and re-ranks on settle. P1 ships these states as plain text; P2 designs them fully.</p>
+  <aside class="panel free">
+    <div class="state" style="border-top:0">
+      <div class="lab">Dragging</div>
+      <div class="scan"><i></i>Scanning · list held</div>
+      <ul class="rows frozen" style="margin:6px -16px 0"><li class="row "><a class="title" lang="ru" dir="auto">Синоптики обещают первый снег к концу недели</a><div class="meta"><span class="lang">ru</span><bdi>pogoda-segodnya.example</bdi><bdi>13:58</bdi><span class="out" aria-hidden="true">↗</span></div></li></ul>
+    </div>
+    <div class="state"><div class="lab">Loading, after 1 s</div><div class="sk" style="width:92%"></div><div class="sk" style="width:64%"></div><div class="sk" style="width:38%;height:9px"></div></div>
+    <div class="state"><div class="lab">Empty</div><p><b>No located coverage here in 24 h.</b></p></div>
+    <div class="state"><div class="lab">Fetch failed</div><p><b>Couldn’t load the latest data.</b> Showing data from 13:45.</p><span class="btn">Retry</span></div>
+    <div class="state"><div class="lab">Stale, over 45 min</div><span class="badge warn" style="height:auto;padding:6px 10px;white-space:normal;text-transform:none;letter-spacing:0;font:450 12px/16px var(--f-ui)"><span class="dot" style="flex:none"></span>GDELT hasn’t published since 14:00 UTC; showing the last good data</span></div>
+    <div class="state"><div class="lab">No WebGL2</div><p>The SVG globe stays, with this list.</p></div>
+  </aside>
+</div>
+
+<div class="anno">
+  <h3>Row anatomy</h3>
+  <dl>
+    <dt>Title</dt><dd>Noto Serif 15/21 (16/23 on phones), in the original script. <code>lang</code> from the source language; <code>dir="auto"</code> in P1. The whole title is the link out.</dd>
+    <dt>Meta line</dt><dd>JetBrains Mono 500 caps 11/14: language · outlet · time, each in <code>&lt;bdi&gt;</code>. Time is the reader’s zone, UTC on hover.</dd>
+    <dt>Copies chip</dt><dd>“+11 copies · 4 outlets”. Counts are over the rows the Lens has loaded for this place.</dd>
+    <dt>Country group</dt><dd>One row per country or region the ring touches, with its count. Never a point on the map.</dd>
+    <dt>Keys</dt><dd>↑ ↓ move through rows, Enter opens the article, arrow keys on the globe move the ring.</dd>
+    <dt>Targets</dt><dd>Every control is at least 32 px tall.</dd>
+    <dt>Primitives</dt><dd><div class="prims"><span>Panel</span><span>Chip</span><span>Badge</span><span>ListRow</span><span>Readout</span></div></dd>
+    <dt>Not in P1</dt><dd>English glosses and source marks (P2), story groups (P2), window chips (P2).</dd>
+  </dl>
+</div>
+
+
+<div class="tok">
+  <div><h4>Surfaces and text</h4><div class="sws">
+    <div class="sw2"><i style="background:#030509"></i><span>void</span></div><div class="sw2"><i style="background:#070A10"></i><span>canvas</span></div>
+    <div class="sw2"><i style="background:#0D1219"></i><span>surf-1</span></div><div class="sw2"><i style="background:#141A22"></i><span>surf-2</span></div><div class="sw2"><i style="background:#1C232C"></i><span>surf-3</span></div>
+    <div class="sw2"><i style="background:#EBEFF4"></i><span>text-1</span></div><div class="sw2"><i style="background:#B4BBC5"></i><span>text-2</span></div><div class="sw2"><i style="background:#8A939F"></i><span>text-3</span></div>
+  </div></div>
+  <div><h4>Lens, the only accent · status</h4><div class="sws">
+    <div class="sw2"><i style="background:#DEFF87"></i><span>l-300</span></div><div class="sw2"><i style="background:#C3F344"></i><span>l-500</span></div><div class="sw2"><i style="background:#759B21"></i><span>l-700</span></div><div class="sw2"><i style="background:#233407"></i><span>l-900</span></div>
+    <div class="sw2"><i style="background:#FCB442"></i><span>warn</span></div><div class="sw2"><i style="background:#FB575D"></i><span>danger</span></div>
+  </div></div>
+  <div><h4>Attention ramp · basemap</h4><div class="sws">
+    <div class="sw2"><i style="background:#1A2029"></i><span>att-0</span></div><div class="sw2"><i style="background:#8A6A3E"></i><span>att-1</span></div><div class="sw2"><i style="background:#F9BE78"></i><span>att-2</span></div><div class="sw2"><i style="background:#FFF1DC"></i><span>att-3</span></div>
+    <div class="sw2"><i style="background:#030910"></i><span>ocean</span></div><div class="sw2"><i style="background:#11181F"></i><span>land</span></div><div class="sw2"><i style="background:#2C3742"></i><span>coast</span></div>
+  </div></div>
+  <div style="flex:1"><h4>Type</h4><div class="spec">
+    <span class="t-headline">Kyiv Oblast<small>headline · Newsreader 500 · 22/28</small></span>
+    <span class="t-title">Міська рада затвердила<small>title · Noto Serif · 15/21</small></span>
+    <span class="t-body">Honesty: 31% country-level<small>body · Inter 400 · 14/21</small></span>
+    <span class="t-micro" style="color:var(--text-2)">In the Lens · 640 km<small style="text-transform:none;letter-spacing:0">micro · JetBrains Mono 500 caps · 11/14</small></span>
+  </div></div>
+</div>
+
+</div></div>
+
+</div></div></div>
+<div class="doc foot">Three states of the 360 px panel, the row’s anatomy, and the colour and type tokens P1 creates in packages/ui/tokens.css. Arabic and Hebrew rows are laid out right to left by the browser from the text itself. Colours, sizes and type are the plan’s §4 tokens. The named faces (Inter, JetBrains Mono, Newsreader, Noto Serif) are not embedded: this file falls back to system fonts, so letterforms differ from the target. Land and borders: Natural Earth (public domain), projected ahead of time. No network requests, no scripts beyond the fit-to-width helper.</div>
+
+<script>
+(function(){var d=document.documentElement,f=document.querySelector('.fit');if(!f)return;
+var bare=/[?&]bare=1/.test(location.search);if(bare)d.classList.add('bare');
+var W=+f.dataset.w,H=+f.dataset.h,b=f.parentNode;
+function fit(){var s=bare?d.clientWidth/W:Math.min(1,(d.clientWidth-32)/W);f.style.transform='scale('+s+')';b.style.width=(W*s)+'px';b.style.height=(H*s)+'px';}
+fit();addEventListener('resize',fit);})();
+</script>
+
+</body>
+</html>
