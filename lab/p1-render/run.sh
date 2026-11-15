@@ -83,6 +83,12 @@ case "${1:-}" in
       echo "run.sh: NOT in the pinned state; results are labelled 'unpinned' and do not gate" >&2
     fi
     [ -f picks.json ] || die "picks.json is missing; run ./run.sh picks-list"
+    # One build (§5.1): the page is rebuilt from the checked-out commit, and that commit is in every result.
+    BUILD_OUT="$(node build.mjs 2>&1 | tail -1)"
+    echo "$BUILD_OUT"
+    case "$BUILD_OUT" in
+      *uncommitted*) [ "$LABEL" = unpinned ] || die "the page has uncommitted changes; commit them first, so the results name one commit" ;;
+    esac
     start_server
     # C1: basemap and discs, 300k, at the device's own pixel ratio. This is the gating run.
     orbit_five "${LABEL}-c1" "n=300000&${DESK}" "${GATING[@]}"
