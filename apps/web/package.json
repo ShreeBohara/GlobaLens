@@ -1,0 +1,14 @@
+{
+  "name": "@globalens/web",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The site: a Next.js static export with the persistent globe (P1 task 12).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

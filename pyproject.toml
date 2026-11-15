@@ -1,0 +1,43 @@
+# Root of the uv workspace. It is not a package: it only pulls every member and the shared
+# developer tools into one environment (.venv) under one lockfile (uv.lock).
+[project]
+name = "globalens-workspace"
+version = "0.0.0"
+description = "GlobaLens 3.0 Python workspace root"
+requires-python = ">=3.13,<3.14"
+dependencies = ["globalens-gdelt", "globalens-glcore", "globalens-worker"]
+
+[dependency-groups]
+dev = ["pytest==9.2.0", "ruff==0.17.4"]
+
+[tool.uv]
+package = false
+# Always a Python that uv installed itself, never one that happens to be on this machine.
+python-preference = "only-managed"
+# Supply-chain cooldown: never resolve a release newer than this date. Moved forward only by a
+# dependency pull request (docs/adr/0001-monorepo-and-toolchain.md).
+exclude-newer = "2026-11-08T00:00:00Z"
+
+[tool.uv.workspace]
+members = ["apps/worker", "packages/gdelt", "packages/glcore"]
+
+[tool.uv.sources]
+globalens-gdelt = { workspace = true }
+globalens-glcore = { workspace = true }
+globalens-worker = { workspace = true }
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib", "--strict-markers", "--strict-config"]
+
+[tool.pyright]
+typeCheckingMode = "strict"
+pythonVersion = "3.13"
+venvPath = "."
+venv = ".venv"

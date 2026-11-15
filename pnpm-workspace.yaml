@@ -1,0 +1,11 @@
+# Workspace members. Only the 3.0 folders: the v1 folders and lab/ are never part of the workspace.
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Supply-chain cooldown: a version must have been public for 7 days before pnpm will resolve it
+# (docs/adr/0001-monorepo-and-toolchain.md). Value in minutes.
+minimumReleaseAge: 10080
+
+# Fail the install when the running Node does not satisfy package.json "engines".
+engineStrict: true

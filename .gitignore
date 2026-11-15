@@ -30,3 +30,28 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# --- GlobaLens 3.0 ---
+
+# Claude Code: per-session worktrees and personal settings
+.claude/worktrees/
+.claude/settings.local.json
+
+# Turborepo and Next.js
+.turbo
+.next
+out
+coverage
+
+# Python
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+
+# OpenTofu
+.terraform
+*.tfstate
+*.tfstate.*
+*.tfplan
