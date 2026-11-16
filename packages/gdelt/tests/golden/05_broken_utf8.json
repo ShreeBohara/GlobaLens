@@ -1,0 +1,169 @@
+{
+  "rows": [
+    {
+      "record_id": "20260301120000-0",
+      "stream": "english",
+      "seq": 0,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/utf8/0",
+      "title": "Synthetic headline with a clean title",
+      "title_hash": "fe49a70bb7a9abe5",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-1",
+      "stream": "english",
+      "seq": 1,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/utf8/1",
+      "title": "Caf\ufffd owners meet in the old town",
+      "title_hash": "b03dcd107a385e31",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-2",
+      "stream": "english",
+      "seq": 2,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/utf8/2",
+      "title": "Truncated headline \ufffd",
+      "title_hash": "8b981b5274ff9199",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-3",
+      "stream": "english",
+      "seq": 3,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/utf8/3",
+      "title": "Synthetic headline with a clean title",
+      "title_hash": "fe49a70bb7a9abe5",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-7",
+      "stream": "english",
+      "seq": 7,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/utf8/7",
+      "title": "Synthetic headline with a clean title",
+      "title_hash": "fe49a70bb7a9abe5",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    }
+  ],
+  "quarantined": [
+    {
+      "line_no": 5,
+      "reason": "bad_utf8",
+      "bytes": 572
+    },
+    {
+      "line_no": 6,
+      "reason": "bad_utf8",
+      "bytes": 688
+    },
+    {
+      "line_no": 7,
+      "reason": "bad_utf8",
+      "bytes": 562
+    }
+  ],
+  "stats": {
+    "lines": 8,
+    "rows": 5,
+    "blank_lines": 0,
+    "quarantined": {
+      "bad_utf8": 3
+    },
+    "issues": {
+      "title_bad_utf8": 2
+    },
+    "unknown_srclc": {},
+    "malformed_share": 0.375
+  }
+}

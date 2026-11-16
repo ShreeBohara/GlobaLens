@@ -1,0 +1,490 @@
+{
+  "rows": [
+    {
+      "record_id": "20260301120000-0",
+      "stream": "english",
+      "seq": 0,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/0",
+      "title": "Synthetic location case 0",
+      "title_hash": "04e786925f7c4764",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 1,
+          "name": "France",
+          "country": "FR",
+          "adm1": "FR",
+          "adm2": "",
+          "lat": 46.0,
+          "lon": 2.0,
+          "feature_id": "FR",
+          "offset": 12
+        },
+        {
+          "geo_type": 4,
+          "name": "Paris, Ile-De-France, France",
+          "country": "FR",
+          "adm1": "FRA8",
+          "adm2": "75",
+          "lat": 48.8667,
+          "lon": 2.33333,
+          "feature_id": "-1456928",
+          "offset": 640
+        },
+        {
+          "geo_type": 4,
+          "name": "Marseille, Provence-Alpes-Cote D'azur, France",
+          "country": "FR",
+          "adm1": "FRB8",
+          "adm2": "13",
+          "lat": 43.3,
+          "lon": 5.4,
+          "feature_id": "-1449947",
+          "offset": 95
+        }
+      ],
+      "primary": {
+        "geo_type": 4,
+        "name": "Marseille, Provence-Alpes-Cote D'azur, France",
+        "country": "FR",
+        "adm1": "FRB8",
+        "lat": 43.3,
+        "lon": 5.4,
+        "feature_id": "-1449947",
+        "offset": 95,
+        "demoted": false,
+        "is_point": true
+      }
+    },
+    {
+      "record_id": "20260301120000-1",
+      "stream": "english",
+      "seq": 1,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/1",
+      "title": "Synthetic location case 1",
+      "title_hash": "49d5e3ab6a83ef5c",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 1,
+          "name": "Germany",
+          "country": "GM",
+          "adm1": "GM",
+          "adm2": "",
+          "lat": 51.0,
+          "lon": 9.0,
+          "feature_id": "GM",
+          "offset": 20
+        },
+        {
+          "geo_type": 5,
+          "name": "Bayern, Germany",
+          "country": "GM",
+          "adm1": "GM02",
+          "adm2": "",
+          "lat": 49.0,
+          "lon": 11.5,
+          "feature_id": "-1746443",
+          "offset": 200
+        }
+      ],
+      "primary": {
+        "geo_type": 5,
+        "name": "Bayern, Germany",
+        "country": "GM",
+        "adm1": "GM02",
+        "lat": null,
+        "lon": null,
+        "feature_id": "-1746443",
+        "offset": 200,
+        "demoted": false,
+        "is_point": false
+      }
+    },
+    {
+      "record_id": "20260301120000-2",
+      "stream": "english",
+      "seq": 2,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/2",
+      "title": "Synthetic location case 2",
+      "title_hash": "d87985c5ddcef976",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 1,
+          "name": "United States",
+          "country": "US",
+          "adm1": "US",
+          "adm2": "",
+          "lat": 39.828175,
+          "lon": -98.5795,
+          "feature_id": "US",
+          "offset": 5
+        },
+        {
+          "geo_type": 2,
+          "name": "Ohio, United States",
+          "country": "US",
+          "adm1": "USOH",
+          "adm2": "",
+          "lat": 40.3736,
+          "lon": -82.7755,
+          "feature_id": "OH",
+          "offset": 150
+        }
+      ],
+      "primary": {
+        "geo_type": 2,
+        "name": "Ohio, United States",
+        "country": "US",
+        "adm1": "USOH",
+        "lat": null,
+        "lon": null,
+        "feature_id": "OH",
+        "offset": 150,
+        "demoted": false,
+        "is_point": false
+      }
+    },
+    {
+      "record_id": "20260301120000-3",
+      "stream": "english",
+      "seq": 3,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/3",
+      "title": "Synthetic location case 3",
+      "title_hash": "d14f57a730f151db",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 1,
+          "name": "Japan",
+          "country": "JA",
+          "adm1": "JA",
+          "adm2": "",
+          "lat": 36.0,
+          "lon": 138.0,
+          "feature_id": "JA",
+          "offset": 44
+        },
+        {
+          "geo_type": 1,
+          "name": "Brazil",
+          "country": "BR",
+          "adm1": "BR",
+          "adm2": "",
+          "lat": -10.0,
+          "lon": -55.0,
+          "feature_id": "BR",
+          "offset": 18
+        }
+      ],
+      "primary": {
+        "geo_type": 1,
+        "name": "Brazil",
+        "country": "BR",
+        "adm1": "",
+        "lat": null,
+        "lon": null,
+        "feature_id": "BR",
+        "offset": 18,
+        "demoted": false,
+        "is_point": false
+      }
+    },
+    {
+      "record_id": "20260301120000-4",
+      "stream": "english",
+      "seq": 4,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/4",
+      "title": "Synthetic location case 4",
+      "title_hash": "fd4e6004324c1a6c",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-5",
+      "stream": "english",
+      "seq": 5,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/5",
+      "title": "Synthetic location case 5",
+      "title_hash": "9717155d9aaac824",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 3,
+          "name": "Austin, Texas, United States",
+          "country": "US",
+          "adm1": "USTX",
+          "adm2": "TX453",
+          "lat": 30.2672,
+          "lon": -97.7431,
+          "feature_id": "1384879",
+          "offset": 77
+        },
+        {
+          "geo_type": 3,
+          "name": "Dallas, Texas, United States",
+          "country": "US",
+          "adm1": "USTX",
+          "adm2": "TX113",
+          "lat": 32.7831,
+          "lon": -96.8067,
+          "feature_id": "1380944",
+          "offset": 77
+        }
+      ],
+      "primary": {
+        "geo_type": 3,
+        "name": "Austin, Texas, United States",
+        "country": "US",
+        "adm1": "USTX",
+        "lat": 30.2672,
+        "lon": -97.7431,
+        "feature_id": "1384879",
+        "offset": 77,
+        "demoted": false,
+        "is_point": true
+      }
+    },
+    {
+      "record_id": "20260301120000-6",
+      "stream": "english",
+      "seq": 6,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/6",
+      "title": "Synthetic location case 6",
+      "title_hash": "fcf9a5bb7b7288cd",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 2,
+          "name": "Texas, United States",
+          "country": "US",
+          "adm1": "USTX",
+          "adm2": "",
+          "lat": 31.106,
+          "lon": -97.6475,
+          "feature_id": "TX",
+          "offset": 120
+        },
+        {
+          "geo_type": 5,
+          "name": "Ontario, Canada",
+          "country": "CA",
+          "adm1": "CA08",
+          "adm2": "",
+          "lat": 50.0,
+          "lon": -85.0,
+          "feature_id": "-570406",
+          "offset": 90
+        }
+      ],
+      "primary": {
+        "geo_type": 5,
+        "name": "Ontario, Canada",
+        "country": "CA",
+        "adm1": "CA08",
+        "lat": null,
+        "lon": null,
+        "feature_id": "-570406",
+        "offset": 90,
+        "demoted": false,
+        "is_point": false
+      }
+    },
+    {
+      "record_id": "20260301120000-7",
+      "stream": "english",
+      "seq": 7,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/geo/7",
+      "title": "Synthetic location case 7",
+      "title_hash": "1331dbaff9f8c365",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [
+        {
+          "geo_type": 5,
+          "name": "Bayern, Germany",
+          "country": "GM",
+          "adm1": "GM02",
+          "adm2": "",
+          "lat": 49.0,
+          "lon": 11.5,
+          "feature_id": "-1746443",
+          "offset": 200
+        },
+        {
+          "geo_type": 1,
+          "name": "Germany",
+          "country": "GM",
+          "adm1": "GM",
+          "adm2": "",
+          "lat": 51.0,
+          "lon": 9.0,
+          "feature_id": "GM",
+          "offset": 20
+        },
+        {
+          "geo_type": 4,
+          "name": "Lyon, Rhone-Alpes, France",
+          "country": "FR",
+          "adm1": "FRB9",
+          "adm2": "69",
+          "lat": 45.75,
+          "lon": 4.85,
+          "feature_id": "-1445171",
+          "offset": 58
+        }
+      ],
+      "primary": {
+        "geo_type": 4,
+        "name": "Lyon, Rhone-Alpes, France",
+        "country": "FR",
+        "adm1": "FRB9",
+        "lat": 45.75,
+        "lon": 4.85,
+        "feature_id": "-1445171",
+        "offset": 58,
+        "demoted": false,
+        "is_point": true
+      }
+    }
+  ],
+  "quarantined": [],
+  "stats": {
+    "lines": 8,
+    "rows": 8,
+    "blank_lines": 0,
+    "quarantined": {},
+    "issues": {},
+    "unknown_srclc": {},
+    "malformed_share": 0.0
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "rows": [
+    {
+      "record_id": "20260301120000-0",
+      "stream": "english",
+      "seq": 0,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/world/2026/03/river-levels-rise",
+      "title": "River levels rise in the northern valley after a week of rain",
+      "title_hash": "a72c1b5983a5ff55",
+      "published_at": "2026-03-01T11:30:00+00:00",
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [
+        "NATURAL_DISASTER_FLOOD",
+        "TAX_FNCACT_MAYOR",
+        "WB_137_WATER"
+      ],
+      "locations": [
+        {
+          "geo_type": 4,
+          "name": "Lyon, Rhone-Alpes, France",
+          "country": "FR",
+          "adm1": "FRB9",
+          "adm2": "69",
+          "lat": 45.75,
+          "lon": 4.85,
+          "feature_id": "-1445171",
+          "offset": 58
+        },
+        {
+          "geo_type": 1,
+          "name": "France",
+          "country": "FR",
+          "adm1": "FR",
+          "adm2": "",
+          "lat": 46.0,
+          "lon": 2.0,
+          "feature_id": "FR",
+          "offset": 301
+        }
+      ],
+      "primary": {
+        "geo_type": 4,
+        "name": "Lyon, Rhone-Alpes, France",
+        "country": "FR",
+        "adm1": "FRB9",
+        "lat": 45.75,
+        "lon": 4.85,
+        "feature_id": "-1445171",
+        "offset": 58,
+        "demoted": false,
+        "is_point": true
+      }
+    },
+    {
+      "record_id": "20260301120000-1",
+      "stream": "english",
+      "seq": 1,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "harbor-gazette.example",
+      "url": "https://www.harbor-gazette.example/local/tide-gauges-budget",
+      "title": "Harbor council approves R&D budget for tide gauges",
+      "title_hash": "6b5976e48ec1924a",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [
+        "EPU_POLICY_BUDGET",
+        "TAX_FNCACT_COUNCIL"
+      ],
+      "locations": [
+        {
+          "geo_type": 3,
+          "name": "Austin, Texas, United States",
+          "country": "US",
+          "adm1": "USTX",
+          "adm2": "TX453",
+          "lat": 30.2672,
+          "lon": -97.7431,
+          "feature_id": "1384879",
+          "offset": 77
+        },
+        {
+          "geo_type": 2,
+          "name": "Texas, United States",
+          "country": "US",
+          "adm1": "USTX",
+          "adm2": "",
+          "lat": 31.106,
+          "lon": -97.6475,
+          "feature_id": "TX",
+          "offset": 120
+        },
+        {
+          "geo_type": 1,
+          "name": "United States",
+          "country": "US",
+          "adm1": "US",
+          "adm2": "",
+          "lat": 39.828175,
+          "lon": -98.5795,
+          "feature_id": "US",
+          "offset": 410
+        }
+      ],
+      "primary": {
+        "geo_type": 3,
+        "name": "Austin, Texas, United States",
+        "country": "US",
+        "adm1": "USTX",
+        "lat": 30.2672,
+        "lon": -97.7431,
+        "feature_id": "1384879",
+        "offset": 77,
+        "demoted": false,
+        "is_point": true
+      }
+    },
+    {
+      "record_id": "20260301120000-2",
+      "stream": "english",
+      "seq": 2,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/opinion/ferry-timetable/",
+      "title": "Opinion: why the ferry timetable matters",
+      "title_hash": "f8a9599df0832176",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    }
+  ],
+  "quarantined": [],
+  "stats": {
+    "lines": 3,
+    "rows": 3,
+    "blank_lines": 0,
+    "quarantined": {},
+    "issues": {},
+    "unknown_srclc": {},
+    "malformed_share": 0.0
+  }
+}

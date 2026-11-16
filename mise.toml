@@ -42,6 +42,11 @@ description = "Placeholder benchmark that proves the bench:<name> wiring. Add on
 depends = ["install"]
 run = "uv run --no-sync python bench/smoke.py"
 
+[tasks."bench:parse"]
+description = "GKG parse throughput on one core. Pass real GKG files or folders after --; without them it runs on synthetic rows."
+depends = ["install"]
+run = "uv run --no-sync python bench/parse_bench.py"
+
 [tasks."tofu:plan"]
 description = "Read-only plan of every stack under infra/live. Never applies."
 run = """
