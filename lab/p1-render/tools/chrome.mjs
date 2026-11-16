@@ -7,7 +7,12 @@
 //   --headless             headless Chrome (development only; never a gating run)
 //   --fullscreen           start in full screen (kiosk)
 //   --foreground           start Chrome through `open`, so its window comes to the front and has focus
-//                          (a run whose window is not focused is void, prereg §5.7)
+//                          (a run whose window is not focused is void, prereg §5.7). The script then
+//                          watches which application is frontmost: if it is not this Chrome for 4 s,
+//                          or this Chrome never comes to the front within 30 s, the run is logged as
+//                          void at once and Chrome is closed. A hidden page stops drawing and would
+//                          otherwise never report.
+//   --watch-front          the same watch without --foreground (for testing it)
 //   --cdp                  attach over the DevTools protocol (needed for the options below)
 //   --throttle <rate>      CPU throttling rate, e.g. 6 (the phone stand-in, prereg §6)
 //   --screenshot <file>    save a PNG when the page is done
@@ -18,7 +23,7 @@
 // A gating run uses none of --headless, --cdp, --throttle: Chrome is started plainly and the
 // script only watches the results folder, so nothing is attached to the page while it is timed.
 
-import { spawn } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -38,6 +43,7 @@ const size = opt('--size', '1512,945');
 const timeoutMs = Number(opt('--timeout', '180')) * 1000;
 const useCdp = flag('--cdp') || flag('--headless') || opt('--throttle') || opt('--screenshot') || opt('--eval');
 const waitFile = opt('--wait-file');
+const watchFront = flag('--foreground') || flag('--watch-front');
 
 const profile = mkdtempSync(path.join(os.tmpdir(), 'p1-render-chrome-'));
 const chromeArgs = [
@@ -109,6 +115,30 @@ async function connectCdp() {
 const newResultFile = () => (existsSync(RESULTS) ? readdirSync(RESULTS) : [])
   .find((f) => !before.has(f) && (!waitFile || f.includes(waitFile)));
 
+// The frontmost application's process id, and the process ids of the Chrome started here.
+const run = (cmd, argv) => { try { return execFileSync(cmd, argv, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }); } catch { return ''; } };
+function frontPid() {
+  const asn = /ASN:[0-9a-fx-]+:/i.exec(run('lsappinfo', ['front']))?.[0];
+  const m = asn && /pid"?\s*=\s*(\d+)/.exec(run('lsappinfo', ['info', '-only', 'pid', asn]));
+  return m ? Number(m[1]) : null;
+}
+const ourPids = () => new Set(run('pgrep', ['-f', profile]).split(/\s+/).filter(Boolean).map(Number));
+
+// Logs a void run through the collector, under the name the page itself would have used.
+async function postVoid(reason) {
+  const u = new URL(url), q = u.searchParams;
+  const stamp = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15);
+  const name = [`void-${q.get('mode') || 'page'}`, q.get('label'), q.get('n') ? `n${q.get('n')}` : null, q.get('run') ? `run${q.get('run')}` : null, stamp].filter(Boolean).join('-');
+  const body = { kind: q.get('mode'), void: true, reason, notedBy: 'tools/chrome.mjs', dateUtc: new Date().toISOString(), params: Object.fromEntries(q) };
+  try {
+    const r = await (await fetch(`${u.origin}/result?name=${encodeURIComponent(name)}`, { method: 'POST', body: JSON.stringify(body) })).json();
+    return r.file || `${name}.json`;
+  } catch {
+    writeFileSync(path.join(RESULTS, `${name}.json`), JSON.stringify(body, null, 1) + '\n');
+    return `${name}.json`;
+  }
+}
+
 try {
   let cdp = null;
   if (useCdp) {
@@ -119,8 +149,20 @@ try {
   }
   const t0 = Date.now();
   let outcome = null;
+  let seenInFront = false, notFrontSince = null, lastFrontCheck = 0;
   while (Date.now() - t0 < timeoutMs && !exited) {
     await sleep(500);
+    if (watchFront && Date.now() - lastFrontCheck >= 2000) {
+      lastFrontCheck = Date.now();
+      const pid = frontPid();
+      const inFront = pid !== null && ourPids().has(pid);
+      if (inFront) { seenInFront = true; notFrontSince = null; }
+      else if (seenInFront && pid !== null) notFrontSince ??= Date.now();
+      let reason = null;
+      if (notFrontSince && Date.now() - notFrontSince >= 4000) reason = 'another application came to the front, so the window was hidden or lost focus';
+      else if (!seenInFront && Date.now() - t0 >= 30000) reason = 'the window never came to the front within 30 s';
+      if (reason && !newResultFile()) { outcome = { resultFile: await postVoid(reason), void: reason }; break; }
+    }
     if (waitFile || !cdp) {
       const f = newResultFile();
       if (f) { outcome = { resultFile: f }; break; }

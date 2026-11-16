@@ -1,0 +1,6 @@
+2026-11-16T00:18:41Z ready: starting far side, labels and picks (c4 c5 c3) (load average { 5.27 4.89 4.74 })
+page commit: e379173
+00:18:43 desktop-c4 run 1: mode=farside&n=300000&w=1440&h=900
+{  "timeout": true } 
+run.sh: the page did not finish in time; see data/.server.log
+2026-11-16T00:33:44Z far side, labels and picks (c4 c5 c3) ended with exit code 1
