@@ -6,6 +6,7 @@
 #   ./run.sh sample       build the point sample (downloads GDELT files; about 3.3 GB under data/)
 #   ./run.sh picks-list   make the pick list (once; refuses to overwrite picks.json)
 #   ./run.sh desktop      the desktop half: C1 (orbit), C3 (picks), C4 (far side), C5 (labels)
+#   ./run.sh desktop <steps>   only some of its steps, in the order given: c1 dpr1.5 arcs-labels c4 c5 c3
 #   ./run.sh standin      the phone stand-in: 100k points, 412 × 915 at pixel ratio 2.625, 6× CPU throttle
 #   ./run.sh projtile     the projectTile() smoke test (§5.6)
 #   ./run.sh preview      one full pass of every check, in any machine state; never a gating run
@@ -17,6 +18,9 @@
 # Close other applications first; the script cannot do that for you. Chrome opens in full screen on
 # the built-in display and must be left alone until the suite ends (about 1 h 45 min).
 # Set SPIKE_ALLOW_UNPINNED=1 to run it anyway; every result is then labelled "unpinned" and does not gate.
+# Set SPIKE_RUNS to choose the run names of a step, for example SPIKE_RUNS="2b 3b 4 5" to repeat a void
+# run 2 and a run 3 that gave no result and then finish the five. A repeat gets its own name, so the
+# void run's file stays beside it (§5.7).
 
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -55,11 +59,14 @@ open_page() {
   esac
 }
 
+RUNS5="${SPIKE_RUNS:-1 2 3 4 5}"
+RUNS3="${SPIKE_RUNS:-1 2 3}"
 orbit_five() { # <label> <query> [options...]: five page loads, 60 s apart (§5.2)
-  local label="$1" query="$2"; shift 2
-  for k in 1 2 3 4 5; do
+  local label="$1" query="$2" first=1; shift 2
+  for k in $RUNS5; do
+    [ "$first" = 1 ] || sleep 60
+    first=0
     open_page "$label" "$k" "mode=orbit&${query}" --timeout 180 "$@"
-    [ "$k" = 5 ] || sleep 60
   done
 }
 
@@ -95,19 +102,28 @@ case "${1:-}" in
       echo "run.sh: NOT in the pinned state; results are labelled 'unpinned' and do not gate" >&2
     fi
     [ -f picks.json ] || die "picks.json is missing; run ./run.sh picks-list"
+    shift
+    STEPS="${*:-c1 dpr1.5 arcs-labels c4 c5 c3}"
+    for step in $STEPS; do
+      case "$step" in c1|dpr1.5|arcs-labels|c4|c5|c3) ;; *) die "unknown step '${step}'; the steps are c1 dpr1.5 arcs-labels c4 c5 c3" ;; esac
+    done
     build_clean
     start_server
-    # C1: basemap and discs, 300k, at the device's own pixel ratio. This is the gating run.
-    orbit_five "${LABEL}-c1" "n=300000&${DESK}" "${GATING[@]}"
-    # Reported, not gating: the battery tier's pixel ratio, and the scene with arcs and labels.
-    orbit_five "${LABEL}-dpr1.5" "n=300000&${DESK}&dpr=1.5" "${GATING[@]}"
-    orbit_five "${LABEL}-arcs-labels" "n=300000&${DESK}&arcs=1&labels=1" "${GATING[@]}"
-    # C4 and C5, three runs each.
-    for k in 1 2 3; do open_page "${LABEL}-c4" "$k" "mode=farside&n=300000&${DESK}" --timeout 900 "${GATING[@]}"; done
-    for k in 1 2 3; do open_page "${LABEL}-c5" "$k" "mode=labels&n=300000&${DESK}" --timeout 600 "${GATING[@]}"; done
-    # C3: the pick list, three runs.
-    for k in 1 2 3; do open_page "${LABEL}-c3" "$k" "mode=picks&n=300000&${DESK}" --timeout 3600 "${GATING[@]}"; done
-    echo "desktop suite finished; results are in results/"
+    for step in $STEPS; do
+      case "$step" in
+        # C1: basemap and discs, 300k, at the device's own pixel ratio. This is the gating run.
+        c1) orbit_five "${LABEL}-c1" "n=300000&${DESK}" "${GATING[@]}" ;;
+        # Reported, not gating: the battery tier's pixel ratio, and the scene with arcs and labels.
+        dpr1.5) orbit_five "${LABEL}-dpr1.5" "n=300000&${DESK}&dpr=1.5" "${GATING[@]}" ;;
+        arcs-labels) orbit_five "${LABEL}-arcs-labels" "n=300000&${DESK}&arcs=1&labels=1" "${GATING[@]}" ;;
+        # C4 and C5, three runs each.
+        c4) for k in $RUNS3; do open_page "${LABEL}-c4" "$k" "mode=farside&n=300000&${DESK}" --timeout 900 "${GATING[@]}"; done ;;
+        c5) for k in $RUNS3; do open_page "${LABEL}-c5" "$k" "mode=labels&n=300000&${DESK}" --timeout 600 "${GATING[@]}"; done ;;
+        # C3: the pick list, three runs.
+        c3) for k in $RUNS3; do open_page "${LABEL}-c3" "$k" "mode=picks&n=300000&${DESK}" --timeout 3600 "${GATING[@]}"; done ;;
+      esac
+    done
+    echo "desktop steps finished (${STEPS}); results are in results/"
     ;;
   standin)
     LABEL=standin-6x; is_pinned || LABEL=standin-6x-unpinned
