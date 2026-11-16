@@ -1,0 +1,26 @@
+{
+  "name": "globalens",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=26.13.0 <27"
+  },
+  "scripts": {
+    "lint": "uv run --no-sync ruff check .claude/hooks bench && uv run --no-sync ruff format --check .claude/hooks bench",
+    "typecheck": "pyright -p . .claude/hooks bench",
+    "test": "uv run --no-sync pytest .claude/hooks/tests"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.6",
+    "eslint": "10.14.0",
+    "globals": "17.14.0",
+    "pyright": "1.1.414",
+    "turbo": "2.11.10",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "5.1.0"
+  }
+}

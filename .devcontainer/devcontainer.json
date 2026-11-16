@@ -1,0 +1,17 @@
+{
+  "name": "GlobaLens 3.0",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "vscode",
+  "postCreateCommand": "mise trust && mise install && mise run install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "dbaeumer.vscode-eslint",
+        "ms-python.python"
+      ]
+    }
+  }
+}

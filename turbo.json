@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "globalDependencies": [
+    "eslint.config.js",
+    "mise.toml",
+    "pyproject.toml",
+    "tsconfig.base.json",
+    "uv.lock"
+  ],
+  "tasks": {
+    "lint": {},
+    "typecheck": {},
+    "test": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "e2e": {
+      "cache": false
+    },
+    "//#lint": {
+      "inputs": [".claude/hooks/**", "bench/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+    },
+    "//#typecheck": {
+      "inputs": [".claude/hooks/**", "bench/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+    },
+    "//#test": {
+      "inputs": [".claude/hooks/**", ".claude/settings.json", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+    }
+  }
+}

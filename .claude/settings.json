@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Bash(tofu apply *)",
+      "Bash(tofu destroy *)",
+      "Bash(tofu * apply)",
+      "Bash(tofu * apply *)",
+      "Bash(tofu * destroy)",
+      "Bash(tofu * destroy *)",
+      "Bash(terraform apply *)",
+      "Bash(terraform destroy *)",
+      "Bash(terraform * apply)",
+      "Bash(terraform * apply *)",
+      "Bash(terraform * destroy)",
+      "Bash(terraform * destroy *)",
+      "Bash(wrangler deploy *)",
+      "Bash(wrangler publish *)",
+      "Bash(wrangler rollback *)",
+      "Bash(wrangler versions deploy *)",
+      "Bash(wrangler versions upload *)",
+      "Bash(wrangler pages deploy *)",
+      "Bash(docker push *)",
+      "Bash(docker image push *)",
+      "Bash(docker compose push *)",
+      "Bash(docker * --push)",
+      "Bash(docker * --push *)",
+      "Bash(ssh *)",
+      "Bash(scp *)",
+      "Bash(sftp *)",
+      "Bash(mosh *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$|__(run_in_terminal|start_process|interact_with_process)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/deny_prod.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/usr/bin/python3 \"$CLAUDE_PROJECT_DIR/.claude/hooks/stop_check.py\"",
+            "timeout": 900
+          }
+        ]
+      }
+    ]
+  }
+}
