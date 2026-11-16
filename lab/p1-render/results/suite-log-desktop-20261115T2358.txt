@@ -1,0 +1,21 @@
+2026-11-15T23:58:35Z ready: starting ./run.sh desktop (load average { 4.14 5.10 5.23 })
+page commit: ba391bb
+23:58:36 desktop-c1 run 1: mode=orbit&n=300000&w=1440&h=900
+{  "resultFile": "orbit-desktop-c1-n300000-run1-20261115T235942.json" } 
+00:00:44 desktop-c1 run 2: mode=orbit&n=300000&w=1440&h=900
+{  "resultFile": "orbit-desktop-c1-n300000-run2-20261116T000147.json" } 
+00:02:49 desktop-c1 run 3: mode=orbit&n=300000&w=1440&h=900
+{  "resultFile": "orbit-desktop-c1-n300000-run3-20261116T000352.json" } 
+00:04:54 desktop-c1 run 4: mode=orbit&n=300000&w=1440&h=900
+{  "resultFile": "orbit-desktop-c1-n300000-run4-20261116T000558.json" } 
+00:06:59 desktop-c1 run 5: mode=orbit&n=300000&w=1440&h=900
+{  "resultFile": "orbit-desktop-c1-n300000-run5-20261116T000802.json" } 
+00:08:04 desktop-dpr1.5 run 1: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run1-20261116T000908.json" } 
+00:10:09 desktop-dpr1.5 run 2: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run2-20261116T001114.json" } 
+00:12:16 desktop-dpr1.5 run 3: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "timeout": true } 
+run.sh: the page did not finish in time; see data/.server.log
+./run.sh: line 30: 85115 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-16T00:15:18Z the suite ended with exit code 1
