@@ -33,7 +33,8 @@ class Harness:
         self.project = root / "project"
         self.state = root / "state"
         self.fake = root / "fake"
-        for folder in (self.bin, self.project, self.fake):
+        self.empty = root / "empty"
+        for folder in (self.bin, self.project, self.fake, self.empty):
             folder.mkdir()
         mise = self.bin / "mise"
         mise.write_text(FAKE_MISE)
@@ -119,6 +120,7 @@ def test_sessions_are_counted_apart(harness: Harness) -> None:
 
 
 def test_blocks_when_mise_is_missing(harness: Harness) -> None:
-    output = harness.stop(path="/usr/bin:/bin")
+    # An empty folder as PATH: a system folder such as /usr/bin may hold a real mise.
+    output = harness.stop(path=str(harness.empty))
     assert output["decision"] == "block"
     assert "`mise` is not on PATH" in str(output["reason"])
