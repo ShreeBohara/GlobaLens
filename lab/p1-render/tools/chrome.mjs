@@ -53,7 +53,10 @@ const chromeArgs = [
 if (flag('--headless')) chromeArgs.push('--headless=new', '--hide-scrollbars');
 if (flag('--fullscreen')) chromeArgs.push('--kiosk');
 if (useCdp) chromeArgs.push('--remote-debugging-port=0');
-chromeArgs.push(useCdp ? 'about:blank' : url);
+// With the DevTools protocol the page is opened by Page.navigate, once the throttle is set. Chrome gives
+// the keyboard focus to the address bar when it starts on about:blank, and the page then never has the
+// focus, which voids the run (prereg §5.7). Starting on a plain file of the same origin gives it to the page.
+chromeArgs.push(!useCdp ? url : (flag('--foreground') ? new URL('/picks.json', url).href : 'about:blank'));
 
 const before = new Set(existsSync(RESULTS) ? readdirSync(RESULTS) : []);
 const foreground = flag('--foreground');
