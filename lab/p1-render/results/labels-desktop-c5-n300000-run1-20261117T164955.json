@@ -1,0 +1,212 @@
+{
+ "kind": "labels",
+ "state": {
+  "pageCommit": "232f507",
+  "url": "http://127.0.0.1:47173/?mode=labels&n=300000&w=1440&h=900&label=desktop-c5&run=1",
+  "dateUtc": "2026-11-17T16:49:55.116Z",
+  "versions": {
+   "maplibre": "6.18.0",
+   "deck": "9.4.1",
+   "flechette": "2.8.0"
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "webglRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M3 Pro, Unspecified Version)",
+  "webglVendor": "Google Inc. (Apple)",
+  "devicePixelRatio": 2,
+  "mapPixelRatio": 2,
+  "screen": {
+   "width": 1512,
+   "height": 982
+  },
+  "window": {
+   "innerWidth": 1512,
+   "innerHeight": 949
+  },
+  "viewport": {
+   "width": 1440,
+   "height": 900,
+   "clipped": false
+  },
+  "drawingBuffer": {
+   "width": 2880,
+   "height": 1800
+  },
+  "antialias": true,
+  "hardwareConcurrency": 11,
+  "deviceMemory": 16,
+  "battery": {
+   "charging": true,
+   "level": 1
+  },
+  "sample": {
+   "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8",
+   "bytes": 4801706,
+   "rows": 300000,
+   "languages": 64,
+   "decodeMs": 5.299999997019768
+  },
+  "params": {
+   "mode": "labels",
+   "n": 300000,
+   "w": 1440,
+   "h": 900,
+   "dpr": null,
+   "hide": true,
+   "billboard": false,
+   "arcs": false,
+   "labels": false,
+   "arcHeight": 0.3,
+   "discDepth": false,
+   "arcDepth": false,
+   "run": "1",
+   "label": "desktop-c5",
+   "standin": false,
+   "post": true
+  },
+  "cpuProbe": {
+   "ms": 15.7,
+   "check": 59628481636
+  },
+  "refresh": {
+   "medianIntervalMs": 8.300000000000011,
+   "hz": 120.48192771084321,
+   "frames": 122
+  },
+  "orbit": {
+   "zoom": 2.7398,
+   "targetDiameterPx": 810,
+   "limbDiameterPx": 809.9824104643159,
+   "globeRadiusPx": 544.3171966769046,
+   "cameraDistanceRadii": 3.480171503384142
+  }
+ },
+ "densest": {
+  "lon": -77.0363998413086,
+  "lat": 38.89509963989258,
+  "pointsInCell": 17847,
+  "pointsAtCoordinate": 17641
+ },
+ "failures": 0,
+ "threshold": "all of §5.5 items 1 and 2 at every camera, in each of three runs; item 3 is the label row of the far-side check",
+ "voidEvents": [],
+ "mapErrors": [],
+ "cameras": [
+  {
+   "zoom": 3,
+   "projection": "globe",
+   "expectedLabels": 209,
+   "returned": 209,
+   "returnedShare": 1,
+   "pixelsNoDiscs": 32194,
+   "pixelsDiscsBeneath": 33645,
+   "pixelsDiscsAbove": 13108,
+   "keptWithDiscsBeneath": 1.0450705100329254,
+   "withDefaultCollision": {
+    "pixels": 13568,
+    "queried": 68
+   },
+   "failures": []
+  },
+  {
+   "zoom": 10.5,
+   "projection": "morph",
+   "expectedLabels": 33,
+   "returned": 33,
+   "returnedShare": 1,
+   "pixelsNoDiscs": 1036,
+   "pixelsDiscsBeneath": 1042,
+   "pixelsDiscsAbove": 791,
+   "keptWithDiscsBeneath": 1.005791505791506,
+   "withDefaultCollision": {
+    "pixels": 442,
+    "queried": 2
+   },
+   "failures": []
+  },
+  {
+   "zoom": 11,
+   "projection": "morph",
+   "expectedLabels": 33,
+   "returned": 33,
+   "returnedShare": 1,
+   "pixelsNoDiscs": 1031,
+   "pixelsDiscsBeneath": 1035,
+   "pixelsDiscsAbove": 846,
+   "keptWithDiscsBeneath": 1.0038797284190106,
+   "withDefaultCollision": {
+    "pixels": 440,
+    "queried": 2
+   },
+   "failures": []
+  },
+  {
+   "zoom": 11.5,
+   "projection": "morph",
+   "expectedLabels": 33,
+   "returned": 33,
+   "returnedShare": 1,
+   "pixelsNoDiscs": 1034,
+   "pixelsDiscsBeneath": 1034,
+   "pixelsDiscsAbove": 840,
+   "keptWithDiscsBeneath": 1,
+   "withDefaultCollision": {
+    "pixels": 440,
+    "queried": 2
+   },
+   "failures": []
+  },
+  {
+   "zoom": 13,
+   "projection": "mercator",
+   "expectedLabels": 33,
+   "returned": 33,
+   "returnedShare": 1,
+   "pixelsNoDiscs": 1044,
+   "pixelsDiscsBeneath": 1047,
+   "pixelsDiscsAbove": 883,
+   "keptWithDiscsBeneath": 1.0028735632183907,
+   "withDefaultCollision": {
+    "pixels": 424,
+    "queried": 2
+   },
+   "failures": []
+  }
+ ],
+ "host": {
+  "label": "desktop-c5",
+  "notedUtc": "2026-11-17T16:49:44.912Z",
+  "model": "MacBook Pro",
+  "modelIdentifier": "Mac15,6",
+  "chip": "Apple M3 Pro",
+  "cores": "11 (5 Performance and 6 Efficiency)",
+  "memory": "18 GB",
+  "os": "macOS 27.0.1 (26A434)",
+  "chrome": "Google Chrome 157.0.8103.79",
+  "displays": [
+   {
+    "builtIn": true,
+    "pixels": "3024 x 1964",
+    "resolution": "1512 x 982 @ 120.00Hz",
+    "main": true,
+    "online": true
+   }
+  ],
+  "externalDisplayAttached": false,
+  "powerSource": "AC Power",
+  "batteryPercent": 100,
+  "lowPowerMode": false,
+  "thermal": {
+   "cpuSpeedLimit": null,
+   "schedulerLimit": null,
+   "noThermalWarning": true
+  },
+  "visibleApplications": 10,
+  "loadAverage": [
+   5.85,
+   9.52,
+   12.95
+  ],
+  "pinned": true
+ },
+ "receivedUtc": "2026-11-17T16:49:55.135Z"
+}
