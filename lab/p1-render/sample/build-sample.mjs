@@ -9,6 +9,13 @@
 //   data/sample-300k.arrow       the sample (Arrow IPC file)
 //   data/sample-record.json      what prereg §4.4 asks for
 //   data/sources.txt             one source file per line: URL, bytes, MD5
+//
+// The sample is pinned. sample/pinned.json holds the first run's UTC time, the days used and the
+// sample's SHA-256, and ../sample-sources.txt lists every source file with its size and MD5 in the
+// order they were read (both committed; prereg §4.4). With the pins present the script reads
+// exactly those files instead of GDELT's master lists, and it fails if the result differs, so a
+// fresh checkout rebuilds the sample the committed pick list was made on.
+// SAMPLE_FROM_LISTS=1 ignores the pins and follows the recipe from the master lists.
 
 import { createHash } from 'node:crypto';
 import { execFileSync, spawn } from 'node:child_process';
@@ -55,11 +62,19 @@ function stampsOf(day) {
   return out;
 }
 
+// The pins (see the top of this file). They are used whenever sample/pinned.json is there, unless
+// SAMPLE_FROM_LISTS=1; the source list it names must then be there too.
+const PINNED = path.join(HERE, 'pinned.json');
+const pins = !process.env.SAMPLE_FROM_LISTS && existsSync(PINNED) ? JSON.parse(readFileSync(PINNED, 'utf8')) : null;
+const PINNED_SOURCES = pins ? path.resolve(HERE, '..', pins.sources) : null;
+if (pins && !existsSync(PINNED_SOURCES)) throw new Error(`${PINNED_SOURCES} is missing; set SAMPLE_FROM_LISTS=1 to build from the master lists`);
+
 // "The most recent complete UTC day before the day the script first runs."
-// The first run's UTC date is kept, so a re-run rebuilds the same sample.
+// The first run's UTC date is kept, so a re-run rebuilds the same sample. The pinned date wins.
 const firstRunPath = path.join(DATA, 'first-run.json');
 let firstRun;
-if (existsSync(firstRunPath)) firstRun = JSON.parse(readFileSync(firstRunPath, 'utf8'));
+if (pins) firstRun = { firstRunUtc: pins.firstRunUtc };
+else if (existsSync(firstRunPath)) firstRun = JSON.parse(readFileSync(firstRunPath, 'utf8'));
 else {
   firstRun = { firstRunUtc: new Date().toISOString() };
   writeFileSync(firstRunPath, JSON.stringify(firstRun, null, 2) + '\n');
@@ -84,6 +99,25 @@ async function fetchListTail(listName) {
   }
   log(`${listName}: HTTP ${res.status}, ${text.length} bytes read, ${entries.size} entries`);
   return entries;
+}
+
+// The pinned source list in place of the master lists: one line per file, "URL bytes MD5".
+function listsFromPinnedSources(file, expectedSha256) {
+  const text = readFileSync(file, 'utf8');
+  const sha = createHash('sha256').update(text).digest('hex');
+  if (sha !== expectedSha256) throw new Error(`${file}: SHA-256 ${sha}, but pinned.json expects ${expectedSha256}`);
+  const lists = STREAMS.map(() => new Map());
+  for (const line of text.split('\n')) {
+    const p = line.trim().split(/\s+/);
+    if (p.length !== 3) continue;
+    const name = p[0].slice(p[0].lastIndexOf('/') + 1);
+    // The translated stream's suffix also ends in ".gkg.csv.zip", so it is tested first.
+    const si = name.endsWith(STREAMS[1].suffix) ? 1 : name.endsWith(STREAMS[0].suffix) ? 0 : -1;
+    if (si < 0) throw new Error(`${file}: not a GKG file: ${name}`);
+    lists[si].set(name, { listedUrl: p[0], bytes: +p[1], md5: p[2] });
+  }
+  log(`${path.basename(file)}: ${lists[0].size} English and ${lists[1].size} translated files, pinned`);
+  return lists;
 }
 
 // ---------- download ----------
@@ -240,8 +274,8 @@ function mulberry32(a) {
 
 // ---------- main ----------
 
-const lists = [];
-for (const s of STREAMS) lists.push(await fetchListTail(s.list));
+const lists = pins ? listsFromPinnedSources(PINNED_SOURCES, pins.sourcesSha256) : [];
+if (!pins) for (const s of STREAMS) lists.push(await fetchListTail(s.list));
 
 const rows = { lat: [], lon: [], lang: [], t: [] };
 const days = [];
@@ -291,6 +325,7 @@ try {
 
 const record = {
   firstRunUtc: firstRun.firstRunUtc,
+  pinned: Boolean(pins),
   builtUtc: new Date().toISOString(),
   script: 'lab/p1-render/sample/build-sample.mjs',
   commit,
@@ -317,3 +352,12 @@ writeFileSync(path.join(DATA, 'sample-record.json'), JSON.stringify(record, null
 writeFileSync(path.join(DATA, 'sources.txt'), days.flatMap((d) => d.sources).join('\n') + '\n');
 log(`wrote ${out}: ${TARGET} rows, ${bytes.length} bytes, sha256 ${sha256}`);
 log(`points before down-sampling: ${total}; days: ${record.daysUsed.join(', ')}`);
+if (pins) {
+  const sameDays = record.daysUsed.join(',') === pins.daysUsed.join(',');
+  if (!sameDays || sha256 !== pins.sha256) {
+    console.error(`the rebuilt sample differs from the pinned one (days ${record.daysUsed.join(', ')} against ${pins.daysUsed.join(', ')}; ` +
+      `SHA-256 ${sha256} against ${pins.sha256}). The committed pick list will not match it.`);
+    process.exit(1);
+  }
+  log('matches the pinned sample (sample/pinned.json), so the committed pick list matches it');
+}

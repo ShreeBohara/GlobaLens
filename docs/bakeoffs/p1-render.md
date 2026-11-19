@@ -6,6 +6,8 @@ The pre-registration is `lab/p1-render/prereg.md`; this note reports against it.
 
 **Sources.** The points are a sample of the GDELT Project's GKG 2.1. Source: The GDELT Project (https://www.gdeltproject.org/). The basemap, on the spike's page and in its pictures: OpenFreeMap © OpenMapTiles Data from OpenStreetMap. Both are listed in `prov/sources.yml`.
 
+**Rebuilding the sample.** The sample is not committed. On a fresh checkout `./run.sh build` and then `./run.sh sample` rebuild it from the 576 files listed in `lab/p1-render/sample-sources.txt`, with the first run's time and the hashes pinned in `lab/p1-render/sample/pinned.json`. The script stops with an error if the result differs from the recorded SHA-256, so the committed pick list always matches the sample it runs on.
+
 ## Desktop results, gating
 
 M3 Pro, built-in display at 120 Hz, external display disconnected, mains power, Chrome in full screen with a fresh profile, 300,000 points, 1440 × 900 CSS px.

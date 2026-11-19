@@ -3,7 +3,7 @@
 # "runs from lab/<id>/run.sh"). macOS + Google Chrome. Needs Node 20 or later.
 #
 #   ./run.sh build        install the pinned packages and bundle the page
-#   ./run.sh sample       build the point sample (downloads GDELT files; about 3.3 GB under data/)
+#   ./run.sh sample       rebuild the pinned point sample (sample/pinned.json; downloads 576 GDELT files, about 3.3 GB, under data/)
 #   ./run.sh picks-list   make the pick list (once; refuses to overwrite picks.json)
 #   ./run.sh desktop      the desktop half: C1 (orbit), C3 (picks), C4 (far side), C5 (labels)
 #   ./run.sh desktop <steps>   only some of its steps, in the order given: c1 dpr1.5 arcs-labels c4 c5 c3
