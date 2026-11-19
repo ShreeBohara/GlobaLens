@@ -19,13 +19,13 @@
       "cache": false
     },
     "//#lint": {
-      "inputs": [".claude/hooks/**", "bench/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+      "inputs": [".claude/hooks/**", "bench/**", "db/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
     },
     "//#typecheck": {
-      "inputs": [".claude/hooks/**", "bench/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+      "inputs": [".claude/hooks/**", "bench/**", "db/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
     },
     "//#test": {
-      "inputs": [".claude/hooks/**", ".claude/settings.json", "!**/__pycache__/**", "!**/.ruff_cache/**"]
+      "inputs": [".claude/hooks/**", ".claude/settings.json", "db/**", "prov/**", "!**/__pycache__/**", "!**/.ruff_cache/**"]
     }
   }
 }
