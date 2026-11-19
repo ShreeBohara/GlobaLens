@@ -1,0 +1,18 @@
+2026-11-17T17:54:42Z ready: phone stand-in, run 1b (load average { 2.92 2.85 3.30 })
+page commit: 68e3f9d
+17:54:43 standin-6x run 1b: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run1b-20261117T175549.json" } 
+./run.sh: line 34: 24664 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:55:50Z phone stand-in, run 1b ended with exit code 0
+2026-11-17T17:56:51Z ready: phone stand-in, runs 2b to 5b (load average { 3.43 3.18 3.38 })
+page commit: 68e3f9d
+17:56:52 standin-6x run 2b: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run2b-20261117T175757.json" } 
+17:58:58 standin-6x run 3b: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run3b-20261117T180003.json" } 
+18:01:05 standin-6x run 4b: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run4b-20261117T180210.json" } 
+18:03:12 standin-6x run 5b: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run5b-20261117T180419.json" } 
+./run.sh: line 34: 28575 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T18:04:20Z phone stand-in, runs 2b to 5b ended with exit code 0

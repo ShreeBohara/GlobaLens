@@ -355,3 +355,28 @@ Dated entries only, each with its reason.
 **The open method points (§10 points 2 and 9).** The owner was told on 15 November 2026 that points 2, 9 and 10 should be settled before any timed run, and answered: "Merge it, do it, whatever you want, and go ahead with the next step or phase." No point was changed. So the gating runs use the file as written: the device's own pixel ratio gates, with 1.5 reported beside it, and the desktop runs on the built-in display at 120 Hz with the external display disconnected and the Mac on mains power. This is recorded as going ahead on the file's proposals, not as the owner choosing each one.
 
 **What did not change.** Every threshold, the viewport, the orbit, the pick list, the stops and the repeats.
+
+### Amendment 5, 19 November 2026: the harness after the first gating runs, and where the runs departed
+
+**When.** Written on 19 November 2026, after every desktop run. The first gating measurement was C1, from 23:58 UTC on 15 November 2026 to 00:08 UTC on 16 November. The changes below were made after it, and every later run used them.
+
+**The page did not change.** Its source, the result collector and the pick list are identical at the three commits the results name: `ba391bb` (C1 and the first runs at pixel ratio 1.5), `232f507` (the runs of 17 November) and `68e3f9d` (the stand-in's repeats). Only the scripts that open Chrome and run the suite changed.
+
+**Why the harness changed.** On 16 November the suite ran while the Mac was in use. Each time Chrome went full screen, another application came back to the front within seconds. A hidden page gets no frame callbacks, so it neither finishes nor reports: run 2 at pixel ratio 1.5 was void, and run 3 and the first far-side run gave no result before the suite timed out.
+
+**What changed, in order.**
+
+1. **Chosen steps and run names** (`e379173`, 16 November, 00:17 UTC). `./run.sh desktop` takes the steps to run (`c1`, `dpr1.5`, `arcs-labels`, `c4`, `c5`, `c3`), and `SPIKE_RUNS` names a step's runs. A repeat gets a name of its own, such as run 2b, so the void run's file stays beside it, as §5.7 requires.
+2. **The driver watches the front application** (`232f507`, 16 November, 00:44 UTC). During a run `tools/chrome.mjs` checks every 2 s which application is in front. If another application has been in front for 4 s after this Chrome was, or this Chrome is not in front within 30 s of starting, the run is logged as void at once with that reason, and Chrome is closed. This applies a reason §5.7 already has, "the tab was hidden or lost focus", sooner. No reason was added.
+3. **The stand-in's start page** (`68e3f9d`, 17 November, 17:54 UTC). The stand-in attaches the DevTools protocol to apply the throttle. Chrome then started on a blank page, which left the keyboard focus in the address bar, and the stand-in's first five runs were void ("window not focused at start"). Chrome now starts on a plain file from the spike's own server and then loads the page, which gets the focus. The gating runs do not attach the DevTools protocol, so this change does not touch them. The five void runs are kept; the repeats are runs 1b to 5b.
+
+**How the runs of 17 November were started.** One at a time, by a script outside the repository. It waited until the Mac was in the pinned state (§5.2), no microphone was in use, no application was keeping the display awake, and there had been no keyboard or pointer input for 5 minutes. No gating run on 17 November was void.
+
+**Where the runs departed from this file.** Recorded here; the rules themselves are unchanged.
+
+- **Other applications were not closed** (§5.7). The host record counts 8 visible applications at the runs of 15–16 November and 10 on 17 November. The load average at the start of a gating run was 2.4 to 6.9. Load is not a reason to void a run. Other work competes with the page for the machine, so it is expected to lower a frame rate, not raise it.
+- **Chrome updated itself between sittings,** from 157.0.8103.52 (15–16 November) to 157.0.8103.79 (17 November). §5.7 asks for the version to be noted, and it is in every result; §5.8 does not fix it.
+- **The stand-in ran last.** §6 says it runs first, so that it can show a problem early. The desktop suite, which gates, was given the Mac's free time first, and the stand-in ran on 17 November after every desktop run. It could warn of nothing early, and its result is reported as it came.
+- The remaining gating checks (C4, C5 and C3) ran before the remaining reported runs. The file fixes no other order.
+
+**What did not change.** Every threshold, the point counts, the orbit, the pick list, the stops, the disc radius, the viewport, the display and its refresh rate, the gating pixel ratio, the repeats, the void reasons and the page.
