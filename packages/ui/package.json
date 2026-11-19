@@ -1,0 +1,14 @@
+{
+  "name": "@globalens/ui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Design tokens and UI primitives (P1 task 12).",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  }
+}

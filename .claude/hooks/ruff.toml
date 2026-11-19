@@ -1,0 +1,3 @@
+# The hooks run on the system python3, which may be as old as 3.9 (macOS command line tools).
+extend = "../../pyproject.toml"
+target-version = "py39"

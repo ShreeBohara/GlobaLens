@@ -1,0 +1,14 @@
+[project]
+name = "globalens-gdelt"
+version = "0.0.0"
+description = "GDELT GKG parser, language table and contracts (P1 task 9)."
+license = "Apache-2.0"
+requires-python = ">=3.13,<3.14"
+dependencies = ["globalens-glcore"]
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "gdelt"

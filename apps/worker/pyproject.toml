@@ -1,0 +1,14 @@
+[project]
+name = "globalens-worker"
+version = "0.0.0"
+description = "The ingest worker: poller, fenced ledger, publisher (P1 tasks 10 and 11)."
+license = "Apache-2.0"
+requires-python = ">=3.13,<3.14"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.13.7,<0.14"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "worker"

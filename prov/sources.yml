@@ -1,0 +1,102 @@
+# Every upstream dataset GlobaLens uses, with its licence.
+#
+# This file is the source of truth (master plan, Appendix D: "Every upstream dataset needs a
+# prov/sources.yml entry"). Two things are built from it:
+#   - the rows of the table prov.source: the seed inside db/migrations/0001_ingest.sql is
+#     generated from this file by db/seedgen.py, and a test fails when the two differ;
+#   - the /attributions page (Phase 1 task 17).
+#
+# Fields
+#   source_id         stable key, lower case; never renamed and never reused
+#   name, terms_url   for people and for /attributions; not columns of prov.source.
+#                     terms_url is the page the terms were read on
+#   licence           the licence or terms, by name
+#   redistribute_ok   may we pass the data on: host a copy, or publish it in a data product?
+#   share_alike       does the licence put share-alike terms on data derived from it?
+#   nc                is use limited to non-commercial purposes?
+#   attribution_text  the credit we show
+#   verified_on       the day the terms were last read on the source's own page
+#
+# The lineage gate (master plan §7, "Licences, column by column") refuses a CC BY 4.0 output
+# that traces to a source with redistribute_ok false, share_alike true or nc true. Where the
+# plan and the research do not settle a flag, the entry takes the value that blocks and says so.
+#
+# Each entry notes where its values come from. "The research" is docs/3.0/research/; its
+# data-sources.md was written on 2026-10-28 and marks with [V] what was read on the source's
+# own page that day, and its fact-check table re-read the main claims the same day. Nothing
+# here has been re-read since, so verified_on is that date for all four.
+
+sources:
+  # licence, redistribute_ok, nc: master plan §7, sources table ("Free incl. commercial; cite +
+  #   link"); the research's data-gdelt.md §(e): "unlimited and unrestricted use", redistributing
+  #   and rehosting allowed, "on condition of a citation to the GDELT Project plus a link to
+  #   gdeltproject.org". Confirmed on the about page in data-sources.md's fact-check (row 1) and
+  #   in data-gdelt.md's (row 8).
+  # share_alike: the terms name one condition, the citation and the link.
+  # attribution_text: holds the two things the terms require, the name and the link. The
+  #   wording is ours.
+  - source_id: gdelt-gkg-2.1
+    name: GDELT Global Knowledge Graph 2.1, English and translated streams
+    terms_url: https://www.gdeltproject.org/about.html
+    licence: GDELT Terms of Use
+    redistribute_ok: true
+    share_alike: false
+    nc: false
+    attribution_text: "Source: The GDELT Project (https://www.gdeltproject.org/)"
+    verified_on: 2026-10-28
+
+  # licence: the research's data-sources.md §1.4 ("Public domain. Attribution 'unnecessary'",
+  #   [V]); master plan §7, sources table ("public domain"). The three flags follow from it.
+  # attribution_text: none is required, but the column may not be empty and /attributions lists
+  #   every source, so this is a courtesy credit. The wording is ours.
+  - source_id: natural-earth
+    name: Natural Earth, country and first-level administrative boundaries
+    terms_url: https://www.naturalearthdata.com/about/terms-of-use/
+    licence: Public domain
+    redistribute_ok: true
+    share_alike: false
+    nc: false
+    attribution_text: Made with Natural Earth
+    verified_on: 2026-10-28
+
+  # licence: data-sources.md §1.4 ("ODbL Produced Work. OSM attribution required", [V]) and its
+  #   fact-check (row 9, read on docs.protomaps.com/basemaps/downloads); master plan §7, sources
+  #   table ("ODbL (attribution visible on the map, also in compact mode)").
+  # redistribute_ok: we host our own copy of the file, which is the use that research row
+  #   describes (master plan §4, "Basemap").
+  # share_alike: ODbL puts share-alike terms on derived databases (data-sources.md §1.4, the
+  #   Overture row: "Watch ODbL share-alike"), and master plan §7 keeps OSM/ODbL data out of
+  #   data products. true is the value that makes the lineage gate enforce that.
+  # nc: ODbL has no non-commercial term. The research names the non-commercial sources it
+  #   found (fact-check row 5), and this is not one of them.
+  # attribution_text: "© OpenStreetMap contributors" is the research's wording (data-sources.md
+  #   §2.5, item 5). The Protomaps credit is added because the plan lists it on /attributions.
+  #   The combined wording is ours.
+  - source_id: protomaps-basemap
+    name: Protomaps basemap (OpenStreetMap data), the world to zoom 6, hosted by us
+    terms_url: https://docs.protomaps.com/basemaps/downloads
+    licence: ODbL-1.0
+    redistribute_ok: true
+    share_alike: true
+    nc: false
+    attribution_text: "Protomaps © OpenStreetMap contributors"
+    verified_on: 2026-10-28
+
+  # licence: master plan §7, sources table, which puts "Protomaps and OpenFreeMap (OSM)" under
+  #   ODbL. The licence of the OpenMapTiles schema is not recorded in the plan or the research.
+  # attribution_text: the credit as data-sources.md §1.4 quotes it ([V]).
+  # nc: "commercial OK" (same row, and fact-check row 9, read on openfreemap.org).
+  # share_alike: as for the Protomaps entry.
+  # redistribute_ok: we never copy these tiles; the visitor's browser fetches them from
+  #   OpenFreeMap (zoom 7 to 14). Neither the plan nor the research says whether OpenFreeMap's
+  #   terms of service (https://openfreemap.org/tos/, not read) allow hosting a copy, so this
+  #   is the value that blocks until someone reads them.
+  - source_id: openfreemap
+    name: OpenFreeMap public tiles (OpenMapTiles schema, OpenStreetMap data), zoom 7 to 14
+    terms_url: https://openfreemap.org/
+    licence: ODbL-1.0
+    redistribute_ok: false
+    share_alike: true
+    nc: false
+    attribution_text: "OpenFreeMap © OpenMapTiles Data from OpenStreetMap"
+    verified_on: 2026-10-28

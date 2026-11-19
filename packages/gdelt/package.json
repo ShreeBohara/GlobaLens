@@ -1,0 +1,15 @@
+{
+  "name": "@globalens/gdelt",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Turborepo entry for the Python package globalens-gdelt. Dependencies live in pyproject.toml.",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@globalens/glcore": "workspace:*"
+  },
+  "scripts": {
+    "lint": "uv run --no-sync ruff check . && uv run --no-sync ruff format --check .",
+    "typecheck": "pyright -p ../.. .",
+    "test": "uv run --no-sync pytest"
+  }
+}

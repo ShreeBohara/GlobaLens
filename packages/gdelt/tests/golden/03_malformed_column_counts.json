@@ -1,0 +1,108 @@
+{
+  "rows": [
+    {
+      "record_id": "20260301120000-0",
+      "stream": "english",
+      "seq": 0,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/a",
+      "title": "First synthetic headline",
+      "title_hash": "245cde6afb611831",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-7",
+      "stream": "english",
+      "seq": 7,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "northern-courier.example",
+      "url": "https://northern-courier.example/b",
+      "title": "Last synthetic headline",
+      "title_hash": "b7714ca2d0bc34e5",
+      "published_at": null,
+      "srclc": null,
+      "lang": "en",
+      "lang_index": 0,
+      "translation_info": "",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    }
+  ],
+  "quarantined": [
+    {
+      "line_no": 2,
+      "reason": "column_count",
+      "bytes": 506
+    },
+    {
+      "line_no": 3,
+      "reason": "column_count",
+      "bytes": 546
+    },
+    {
+      "line_no": 4,
+      "reason": "column_count",
+      "bytes": 26
+    },
+    {
+      "line_no": 5,
+      "reason": "bad_record_id",
+      "bytes": 532
+    },
+    {
+      "line_no": 6,
+      "reason": "bad_date",
+      "bytes": 529
+    },
+    {
+      "line_no": 7,
+      "reason": "bad_date",
+      "bytes": 533
+    },
+    {
+      "line_no": 8,
+      "reason": "bad_record_id",
+      "bytes": 533
+    }
+  ],
+  "stats": {
+    "lines": 9,
+    "rows": 2,
+    "blank_lines": 0,
+    "quarantined": {
+      "bad_date": 2,
+      "bad_record_id": 2,
+      "column_count": 3
+    },
+    "issues": {},
+    "unknown_srclc": {},
+    "malformed_share": 0.777778
+  }
+}

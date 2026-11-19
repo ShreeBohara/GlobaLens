@@ -1,0 +1,69 @@
+# GlobaLens 3.0 toolchain and tasks. Versions and reasons: docs/adr/0001-monorepo-and-toolchain.md.
+# mise installs these tools under its own directory (~/.local/share/mise) the first time a task runs;
+# nothing is installed system-wide.
+
+min_version = "2025.4.0"
+
+# Python is not listed: uv installs it and pyproject.toml pins it (requires-python).
+[tools]
+node = "26.13.0"
+"npm:pnpm" = "12.18.0"
+uv = "0.13.7"
+opentofu = "1.13.9"
+dbmate = "2.37.0"
+age = "1.3.2"
+
+[tasks.install]
+description = "Install JavaScript and Python dependencies exactly as locked"
+run = ["pnpm install --frozen-lockfile", "uv sync --locked"]
+
+[tasks.check]
+description = "Lint, types and unit tests. The Stop hook and CI run this."
+depends = ["install"]
+run = "pnpm exec turbo run lint typecheck test"
+
+[tasks.test]
+description = "Every test suite: the unit tests, then the SQL tests, which need Docker."
+depends = ["install"]
+run = ["pnpm exec turbo run test", "uv run --no-sync pytest db/tests/pg"]
+
+[tasks."test:db"]
+description = "The SQL tests alone: db/migrations applied to a clean PostgreSQL 18 in a throwaway container."
+depends = ["install"]
+run = "uv run --no-sync pytest db/tests/pg"
+
+[tasks.dev]
+description = "Start the local stack. Nothing to start yet: each app's dev script arrives with the app."
+depends = ["install"]
+run = "pnpm exec turbo run dev"
+
+[tasks.e2e]
+description = "End-to-end tests. None yet: Playwright arrives with the P1 deploy task."
+depends = ["install"]
+run = "pnpm exec turbo run e2e"
+
+[tasks."bench:smoke"]
+description = "Placeholder benchmark that proves the bench:<name> wiring. Add one task per file in bench/."
+depends = ["install"]
+run = "uv run --no-sync python bench/smoke.py"
+
+[tasks."bench:parse"]
+description = "GKG parse throughput on one core. Pass real GKG files or folders after --; without them it runs on synthetic rows."
+depends = ["install"]
+run = "uv run --no-sync python bench/parse_bench.py"
+
+[tasks."tofu:plan"]
+description = "Read-only plan of every stack under infra/live. Never applies."
+run = """
+#!/usr/bin/env bash
+set -euo pipefail
+for dir in infra/live/*/; do
+  if ! compgen -G "${dir}*.tf" > /dev/null; then
+    echo "skip ${dir} (no .tf files yet)"
+    continue
+  fi
+  echo "== ${dir}"
+  tofu -chdir="${dir}" init -input=false -backend=false > /dev/null
+  tofu -chdir="${dir}" plan -input=false -lock=false
+done
+"""

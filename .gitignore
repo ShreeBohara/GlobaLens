@@ -31,5 +31,30 @@ dist-ssr
 *.sln
 *.sw?
 
+# --- GlobaLens 3.0 ---
+
+# Claude Code: per-session worktrees and personal settings
+.claude/worktrees/
+.claude/settings.local.json
+
+# Turborepo and Next.js
+.turbo
+.next
+out
+coverage
+
+# Python
+.venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+
+# OpenTofu
+.terraform
+*.tfstate
+*.tfstate.*
+*.tfplan
+
 # Render spike (lab/p1-render/prereg.md §4.3): the sample and its raw GDELT files are rebuilt, never committed
 lab/p1-render/data/
