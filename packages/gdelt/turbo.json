@@ -6,7 +6,8 @@
       "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/glcore/src/**/*.py"]
     },
     "test": {
-      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/glcore/src/**/*.py"]
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/packages/glcore/src/**/*.py"],
+      "env": ["GLOBALENS_FIXTURE_WEEK"]
     }
   }
 }
