@@ -25,6 +25,10 @@
 # data-sources.md was written on 2026-10-28 and marks with [V] what was read on the source's
 # own page that day, and its fact-check table re-read the main claims the same day. Nothing
 # here has been re-read since, so verified_on is that date for all four.
+#
+# The owner accepted all four entries as written on 19 November 2026: the credit lines worded
+# here, and the blocking values chosen where the sources say nothing. That acceptance is not a
+# re-read of the terms, so verified_on is unchanged.
 
 sources:
   # licence, redistribute_ok, nc: master plan §7, sources table ("Free incl. commercial; cite +
