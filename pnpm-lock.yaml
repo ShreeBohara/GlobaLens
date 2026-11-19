@@ -198,7 +198,11 @@ importers:
 
   apps/worker: {}
 
-  packages/gdelt: {}
+  packages/gdelt:
+    dependencies:
+      '@globalens/glcore':
+        specifier: workspace:*
+        version: link:../glcore
 
   packages/glcore: {}
 

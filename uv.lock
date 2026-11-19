@@ -26,6 +26,12 @@ wheels = [
 name = "globalens-gdelt"
 version = "0.0.0"
 source = { editable = "packages/gdelt" }
+dependencies = [
+    { name = "globalens-glcore" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "globalens-glcore", editable = "packages/glcore" }]
 
 [[package]]
 name = "globalens-glcore"

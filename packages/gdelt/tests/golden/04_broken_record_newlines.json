@@ -1,0 +1,115 @@
+{
+  "rows": [
+    {
+      "record_id": "20260301120000-T10",
+      "stream": "translated",
+      "seq": 10,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "valley-dispatch.test",
+      "url": "https://www.valley-dispatch.test/noticias/antes",
+      "title": "Título de teste: antes",
+      "title_hash": "37ec62d485548a47",
+      "published_at": null,
+      "srclc": "por",
+      "lang": "pt",
+      "lang_index": 46,
+      "translation_info": "srclc:por;eng:GT-POR 1.0",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-T11",
+      "stream": "translated",
+      "seq": 11,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "valley-dispatch.test",
+      "url": "https://www.valley-dispatch.test/noticias/cortado",
+      "title": null,
+      "title_hash": null,
+      "published_at": null,
+      "srclc": "por",
+      "lang": "pt",
+      "lang_index": 46,
+      "translation_info": "srclc:por;eng:GT-POR 1.0",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    },
+    {
+      "record_id": "20260301120000-T12",
+      "stream": "translated",
+      "seq": 12,
+      "stamp": "2026-03-01T12:00:00+00:00",
+      "outlet": "valley-dispatch.test",
+      "url": "https://www.valley-dispatch.test/noticias/depois",
+      "title": "Título de teste: depois",
+      "title_hash": "7d7ff97b5dcc31dd",
+      "published_at": null,
+      "srclc": "por",
+      "lang": "pt",
+      "lang_index": 46,
+      "translation_info": "srclc:por;eng:GT-POR 1.0",
+      "tone": [
+        -2.41545893719807,
+        1.93236714975845,
+        4.34782608695652,
+        6.28019323671498,
+        21.256038647343,
+        0.483091787439614,
+        186.0
+      ],
+      "themes": [],
+      "locations": [],
+      "primary": null
+    }
+  ],
+  "quarantined": [
+    {
+      "line_no": 4,
+      "reason": "column_count",
+      "bytes": 34
+    },
+    {
+      "line_no": 5,
+      "reason": "column_count",
+      "bytes": 69
+    },
+    {
+      "line_no": 6,
+      "reason": "column_count",
+      "bytes": 112
+    }
+  ],
+  "stats": {
+    "lines": 7,
+    "rows": 3,
+    "blank_lines": 1,
+    "quarantined": {
+      "column_count": 3
+    },
+    "issues": {
+      "title_missing": 1
+    },
+    "unknown_srclc": {},
+    "malformed_share": 0.5
+  }
+}
