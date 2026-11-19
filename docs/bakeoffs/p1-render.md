@@ -4,6 +4,8 @@
 
 The pre-registration is `lab/p1-render/prereg.md`; this note reports against it. Every number here comes from a file in `lab/p1-render/results/`, and `node lab/p1-render/tools/summarise.mjs desktop` prints the table again from those files.
 
+**Sources.** The points are a sample of the GDELT Project's GKG 2.1. Source: The GDELT Project (https://www.gdeltproject.org/). The basemap, on the spike's page and in its pictures: OpenFreeMap © OpenMapTiles Data from OpenStreetMap. Both are listed in `prov/sources.yml`.
+
 ## Desktop results, gating
 
 M3 Pro, built-in display at 120 Hz, external display disconnected, mains power, Chrome in full screen with a fresh profile, 300,000 points, 1440 × 900 CSS px.
