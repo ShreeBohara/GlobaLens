@@ -57,7 +57,9 @@ There was no bake-off, and no prior was written down before the first run, so no
 - `claude-review.yml`, on pull requests from this repository, not drafts and not bots. Without
   the secret it prints a notice and passes. It runs with `--max-turns 30` and
   `--max-budget-usd 5`, Claude Code's own telemetry off, and the repository's hooks off (they
-  run `mise run check`, which that job does not install). It is not part of `ci-ok`.
+  run `mise run check`, which that job does not install). The action keeps Claude's output out
+  of the public log, so when a review fails the job prints one field of it: the text of
+  Claude's final message, at most 500 characters, which says why. It is not part of `ci-ok`.
 
 **Rules every workflow keeps** (`.github/tests/test_workflows.py` checks them under `mise run
 check`; zizmor checks most of them again):
