@@ -1,0 +1,252 @@
+# Continuous integration for pull requests and the merge queue (P1 task 5, docs/adr/0011-ci-toolchain.md).
+#
+# `ci-ok` is the one check a ruleset requires. It runs even when a job it needs fails, and it
+# fails if any of them failed or was cancelled. A new job in this file must be added to its
+# `needs` (.github/tests/test_workflows.py checks that, and the other rules of this file).
+#
+# Waiting for P1 task 12, which builds apps/web and its static export: size-limit, the
+# third-party-script check, and the header and script-policy check on the built export.
+name: ci
+
+on:
+  pull_request:
+  merge_group:
+
+permissions: {}
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  # The devcontainer's mise (.devcontainer/Dockerfile; a test keeps the two equal). It installs
+  # the tools pinned in mise.toml.
+  # renovate: datasource=github-releases depName=jdx/mise extractVersion=^v(?<version>.+)$
+  MISE_VERSION: 2026.11.4
+  # renovate: datasource=pypi depName=zizmor
+  ZIZMOR_VERSION: 1.32.0
+  # renovate: datasource=github-releases depName=google/osv-scanner extractVersion=^v(?<version>.+)$
+  OSV_SCANNER_VERSION: 2.7.1
+  # No usage statistics from the tools: mise (its download counts), Turborepo, and the rest.
+  DO_NOT_TRACK: "1"
+  MISE_USE_VERSIONS_HOST_TRACK: "false"
+  TURBO_TELEMETRY_DISABLED: "1"
+
+jobs:
+  check:
+    name: lint, types and unit tests (affected)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          disable-telemetry: true
+          allowed-endpoints: >-
+            api.github.com:443
+            api.npmjs.org:443
+            api.osv.dev:443
+            endevco.github.io:443
+            files.pythonhosted.org:443
+            github.com:443
+            mise-versions.jdx.dev:443
+            mise.jdx.dev:443
+            nodejs.org:443
+            npm.jsr.io:443
+            objects.githubusercontent.com:443
+            pypi.org:443
+            registry.npmjs.org:443
+            release-assets.githubusercontent.com:443
+            releases.astral.sh:443
+            tuf-repo-cdn.sigstore.dev:443
+
+      - name: Check out the code and its history
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # --affected compares HEAD with the base commit, so the history between them must
+          # be here. A checkout too shallow for that makes Turborepo run every package.
+          fetch-depth: 0
+          filter: blob:none
+          persist-credentials: false
+
+      - name: Install mise and the tools pinned in mise.toml
+        uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
+        with:
+          version: ${{ env.MISE_VERSION }}
+          cache: false
+
+      - name: Install the dependencies exactly as locked (pnpm --frozen-lockfile, uv sync --locked)
+        run: mise run install
+
+      - name: Lint, types and unit tests of every package the change affects
+        env:
+          TURBO_SCM_BASE: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        run: mise exec -- pnpm exec turbo run lint typecheck test --affected
+
+  test:
+    # Every suite on both architectures: the unit tests, the GDELT contract tests among them,
+    # and the SQL tests against PostgreSQL 18 in a throwaway container (ADR-0007). The
+    # fixture-week check skips here: the real week stays on the owner's machine.
+    name: every test suite (${{ matrix.runner }})
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-24.04, ubuntu-24.04-arm]
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          disable-telemetry: true
+          allowed-endpoints: >-
+            api.github.com:443
+            api.npmjs.org:443
+            api.osv.dev:443
+            auth.docker.io:443
+            docker-images-prod.6aa30f8b08e16409b46e0173d6de2f56.r2.cloudflarestorage.com:443
+            endevco.github.io:443
+            files.pythonhosted.org:443
+            github.com:443
+            mise-versions.jdx.dev:443
+            mise.jdx.dev:443
+            nodejs.org:443
+            npm.jsr.io:443
+            objects.githubusercontent.com:443
+            production.cloudflare.docker.com:443
+            production.cloudfront.docker.com:443
+            pypi.org:443
+            registry-1.docker.io:443
+            registry.npmjs.org:443
+            release-assets.githubusercontent.com:443
+            releases.astral.sh:443
+            tuf-repo-cdn.sigstore.dev:443
+
+      - name: Check out the code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install mise and the tools pinned in mise.toml
+        uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
+        with:
+          version: ${{ env.MISE_VERSION }}
+          cache: false
+
+      - name: Install the dependencies exactly as locked (pnpm --frozen-lockfile, uv sync --locked)
+        run: mise run install
+
+      - name: Every test suite (mise run test)
+        run: mise run test
+
+  zizmor:
+    name: zizmor (no high finding)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          disable-telemetry: true
+          allowed-endpoints: >-
+            api.github.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            pypi.org:443
+
+      - name: Check out the code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Every finding becomes an annotation on the pull request, but only a high one fails the
+      # job (the plan's budget: zizmor 0 high).
+      - name: Every finding, reported without failing
+        uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
+        continue-on-error: true
+        with:
+          version: ${{ env.ZIZMOR_VERSION }}
+          advanced-security: false
+          annotations: true
+
+      - name: Fail on any high finding
+        uses: zizmorcore/zizmor-action@45d7276c9ca790aabd705e31ca99c6185c3e76dd # v0.8.1
+        with:
+          version: ${{ env.ZIZMOR_VERSION }}
+          advanced-security: false
+          min-severity: high
+
+  osv-scanner:
+    name: OSV-Scanner (uv.lock, pnpm-lock.yaml)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          disable-telemetry: true
+          allowed-endpoints: >-
+            api.github.com:443
+            api.osv.dev:443
+            github.com:443
+            mise-versions.jdx.dev:443
+            mise.jdx.dev:443
+            objects.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+            tuf-repo-cdn.sigstore.dev:443
+
+      - name: Check out the code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Install mise alone
+        uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
+        with:
+          version: ${{ env.MISE_VERSION }}
+          install: false
+          cache: false
+
+      # Run from outside the checkout, so mise installs OSV-Scanner alone and not the tools of
+      # mise.toml. The release is checked against its published checksums by mise's aqua backend.
+      # Exceptions, each dated and explained, are in .github/osv-scanner.toml.
+      - name: Scan both lockfiles for known vulnerabilities
+        working-directory: ${{ runner.temp }}
+        run: >-
+          mise exec "aqua:google/osv-scanner@${OSV_SCANNER_VERSION}" --
+          osv-scanner scan source
+          --config "${GITHUB_WORKSPACE}/.github/osv-scanner.toml"
+          --lockfile "${GITHUB_WORKSPACE}/uv.lock"
+          --lockfile "${GITHUB_WORKSPACE}/pnpm-lock.yaml"
+
+  ci-ok:
+    name: ci-ok
+    if: always()
+    needs: [check, test, zizmor, osv-scanner]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Show the result of each job ci-ok needs
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          jq -r 'to_entries[] | "\(.key): \(.value.result)"' <<< "${NEEDS}"
+
+      - name: Fail if a needed job failed or was cancelled
+        if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+        run: |
+          echo "::error title=ci-ok::A job that ci-ok needs failed or was cancelled; see its log."
+          exit 1

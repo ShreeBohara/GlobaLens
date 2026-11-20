@@ -1,0 +1,9 @@
+# OSV-Scanner's exceptions (P1 task 5, docs/adr/0011-ci-toolchain.md). The ci workflow passes this
+# file with --config. Each exception names one advisory, says why it does not apply here, and has
+# a date: once the date passes, the scanner reports the advisory again and the job fails.
+# .github/tests/test_workflows.py checks that every entry has all three.
+
+[[IgnoredVulns]]
+id = "GHSA-g3hv-75wg-m249"
+effectiveUntil = 2026-12-14
+reason = "minimatch 10.2.6: denial of service through crafted glob patterns. It comes only with eslint and typescript-eslint, development tools that match this repository's own patterns, never a visitor's. The fix (minimatch 11) arrives with eslint 10.15.0 and typescript-eslint 8.73.0, both still inside the 7-day cooldown on 2026-11-20; the Renovate update that brings them ends this exception."

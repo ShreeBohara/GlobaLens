@@ -1,0 +1,94 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "GlobaLens dependency updates (P1 task 5, docs/adr/0011-ci-toolchain.md). Every update waits 7 days after its release, like pnpm's minimumReleaseAge (ADR-0001), and arrives in weekly groups. Nothing merges by itself: the owner merges every pull request.",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "timezone": "UTC",
+  "schedule": ["* 0-5 * * 1"],
+  "labels": ["dependencies"],
+  "minimumReleaseAge": "7 days",
+  "internalChecksFilter": "strict",
+  "osvVulnerabilityAlerts": true,
+  "ignorePaths": ["**/node_modules/**", "lab/**"],
+  "packageRules": [
+    {
+      "description": "npm waits 7 days, like pnpm's minimumReleaseAge in pnpm-workspace.yaml.",
+      "matchDatasources": ["npm"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "PyPI waits 7 days. uv's exclude-newer in pyproject.toml is a fixed date, so a PyPI update newer than it needs that date moved in the same pull request (ADR-0011).",
+      "matchDatasources": ["pypi"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "The SHA-pinned actions wait 7 days after the release their new commit belongs to.",
+      "matchManagers": ["github-actions"],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "One weekly pull request for the actions.",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions"
+    },
+    {
+      "description": "One weekly pull request for the tools pinned in the workflows (zizmor, OSV-Scanner).",
+      "matchManagers": ["custom.regex"],
+      "matchFileNames": [".github/workflows/**"],
+      "groupName": "CI tools"
+    },
+    {
+      "description": "One weekly pull request for npm minor and patch updates.",
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "npm (minor and patch)"
+    },
+    {
+      "description": "One weekly pull request for PyPI minor and patch updates in the uv workspace.",
+      "matchManagers": ["pep621"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "PyPI (minor and patch)"
+    },
+    {
+      "description": "pnpm is pinned twice (mise.toml and packageManager in package.json): they move together.",
+      "matchPackageNames": ["pnpm"],
+      "groupName": "pnpm"
+    },
+    {
+      "description": "Node.js is pinned in mise.toml and bounded by engines in package.json: they move together.",
+      "matchDepNames": ["node"],
+      "groupName": "Node.js"
+    },
+    {
+      "description": "mise runs CI and the devcontainer at one version (a test keeps them equal): they move together.",
+      "matchDepNames": ["jdx/mise"],
+      "groupName": "mise"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Tool versions in workflow env, each under a `# renovate:` comment (MISE_VERSION, ZIZMOR_VERSION, OSV_SCANNER_VERSION).",
+      "managerFilePatterns": ["/^\\.github/workflows/.+\\.ya?ml$/"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>\\S+)(?: extractVersion=(?<extractVersion>\\S+))?\\s+[A-Z_]+_VERSION: (?<currentValue>\\S+)"
+      ]
+    },
+    {
+      "customType": "regex",
+      "description": "The devcontainer's mise version.",
+      "managerFilePatterns": ["/^\\.devcontainer/Dockerfile$/"],
+      "matchStrings": ["ARG MISE_VERSION=(?<currentValue>v\\S+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "jdx/mise"
+    },
+    {
+      "customType": "regex",
+      "description": "The PostgreSQL image of the SQL tests (ADR-0007), pinned by tag and digest in a Python file.",
+      "managerFilePatterns": ["/^db/tests/pg/.+\\.py$/"],
+      "matchStrings": [
+        "\"(?<depName>postgres):(?<currentValue>[^\"@\\s]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
+}

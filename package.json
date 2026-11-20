@@ -8,9 +8,9 @@
     "node": ">=26.13.0 <27"
   },
   "scripts": {
-    "lint": "uv run --no-sync ruff check .claude/hooks bench db && uv run --no-sync ruff format --check .claude/hooks bench db",
-    "typecheck": "pyright -p . .claude/hooks bench db",
-    "test": "uv run --no-sync pytest .claude/hooks/tests db/tests/unit"
+    "lint": "uv run --no-sync ruff check .claude/hooks .github/tests bench db && uv run --no-sync ruff format --check .claude/hooks .github/tests bench db",
+    "typecheck": "pyright -p . .claude/hooks .github/tests bench db",
+    "test": "uv run --no-sync pytest .claude/hooks/tests .github/tests db/tests/unit"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
