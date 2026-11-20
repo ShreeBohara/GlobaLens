@@ -42,6 +42,7 @@ row says otherwise.
 | dbmate | 2.37.0 | `mise.toml` | The plan names dbmate; first used by task 8 |
 | age | 1.3.2 | `mise.toml` | Needed by task 6 for the escrowed key |
 | mise | 2025.4.0 or later | `min_version` in `mise.toml`; v2026.11.4 in the devcontainer | 2025.4.0 is what the owner's Mac has, and the only version the skeleton was run with |
+| Docker-in-Docker (devcontainer feature) | 4.1.3 | `.devcontainer/devcontainer.json` | Added 2026-11-19 (see Evidence): gives the dev container a Docker daemon of its own, so tests that start containers run in it unchanged. Released 2026-10-07. Pinned to the exact version, like the devcontainer's other pins (the base image tag, the mise version), not by digest |
 
 **Dependency cooldown.** The plan asks for pnpm's `minimumReleaseAge` and a cooldown for PyPI
 (§9, threat model). Options: pnpm's default of one day, or longer. Chosen: 7 days for both
@@ -88,6 +89,10 @@ One repository with:
     order.
   - Repository-level Python (`.claude/hooks`, `bench/`) is checked by the root package's own
     `lint`, `typecheck` and `test` scripts.
+- **A devcontainer** (`.devcontainer/`): the `devcontainers/base` Ubuntu 24.04 image with mise
+  pinned; creating it runs `mise install` and `mise run install`. The Docker-in-Docker feature
+  gives it a Docker daemon of its own, so the SQL tests (ADR-0007), and later tests that start
+  containers, run inside it.
 - **Committed Claude Code settings** (`.claude/settings.json`), from Appendix D:
   - *Stop hook* (`.claude/hooks/stop_check.py`): runs `mise run check` when a session is about
     to finish, and blocks while it fails. It keeps its own count, per session, of failing checks
@@ -118,9 +123,24 @@ Run on the owner's Mac (Apple M3 Pro) on 2026-11-15, from a clean checkout of th
   with a failing test planted, the Stop hook's message reached the model as "block 1 of 8";
   with a clean tree the session ended normally.
 
-Not verified: the devcontainer (Docker was not running); any mise newer than 2025.4.0; the
-give-up after 8 blocks inside a live session (it was run by invoking the hook directly); an
-interactive session.
+The devcontainer, on 2026-11-19 (Docker Desktop 29.7.2, linux/arm64), from a copy of `main`
+at `4d876b9`, which includes task 8:
+
+- Without Docker-in-Docker, the image builds and its `postCreateCommand` passes with mise
+  2026.11.4, so a mise newer than 2025.4.0 works. `mise run check`, `mise run tofu:plan` and
+  `mise run bench:smoke` pass inside it. `mise run test` fails: all 39 SQL tests of ADR-0007
+  stop at `FileNotFoundError: 'docker'`, because the container has no Docker.
+- With the Docker-in-Docker feature, the Dev Containers CLI bundled with the owner's VS Code
+  extension (0.74.0) built the image and started the container: privileged, with the feature's
+  volumes and entrypoint, Docker 29.9.3 running inside, and `vscode` in the `docker` group.
+  That CLI then hung waiting for the container's start event, so the `postCreateCommand`,
+  `mise run check`, `mise run test` and the rest were run by hand in that container, as
+  `vscode`. All pass, the 39 SQL tests included.
+
+Not verified: a current Dev Containers CLI or VS Code running the devcontainer from start to
+finish (the newer CLI could not be fetched from npm in that session); the give-up after 8
+blocks inside a live session (it was run by invoking the hook directly); an interactive
+session.
 
 ## Consequences: what gets easier/harder; rollback plan; what we will measure next
 
@@ -146,6 +166,13 @@ Tasks 8 and 9 add files to folders that already lint and test.
 unquoted `echo tofu apply`). It is a guard against mistakes, not a security boundary: what
 keeps production safe is that a session holds no production credentials.
 
+The dev container runs privileged, because the Docker-in-Docker feature requires it. It keeps
+its Docker images in two named volumes of its own (`dind-var-lib-docker-<id>` and
+`dind-var-lib-containerd-<id>`), so it pulls the PostgreSQL image again instead of sharing the
+Mac's copy. Mounting the Mac's Docker socket instead would share images, but a port that a test
+container publishes on 127.0.0.1 would then be on the Docker host, not in the dev container,
+and the SQL tests would need a host setting.
+
 **Turborepo's cache is shared between worktrees.** A run in a linked git worktree, which is
 where each Claude Code session works, writes its cache to `.turbo/cache` in the main checkout,
 not in the worktree (Turborepo's documented default when `cacheDir` is not set). That gives
@@ -156,5 +183,5 @@ cache hits across sessions, and `.gitignore` covers the folder. Setting `"cacheD
 workspaces are ordinary pnpm and uv projects and can be split without rewriting code.
 
 **Next.** Upgrade mise on the owner's Mac, then move Node to the newest 26.x and, if wanted,
-pnpm back to mise's own installer. Build the devcontainer once Docker is running. Task 5 gives
+pnpm back to mise's own installer. Task 5 gives
 Renovate the same 7-day cooldown and makes `mise run check` the body of `ci-ok`.
