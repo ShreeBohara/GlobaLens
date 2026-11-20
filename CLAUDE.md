@@ -16,7 +16,7 @@ mise run dev | check (lint+types+unit) | test | e2e | eval:quick | bench:<name> 
   (primary:, drill:).
 - Roles: every service starts behind the role guard. Nothing may start cloudflared, the API, the taste proxy, the admin app,
   light jobs or timers on a node that prod.lock does not name primary, or whose ledger epoch is not current.
-- DEPTH KERNELS (apps/worker/ledger/*.py, packages/lens/src/kernel/*, apps/worker/storystream/assign.py, apps/jobs/quant/quantifier.py):
+- DEPTH KERNELS (apps/worker/src/worker/ledger/*.py, packages/lens/src/kernel/*, apps/worker/storystream/assign.py, apps/jobs/quant/quantifier.py):
   a change updates the kernel's property tests and its walkthrough note in the same PR and requests the owner's line-by-line review.
 - Data: never store full article text, ledes or thumbnails. Every upstream dataset needs a prov/sources.yml entry.
   Attribute GDELT in UI, API and MCP. Open-data drops, attested bundles, gold sets and the Bench never contain titles or glosses.
