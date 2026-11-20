@@ -299,6 +299,18 @@ def test_ci_affected_run_compares_against_the_event_base() -> None:
     assert "github.event.merge_group.base_sha" in base
 
 
+@pytest.mark.parametrize("path", WORKFLOW_PARAMS)
+def test_every_job_with_mise_action_allows_sigstores_trust_root(path: Path) -> None:
+    # mise-action checks the mise it downloads against a Sigstore-signed packslip, which needs
+    # Sigstore's trust root. The OSV-Scanner job of pull request 14's first run failed without it.
+    workflow = load(path)
+    for job_name, job in workflow.jobs().items():
+        job_steps = steps(job, f"{workflow.name}: jobs.{job_name}")
+        if any(str(s.get("uses", "")).startswith("jdx/mise-action@") for s in job_steps):
+            allowed = endpoints(job_steps[0])
+            assert "tuf-repo-cdn.sigstore.dev:443" in allowed, f"{workflow.name}: {job_name}"
+
+
 def version_tuple(text: str) -> tuple[int, ...]:
     return tuple(int(part) for part in text.lstrip("v").split("."))
 

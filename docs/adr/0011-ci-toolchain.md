@@ -106,7 +106,11 @@ is the same. Turning telemetry on is one line per job.
 `check` and `test` jobs allow GitHub, `nodejs.org`, npm's registry, PyPI, `releases.astral.sh`
 (uv's Python builds), `mise-versions.jdx.dev` (mise's cache of GitHub release data and
 attestations) and `tuf-repo-cdn.sigstore.dev` (Sigstore's trust root, for those attestations);
-`test` adds Docker Hub, for the PostgreSQL image. Five more hosts are optional to mise: it
+`test` adds Docker Hub, for the PostgreSQL image. Every job that runs mise-action allows
+`tuf-repo-cdn.sigstore.dev` as well, `osv-scanner` included: mise-action checks the mise it
+downloads against a Sigstore-signed packslip. The containers installed mise with `curl`, so they
+could not show this; the first run on GitHub did (see Evidence), and a test now holds it. Five
+more hosts are optional to mise: it
 installs everything when they do not resolve. They are allowed all the same, so that a refused
 domain in a job's log always means something new, and because harden-runner refuses a host
 differently from that test (it answers the lookup with an address its firewall rejects, where
@@ -164,6 +168,14 @@ Run on the owner's Mac (Apple M3 Pro, Docker Desktop 29.7.2) on 2026-11-20:
   `.github/osv-scanner.toml` lasts until 2026-12-14. With it, the scan passes.
 - The DNS lookups behind the allow-lists, from those containers; and `mise install` and
   `mise run install` both pass with the five optional hosts answering "no such domain".
+
+On GitHub, pull request 14's first run (2026-11-20, commit `0463dce`): every job passed but
+`osv-scanner`, which stopped in mise-action with "sigstore refused the bundle: error refreshing
+TUF metadata"; the agent's log for that job shows `domain not allowed: tuf-repo-cdn.sigstore.dev`,
+the only domain refused in any job of the run. The other jobs: `check` 21 of 21 tasks; `test` on
+both architectures with the 39 SQL tests passing; zizmor no finding; CodeQL's three analyses
+passing, with no alert; the review skipping with its notice. The next commit adds the host and
+the test.
 
 Not verified locally: anything that only GitHub can run. The pull request's own run is the
 proof of `ci.yml`, CodeQL's analysis and upload, and the allow-lists on GitHub's runners.
