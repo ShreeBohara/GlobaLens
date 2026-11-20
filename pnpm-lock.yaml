@@ -196,7 +196,11 @@ importers:
 
   apps/web: {}
 
-  apps/worker: {}
+  apps/worker:
+    dependencies:
+      '@globalens/gdelt':
+        specifier: workspace:*
+        version: link:../../packages/gdelt
 
   packages/gdelt:
     dependencies:

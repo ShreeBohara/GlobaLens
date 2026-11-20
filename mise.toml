@@ -23,14 +23,23 @@ depends = ["install"]
 run = "pnpm exec turbo run lint typecheck test"
 
 [tasks.test]
-description = "Every test suite: the unit tests, then the SQL tests, which need Docker."
+description = "Every test suite: the unit tests, then the SQL tests and the ledger's tests, which need Docker."
 depends = ["install"]
-run = ["pnpm exec turbo run test", "uv run --no-sync pytest db/tests/pg"]
+run = [
+  "pnpm exec turbo run test",
+  "uv run --no-sync pytest db/tests/pg",
+  "uv run --no-sync pytest apps/worker/tests/pg",
+]
 
 [tasks."test:db"]
 description = "The SQL tests alone: db/migrations applied to a clean PostgreSQL 18 in a throwaway container."
 depends = ["install"]
 run = "uv run --no-sync pytest db/tests/pg"
+
+[tasks."test:ledger"]
+description = "The ledger's tests alone, against PostgreSQL 18 in a throwaway container: the fence, the tier-1 walk, the poller, and the 1,000-history property test."
+depends = ["install"]
+run = "uv run --no-sync pytest apps/worker/tests/pg"
 
 [tasks.dev]
 description = "Start the local stack. Nothing to start yet: each app's dev script arrives with the app."
