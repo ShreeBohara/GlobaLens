@@ -1,0 +1,1355 @@
+{
+ "kind": "farside",
+ "state": {
+  "pageCommit": "232f507",
+  "url": "http://127.0.0.1:47173/?mode=farside&n=300000&w=1440&h=900&label=desktop-c4&run=3",
+  "dateUtc": "2026-11-17T16:49:41.959Z",
+  "versions": {
+   "maplibre": "6.18.0",
+   "deck": "9.4.1",
+   "flechette": "2.8.0"
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "webglRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M3 Pro, Unspecified Version)",
+  "webglVendor": "Google Inc. (Apple)",
+  "devicePixelRatio": 2,
+  "mapPixelRatio": 2,
+  "screen": {
+   "width": 1512,
+   "height": 982
+  },
+  "window": {
+   "innerWidth": 1512,
+   "innerHeight": 949
+  },
+  "viewport": {
+   "width": 1440,
+   "height": 900,
+   "clipped": false
+  },
+  "drawingBuffer": {
+   "width": 2880,
+   "height": 1800
+  },
+  "antialias": true,
+  "hardwareConcurrency": 11,
+  "deviceMemory": 16,
+  "battery": {
+   "charging": true,
+   "level": 1
+  },
+  "sample": {
+   "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8",
+   "bytes": 4801706,
+   "rows": 300000,
+   "languages": 64,
+   "decodeMs": 5.399999991059303
+  },
+  "params": {
+   "mode": "farside",
+   "n": 300000,
+   "w": 1440,
+   "h": 900,
+   "dpr": null,
+   "hide": true,
+   "billboard": false,
+   "arcs": false,
+   "labels": false,
+   "arcHeight": 0.3,
+   "discDepth": false,
+   "arcDepth": false,
+   "run": "3",
+   "label": "desktop-c4",
+   "standin": false,
+   "post": true
+  },
+  "cpuProbe": {
+   "ms": 14.4,
+   "check": 59628481636
+  },
+  "refresh": {
+   "medianIntervalMs": 8.299999999999955,
+   "hz": 120.48192771084403,
+   "frames": 122
+  },
+  "orbit": {
+   "zoom": 2.7398,
+   "targetDiameterPx": 810,
+   "limbDiameterPx": 809.9824104643159,
+   "globeRadiusPx": 544.3171966769046,
+   "cameraDistanceRadii": 3.480171503384142
+  }
+ },
+ "partial": false,
+ "stopsRun": 24,
+ "violations": 0,
+ "controlFailures": 0,
+ "threshold": "zero violations at every stop, in each of three runs; controls must hold",
+ "arcHeight": 0.3,
+ "labelControl": "MapLibre offers no switch that shows far-side labels; the near set is the only control",
+ "voidEvents": [],
+ "mapErrors": [],
+ "stops": [
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 2.5942235340354074,
+   "globeRadiusPx": 846.8072206805203,
+   "horizonDeg": 67.32696706164847,
+   "oracleMaxDiffPx": 0.000025355175893772404,
+   "sets": {
+    "near": 2116,
+    "limbFar": 10945,
+    "farCap": 159560
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 125599,
+    "nearPixelsOn": 9890,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 9890,
+    "hiddenInViewIfTransparent": 166928
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07678508918558484,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 9709,
+    "nearPixelsOn": 21921,
+    "nearPixelsOff": 21921
+   },
+   "labels": {
+    "hidden": 295,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 2,
+    "nearInView": 2,
+    "nearPixels": 364,
+    "nearQueried": 2
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -45,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 2.5942235340354074,
+   "globeRadiusPx": 846.8072206805203,
+   "horizonDeg": 67.32696706164847,
+   "oracleMaxDiffPx": 0.00002535506563141655,
+   "sets": {
+    "near": 14103,
+    "limbFar": 5842,
+    "farCap": 37181
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 45206,
+    "nearPixelsOn": 63184,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 63184,
+    "hiddenInViewIfTransparent": 40581
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07679636610619696,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 11927,
+    "nearPixelsOn": 56613,
+    "nearPixelsOff": 56613
+   },
+   "labels": {
+    "hidden": 66,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 24,
+    "nearInView": 21,
+    "nearPixels": 4078,
+    "nearQueried": 22
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 45,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 2.5942235340354074,
+   "globeRadiusPx": 846.8072206805203,
+   "horizonDeg": 67.32696706164847,
+   "oracleMaxDiffPx": 0.0000253552195378402,
+   "sets": {
+    "near": 2419,
+    "limbFar": 25454,
+    "farCap": 63110
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 71622,
+    "nearPixelsOn": 16831,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 16831,
+    "hiddenInViewIfTransparent": 75956
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07760249660365726,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 12539,
+    "nearPixelsOn": 29967,
+    "nearPixelsOff": 29967
+   },
+   "labels": {
+    "hidden": 151,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 7,
+    "nearInView": 5,
+    "nearPixels": 1026,
+    "nearQueried": 5
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 2.5942235340354074,
+   "globeRadiusPx": 846.8072206805203,
+   "horizonDeg": 67.32696706164847,
+   "oracleMaxDiffPx": 0.000025342317201767164,
+   "sets": {
+    "near": 10524,
+    "limbFar": 18137,
+    "farCap": 138672
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 112115,
+    "nearPixelsOn": 32776,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 32776,
+    "hiddenInViewIfTransparent": 142464
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.05308204686072942,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 9690,
+    "nearPixelsOn": 48684,
+    "nearPixelsOff": 48684
+   },
+   "labels": {
+    "hidden": 272,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 16,
+    "nearInView": 16,
+    "nearPixels": 2903,
+    "nearQueried": 16
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -135,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 3.480171503384142,
+   "globeRadiusPx": 544.3171966769046,
+   "horizonDeg": 73.30109820840029,
+   "oracleMaxDiffPx": 0.000014641550911811608,
+   "sets": {
+    "near": 30737,
+    "limbFar": 8655,
+    "farCap": 50986
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 67356,
+    "nearPixelsOn": 62732,
+    "nearProbes": 43,
+    "nearReturned": 43,
+    "nearPixelsOff": 62732,
+    "hiddenInViewIfTransparent": 59641
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07604725382466067,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 12300,
+    "nearPixelsOn": 35080,
+    "nearPixelsOff": 35080
+   },
+   "labels": {
+    "hidden": 101,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 48,
+    "nearInView": 48,
+    "nearPixels": 7959,
+    "nearQueried": 48
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 3.480171503384142,
+   "globeRadiusPx": 544.3171966769046,
+   "horizonDeg": 73.30109820840029,
+   "oracleMaxDiffPx": 0.000014638077332578237,
+   "sets": {
+    "near": 78155,
+    "limbFar": 39821,
+    "farCap": 43970
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 56341,
+    "nearPixelsOn": 154756,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 154756,
+    "hiddenInViewIfTransparent": 83791
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07774308991416283,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 13739,
+    "nearPixelsOn": 30979,
+    "nearPixelsOff": 30979
+   },
+   "labels": {
+    "hidden": 140,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 138,
+    "nearInView": 138,
+    "nearPixels": 19480,
+    "nearQueried": 138
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 3.480171503384142,
+   "globeRadiusPx": 544.3171966769046,
+   "horizonDeg": 73.30109820840029,
+   "oracleMaxDiffPx": 0.0000146416751379505,
+   "sets": {
+    "near": 120172,
+    "limbFar": 8077,
+    "farCap": 13464
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 20356,
+    "nearPixelsOn": 177654,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 177654,
+    "hiddenInViewIfTransparent": 21541
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07150501398725019,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 9333,
+    "nearPixelsOn": 30787,
+    "nearPixelsOff": 30787
+   },
+   "labels": {
+    "hidden": 37,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 208,
+    "nearInView": 208,
+    "nearPixels": 29897,
+    "nearQueried": 208
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 135,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 3.480171503384142,
+   "globeRadiusPx": 544.3171966769046,
+   "horizonDeg": 73.30109820840029,
+   "oracleMaxDiffPx": 0.00001464122795864424,
+   "sets": {
+    "near": 51260,
+    "limbFar": 6551,
+    "farCap": 22707
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 49990,
+    "nearPixelsOn": 117853,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 117853,
+    "hiddenInViewIfTransparent": 29258
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07772961092983624,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 12996,
+    "nearPixelsOn": 42833,
+    "nearPixelsOff": 42833
+   },
+   "labels": {
+    "hidden": 45,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 74,
+    "nearInView": 74,
+    "nearPixels": 12557,
+    "nearQueried": 74
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -135,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 2.59422353403556,
+   "globeRadiusPx": 846.807220680439,
+   "horizonDeg": 67.32696706164988,
+   "oracleMaxDiffPx": 0.000025354919830530996,
+   "sets": {
+    "near": 67286,
+    "limbFar": 77552,
+    "farCap": 1430
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 12725,
+    "nearPixelsOn": 192402,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 192402,
+    "hiddenInViewIfTransparent": 20041
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.06501854133062085,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 10413,
+    "nearPixelsOn": 67293,
+    "nearPixelsOff": 67293
+   },
+   "labels": {
+    "hidden": 134,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 110,
+    "nearInView": 110,
+    "nearPixels": 13586,
+    "nearQueried": 110
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": -45,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 2.59422353403556,
+   "globeRadiusPx": 846.807220680439,
+   "horizonDeg": 67.32696706164988,
+   "oracleMaxDiffPx": 0.000025355254480515257,
+   "sets": {
+    "near": 181779,
+    "limbFar": 9899,
+    "farCap": 5546
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 11836,
+    "nearPixelsOn": 331925,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 331925,
+    "hiddenInViewIfTransparent": 10722
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.077556329500619,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 7878,
+    "nearPixelsOn": 46407,
+    "nearPixelsOff": 46407
+   },
+   "labels": {
+    "hidden": 29,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 314,
+    "nearInView": 312,
+    "nearPixels": 41459,
+    "nearQueried": 313
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 45,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 2.59422353403556,
+   "globeRadiusPx": 846.807220680439,
+   "horizonDeg": 67.32696706164988,
+   "oracleMaxDiffPx": 0.00002535495732695066,
+   "sets": {
+    "near": 171918,
+    "limbFar": 41742,
+    "farCap": 1144
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 9122,
+    "nearPixelsOn": 449132,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 449132,
+    "hiddenInViewIfTransparent": 34578
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.0572099365152432,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 4436,
+    "nearPixelsOn": 72822,
+    "nearPixelsOff": 72822
+   },
+   "labels": {
+    "hidden": 71,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 284,
+    "nearInView": 284,
+    "nearPixels": 44375,
+    "nearQueried": 284
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "orbit",
+    "zoom": 2.7398,
+    "lon": 135,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 2.59422353403556,
+   "globeRadiusPx": 846.807220680439,
+   "horizonDeg": 67.32696706164988,
+   "oracleMaxDiffPx": 0.00002535526440414009,
+   "sets": {
+    "near": 49660,
+    "limbFar": 50713,
+    "farCap": 11555
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 27577,
+    "nearPixelsOn": 151643,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 151643,
+    "hiddenInViewIfTransparent": 38516
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07552234978607206,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 11683,
+    "nearPixelsOn": 60687,
+    "nearPixelsOff": 60687
+   },
+   "labels": {
+    "hidden": 103,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 66,
+    "nearInView": 66,
+    "nearPixels": 10923,
+    "nearQueried": 66
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 1.6655661691059525,
+   "globeRadiusPx": 2028.3482885156852,
+   "horizonDeg": 53.10170408734979,
+   "oracleMaxDiffPx": 0.00008051057153732438,
+   "sets": {
+    "near": 588,
+    "limbFar": 4164,
+    "farCap": 159560
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 65862,
+    "nearPixelsOn": 0,
+    "nearProbes": 0,
+    "nearReturned": 0,
+    "nearPixelsOff": 0,
+    "hiddenInViewIfTransparent": 159560
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07653796495803059,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 5823,
+    "nearPixelsOn": 0,
+    "nearPixelsOff": 0
+   },
+   "labels": {
+    "hidden": 280,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 1,
+    "nearInView": 0,
+    "nearPixels": 0,
+    "nearQueried": 0
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -45,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 1.6655661691059525,
+   "globeRadiusPx": 2028.3482885156852,
+   "horizonDeg": 53.10170408734979,
+   "oracleMaxDiffPx": 0.00008050834298477087,
+   "sets": {
+    "near": 10341,
+    "limbFar": 6205,
+    "farCap": 37181
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 19113,
+    "nearPixelsOn": 13073,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 13073,
+    "hiddenInViewIfTransparent": 37181
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07698950538983107,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 7629,
+    "nearPixelsOn": 13638,
+    "nearPixelsOff": 13638
+   },
+   "labels": {
+    "hidden": 64,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 18,
+    "nearInView": 2,
+    "nearPixels": 311,
+    "nearQueried": 2
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 45,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 1.6655661691059525,
+   "globeRadiusPx": 2028.3482885156852,
+   "horizonDeg": 53.10170408734979,
+   "oracleMaxDiffPx": 0.00008051053267690138,
+   "sets": {
+    "near": 1347,
+    "limbFar": 8517,
+    "farCap": 63110
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 31651,
+    "nearPixelsOn": 1528,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 1528,
+    "hiddenInViewIfTransparent": 63110
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07602118302481413,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 8507,
+    "nearPixelsOn": 3081,
+    "nearPixelsOff": 3081
+   },
+   "labels": {
+    "hidden": 115,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 4,
+    "nearInView": 1,
+    "nearPixels": 160,
+    "nearQueried": 1
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 135,
+    "lat": -50
+   },
+   "cameraDistanceRadii": 1.6655661691059525,
+   "globeRadiusPx": 2028.3482885156852,
+   "horizonDeg": 53.10170408734979,
+   "oracleMaxDiffPx": 0.00008034909894121423,
+   "sets": {
+    "near": 5378,
+    "limbFar": 3000,
+    "farCap": 138672
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 65445,
+    "nearPixelsOn": 10200,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 10200,
+    "hiddenInViewIfTransparent": 138672
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.06696026262891006,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 7265,
+    "nearPixelsOn": 36807,
+    "nearPixelsOff": 36807
+   },
+   "labels": {
+    "hidden": 246,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 10,
+    "nearInView": 2,
+    "nearPixels": 626,
+    "nearQueried": 3
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -135,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 2.035437113773716,
+   "globeRadiusPx": 1303.7971906182108,
+   "horizonDeg": 60.57426872567169,
+   "oracleMaxDiffPx": 0.00004437256847157359,
+   "sets": {
+    "near": 13935,
+    "limbFar": 34503,
+    "farCap": 50986
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 43456,
+    "nearPixelsOn": 10680,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 10680,
+    "hiddenInViewIfTransparent": 53980
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07669962516103355,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 12155,
+    "nearPixelsOn": 11457,
+    "nearPixelsOff": 11457
+   },
+   "labels": {
+    "hidden": 134,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 25,
+    "nearInView": 7,
+    "nearPixels": 1079,
+    "nearQueried": 7
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 2.035437113773716,
+   "globeRadiusPx": 1303.7971906182108,
+   "horizonDeg": 60.57426872567169,
+   "oracleMaxDiffPx": 0.00004437221455928208,
+   "sets": {
+    "near": 23189,
+    "limbFar": 54335,
+    "farCap": 43970
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 34176,
+    "nearPixelsOn": 85119,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 85119,
+    "hiddenInViewIfTransparent": 47945
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07678306928155398,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 12490,
+    "nearPixelsOn": 73089,
+    "nearPixelsOff": 73089
+   },
+   "labels": {
+    "hidden": 145,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 42,
+    "nearInView": 26,
+    "nearPixels": 5420,
+    "nearQueried": 32
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 45,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 2.035437113773716,
+   "globeRadiusPx": 1303.7971906182108,
+   "horizonDeg": 60.57426872567169,
+   "oracleMaxDiffPx": 0.00004437274066327864,
+   "sets": {
+    "near": 51915,
+    "limbFar": 17809,
+    "farCap": 13464
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 14299,
+    "nearPixelsOn": 70460,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 70460,
+    "hiddenInViewIfTransparent": 19753
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07458915879705443,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 11048,
+    "nearPixelsOn": 12911,
+    "nearPixelsOff": 12911
+   },
+   "labels": {
+    "hidden": 62,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 83,
+    "nearInView": 21,
+    "nearPixels": 3974,
+    "nearQueried": 22
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 135,
+    "lat": 0
+   },
+   "cameraDistanceRadii": 2.035437113773716,
+   "globeRadiusPx": 1303.7971906182108,
+   "horizonDeg": 60.57426872567169,
+   "oracleMaxDiffPx": 0.000044372742038150206,
+   "sets": {
+    "near": 44024,
+    "limbFar": 3272,
+    "farCap": 22707
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 26889,
+    "nearPixelsOn": 51908,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 51908,
+    "hiddenInViewIfTransparent": 23667
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07720143646931447,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 11702,
+    "nearPixelsOn": 23505,
+    "nearPixelsOff": 23505
+   },
+   "labels": {
+    "hidden": 48,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 61,
+    "nearInView": 19,
+    "nearPixels": 3563,
+    "nearQueried": 23
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -135,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 1.6655661691059258,
+   "globeRadiusPx": 2028.3482885157666,
+   "horizonDeg": 53.101704087349106,
+   "oracleMaxDiffPx": 0.00008051055294015414,
+   "sets": {
+    "near": 29732,
+    "limbFar": 17673,
+    "farCap": 1430
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 2249,
+    "nearPixelsOn": 83846,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 83846,
+    "hiddenInViewIfTransparent": 1430
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.06385970127191792,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 6379,
+    "nearPixelsOn": 69586,
+    "nearPixelsOff": 69586
+   },
+   "labels": {
+    "hidden": 35,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 47,
+    "nearInView": 14,
+    "nearPixels": 2524,
+    "nearQueried": 15
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": -45,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 1.6655661691059258,
+   "globeRadiusPx": 2028.3482885157666,
+   "horizonDeg": 53.101704087349106,
+   "oracleMaxDiffPx": 0.0000805097475972169,
+   "sets": {
+    "near": 104844,
+    "limbFar": 16824,
+    "farCap": 5546
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 3550,
+    "nearPixelsOn": 74725,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 74725,
+    "hiddenInViewIfTransparent": 5546
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07761849511799172,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 6672,
+    "nearPixelsOn": 7492,
+    "nearPixelsOff": 7492
+   },
+   "labels": {
+    "hidden": 45,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 177,
+    "nearInView": 30,
+    "nearPixels": 5514,
+    "nearQueried": 74
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 45,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 1.6655661691059258,
+   "globeRadiusPx": 2028.3482885157666,
+   "horizonDeg": 53.101704087349106,
+   "oracleMaxDiffPx": 0.00008050956681449096,
+   "sets": {
+    "near": 150673,
+    "limbFar": 16924,
+    "farCap": 1144
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 1272,
+    "nearPixelsOn": 381772,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 381772,
+    "hiddenInViewIfTransparent": 1144
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.07710882438220228,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 4433,
+    "nearPixelsOn": 131199,
+    "nearPixelsOff": 131199
+   },
+   "labels": {
+    "hidden": 36,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 260,
+    "nearInView": 129,
+    "nearPixels": 22747,
+    "nearQueried": 162
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  },
+  {
+   "stop": {
+    "zoomName": "z4",
+    "zoom": 4,
+    "lon": 135,
+    "lat": 50
+   },
+   "cameraDistanceRadii": 1.6655661691059258,
+   "globeRadiusPx": 2028.3482885157666,
+   "horizonDeg": 53.101704087349106,
+   "oracleMaxDiffPx": 0.00008050574509388412,
+   "sets": {
+    "near": 32812,
+    "limbFar": 43026,
+    "farCap": 11555
+   },
+   "discs": {
+    "hiddenPixelsOn": 0,
+    "hiddenPickedOverViewport": 0,
+    "transparentProbes": 50,
+    "transparentProbeHits": 0,
+    "hiddenPixelsOff": 8101,
+    "nearPixelsOn": 51241,
+    "nearProbes": 50,
+    "nearReturned": 50,
+    "nearPixelsOff": 51241,
+    "hiddenInViewIfTransparent": 11555
+   },
+   "arcs": {
+    "farArcs": 50,
+    "nearArcs": 50,
+    "maxRiseRadii": 0.06966674812531863,
+    "farPixelsOn": 0,
+    "farPickedOverViewport": 0,
+    "farPixelsOff": 8635,
+    "nearPixelsOn": 38875,
+    "nearPixelsOff": 38875
+   },
+   "labels": {
+    "hidden": 97,
+    "hiddenPixels": 0,
+    "hiddenQueried": 0,
+    "near": 42,
+    "nearInView": 9,
+    "nearPixels": 1336,
+    "nearQueried": 9
+   },
+   "baselineMarkerPixels": 0,
+   "violations": [],
+   "controlFailures": []
+  }
+ ],
+ "host": {
+  "label": "desktop-c4",
+  "notedUtc": "2026-11-17T16:48:35.554Z",
+  "model": "MacBook Pro",
+  "modelIdentifier": "Mac15,6",
+  "chip": "Apple M3 Pro",
+  "cores": "11 (5 Performance and 6 Efficiency)",
+  "memory": "18 GB",
+  "os": "macOS 27.0.1 (26A434)",
+  "chrome": "Google Chrome 157.0.8103.79",
+  "displays": [
+   {
+    "builtIn": true,
+    "pixels": "3024 x 1964",
+    "resolution": "1512 x 982 @ 120.00Hz",
+    "main": true,
+    "online": true
+   }
+  ],
+  "externalDisplayAttached": false,
+  "powerSource": "AC Power",
+  "batteryPercent": 100,
+  "lowPowerMode": false,
+  "thermal": {
+   "cpuSpeedLimit": null,
+   "schedulerLimit": null,
+   "noThermalWarning": true
+  },
+  "visibleApplications": 10,
+  "loadAverage": [
+   3.88,
+   10.44,
+   13.54
+  ],
+  "pinned": true
+ },
+ "receivedUtc": "2026-11-17T16:49:41.976Z"
+}

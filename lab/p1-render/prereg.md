@@ -106,23 +106,25 @@ Rows are put in a fixed order (stream, stamp, row order in the file), shuffled w
 
 It has no titles, URLs or outlet names. Duplicates are not collapsed, no centroid blocklist is applied, and nothing is sanitized: it is real coordinates at real density and nothing else. **It is not committed.** Task 2 adds the ignore rule for `lab/p1-render/data/` before the script first runs.
 
-### 4.4 Sample record (blank until task 2 builds it)
+### 4.4 Sample record (filled on 15 November 2026)
 
 | Field | Value |
 |---|---|
-| UTC day or days covered | *to fill* |
-| Files listed / downloaded / left out | *to fill* |
-| Points before down-sampling, by stream | *to fill* |
-| Rows in the sample | 300,000 (*confirm*) |
-| Arrow file size, bytes | *to fill* |
-| SHA-256 of the sample | *to fill* |
-| SHA-256 of the pick list (§5.3) | *to fill* |
-| Built on (date), by (script and commit) | *to fill* |
+| UTC day or days covered | 14, 13 and 12 November 2026. Three days: the first two gave 280,136 points (§11, amendment 3) |
+| Files listed / downloaded / left out | 576 / 576 / 0. Every file matched the size and MD5 in its master list. 3,490,759,770 bytes zipped |
+| Points before down-sampling, by stream | English 157,854; translated 300,385; 458,239 in all. By day: 111,156 (14th), 168,980 (13th), 178,103 (12th). From 869,271 records read; 839 lines had fewer than 27 columns and were not parsed |
+| Rows in the sample | 300,000 (confirmed) |
+| Arrow file size, bytes | 4,801,706 |
+| SHA-256 of the sample | `7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8` |
+| SHA-256 of the pick list (§5.3) | `e62e1b028e6ddda69a25831f0a7663ca5bf0c024844cce199103051aa6fa9f99` (`lab/p1-render/picks.json`; 1,082 candidates drawn, 82 skipped for a neighbour within 12 CSS px) |
+| Built on (date), by (script and commit) | 15 November 2026, 16:53–16:56 UTC, by `lab/p1-render/sample/build-sample.mjs`, run before it was committed and committed unchanged as `08a916c`. Shuffle: mulberry32 seeded with 20261114, Fisher–Yates from the end. 64 languages in the sample |
 
 Source files, one per line (URL, bytes and MD5 as the master list gives them):
 
 ```
-to fill
+576 lines, in lab/p1-render/sample-sources.txt (SHA-256 1affc03194ddcfc58a9c748f12339b01bf3d26d8ee809865895c5362c183f375)
+first: http://data.gdeltproject.org/gdeltv2/20261114000000.gkg.csv.zip 4744931 56c69d3e36daf92ab34b2adf9fd537d3
+last:  http://data.gdeltproject.org/gdeltv2/20261112234500.translation.gkg.csv.zip 4800152 3f58824d962867b9658184bdc42639dc
 ```
 
 ---
@@ -331,3 +333,50 @@ Dated entries only, each with its reason.
 **What changed.** §5.2 fixes the built-in display at the settings read on 15 November 2026 (1512 × 982, which is pixel ratio 2, at 120 Hz) and puts the Mac on mains power. §5.8 adds the display and its refresh rate to what may not change between builds.
 
 **What did not change.** The 1440 × 900 CSS px view, the rule that the gating run is at the device's own pixel ratio, and every threshold. Whether that view fits in a browser window on this display is not checked; it is point 10 in §10.
+
+### Amendment 3, 15 November 2026: the sample needed a third day
+
+**When.** The sample was built at 16:53–16:56 UTC on 15 November 2026, before any frame was timed. This entry was written later the same day, after the development runs described in amendment 4.
+
+**What happened.** §4.1 step 5 says a third day is added and recorded here if two days fall short, because the plan's recipe stops at two. Two days fell short: 14 November gave 111,156 points and 13 November gave 168,980, which is 280,136 in all. 12 November was added (178,103 points), giving 458,239 before the cut to 300,000.
+
+**Reason.** 14 November 2026 was a Saturday, and GDELT carried about 37% fewer records that day than the average of the two weekdays before it (207,523 against 322,858 and 338,890). The prior in §3.3 expected about 182k points a day and two days; that prior missed and is scored in the note.
+
+**What did not change.** The recipe, the seed, the shuffle and the cut. No file was left out.
+
+### Amendment 4, 15 November 2026: full screen, focus, and the open method points
+
+**When.** After the harness was developed and rehearsed, and before any gating run. The development runs were in headless Chrome, and the rehearsal runs were in Chrome with the external display attached and other applications open. All of them are in `lab/p1-render/results/`, labelled `dev-headless` or `rehearsal`, and none of them gates.
+
+**Full screen (§10 point 10).** The desktop runs use Chrome in full screen. On the built-in display at 1512 × 982 the page then has 1512 × 949 CSS px, so the 1440 × 900 view fits with nothing clipped. Whether it would fit in an ordinary window was not measured; full screen was chosen without trying one.
+
+**Focus.** §5.7 voids a run whose tab was hidden or lost focus. Chrome started as a plain child process opens without focus, so the gating runs start it through macOS's `open`, which brings its window to the front. The page records focus and visibility for the whole run.
+
+**The open method points (§10 points 2 and 9).** The owner was told on 15 November 2026 that points 2, 9 and 10 should be settled before any timed run, and answered: "Merge it, do it, whatever you want, and go ahead with the next step or phase." No point was changed. So the gating runs use the file as written: the device's own pixel ratio gates, with 1.5 reported beside it, and the desktop runs on the built-in display at 120 Hz with the external display disconnected and the Mac on mains power. This is recorded as going ahead on the file's proposals, not as the owner choosing each one.
+
+**What did not change.** Every threshold, the viewport, the orbit, the pick list, the stops and the repeats.
+
+### Amendment 5, 19 November 2026: the harness after the first gating runs, and where the runs departed
+
+**When.** Written on 19 November 2026, after every desktop run. The first gating measurement was C1, from 23:58 UTC on 15 November 2026 to 00:08 UTC on 16 November. The changes below were made after it, and every later run used them.
+
+**The page did not change.** Its source, the result collector and the pick list are identical at the three commits the results name: `ba391bb` (C1 and the first runs at pixel ratio 1.5), `232f507` (the runs of 17 November) and `68e3f9d` (the stand-in's repeats). Only the scripts that open Chrome and run the suite changed.
+
+**Why the harness changed.** On 16 November the suite ran while the Mac was in use. Each time Chrome went full screen, another application came back to the front within seconds. A hidden page gets no frame callbacks, so it neither finishes nor reports: run 2 at pixel ratio 1.5 was void, and run 3 and the first far-side run gave no result before the suite timed out.
+
+**What changed, in order.**
+
+1. **Chosen steps and run names** (`e379173`, 16 November, 00:17 UTC). `./run.sh desktop` takes the steps to run (`c1`, `dpr1.5`, `arcs-labels`, `c4`, `c5`, `c3`), and `SPIKE_RUNS` names a step's runs. A repeat gets a name of its own, such as run 2b, so the void run's file stays beside it, as §5.7 requires.
+2. **The driver watches the front application** (`232f507`, 16 November, 00:44 UTC). During a run `tools/chrome.mjs` checks every 2 s which application is in front. If another application has been in front for 4 s after this Chrome was, or this Chrome is not in front within 30 s of starting, the run is logged as void at once with that reason, and Chrome is closed. This applies a reason §5.7 already has, "the tab was hidden or lost focus", sooner. No reason was added.
+3. **The stand-in's start page** (`68e3f9d`, 17 November, 17:54 UTC). The stand-in attaches the DevTools protocol to apply the throttle. Chrome then started on a blank page, which left the keyboard focus in the address bar, and the stand-in's first five runs were void ("window not focused at start"). Chrome now starts on a plain file from the spike's own server and then loads the page, which gets the focus. The gating runs do not attach the DevTools protocol, so this change does not touch them. The five void runs are kept; the repeats are runs 1b to 5b.
+
+**How the runs of 17 November were started.** One at a time, by a script outside the repository. It waited until the Mac was in the pinned state (§5.2), no microphone was in use, no application was keeping the display awake, and there had been no keyboard or pointer input for 5 minutes. No gating run on 17 November was void.
+
+**Where the runs departed from this file.** Recorded here; the rules themselves are unchanged.
+
+- **Other applications were not closed** (§5.7). The host record counts 8 visible applications at the runs of 15–16 November and 10 on 17 November. The load average at the start of a gating run was 2.4 to 6.9. Load is not a reason to void a run. Other work competes with the page for the machine, so it is expected to lower a frame rate, not raise it.
+- **Chrome updated itself between sittings,** from 157.0.8103.52 (15–16 November) to 157.0.8103.79 (17 November). §5.7 asks for the version to be noted, and it is in every result; §5.8 does not fix it.
+- **The stand-in ran last.** §6 says it runs first, so that it can show a problem early. The desktop suite, which gates, was given the Mac's free time first, and the stand-in ran on 17 November after every desktop run. It could warn of nothing early, and its result is reported as it came.
+- The remaining gating checks (C4, C5 and C3) ran before the remaining reported runs. The file fixes no other order.
+
+**What did not change.** Every threshold, the point counts, the orbit, the pick list, the stops, the disc radius, the viewport, the display and its refresh rate, the gating pixel ratio, the repeats, the void reasons and the page.

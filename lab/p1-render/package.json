@@ -1,0 +1,22 @@
+{
+  "name": "globalens-p1-render-spike",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Phase 1 render bake-off (lab/p1-render/prereg.md). Standalone; not part of any workspace.",
+  "type": "module",
+  "scripts": {
+    "sample": "node sample/build-sample.mjs",
+    "build": "node build.mjs",
+    "serve": "node serve.mjs"
+  },
+  "dependencies": {
+    "@deck.gl/core": "9.4.1",
+    "@deck.gl/layers": "9.4.1",
+    "@deck.gl/maplibre": "9.4.1",
+    "@uwdata/flechette": "2.8.0",
+    "maplibre-gl": "6.18.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

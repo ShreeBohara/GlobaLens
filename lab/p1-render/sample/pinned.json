@@ -1,0 +1,8 @@
+{
+  "about": "The sample as built on 15 November 2026 (prereg §4.4). build-sample.mjs reads these pins, so a fresh checkout rebuilds the same sample and the committed pick list still matches it.",
+  "firstRunUtc": "2026-11-15T16:53:16.536Z",
+  "daysUsed": ["20261114", "20261113", "20261112"],
+  "sources": "sample-sources.txt",
+  "sourcesSha256": "1affc03194ddcfc58a9c748f12339b01bf3d26d8ee809865895c5362c183f375",
+  "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8"
+}

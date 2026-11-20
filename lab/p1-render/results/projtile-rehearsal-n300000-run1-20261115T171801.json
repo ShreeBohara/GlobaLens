@@ -1,0 +1,223 @@
+{
+ "kind": "projtile",
+ "state": {
+  "pageCommit": "2e4e324+uncommitted",
+  "url": "http://127.0.0.1:5173/?mode=projtile&n=300000&w=1440&h=900&label=rehearsal&run=1",
+  "dateUtc": "2026-11-15T17:18:01.597Z",
+  "versions": {
+   "maplibre": "6.18.0",
+   "deck": "9.4.1",
+   "flechette": "2.8.0"
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "webglRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M3 Pro, Unspecified Version)",
+  "webglVendor": "Google Inc. (Apple)",
+  "devicePixelRatio": 2,
+  "mapPixelRatio": 2,
+  "screen": {
+   "width": 1512,
+   "height": 982
+  },
+  "window": {
+   "innerWidth": 1512,
+   "innerHeight": 949
+  },
+  "viewport": {
+   "width": 1440,
+   "height": 900,
+   "clipped": false
+  },
+  "drawingBuffer": {
+   "width": 2880,
+   "height": 1800
+  },
+  "antialias": true,
+  "hardwareConcurrency": 11,
+  "deviceMemory": 16,
+  "battery": {
+   "charging": true,
+   "level": 1
+  },
+  "sample": {
+   "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8",
+   "bytes": 4801706,
+   "rows": 300000,
+   "languages": 64,
+   "decodeMs": 9
+  },
+  "params": {
+   "mode": "projtile",
+   "n": 300000,
+   "w": 1440,
+   "h": 900,
+   "dpr": null,
+   "hide": true,
+   "billboard": false,
+   "arcs": false,
+   "labels": false,
+   "arcHeight": 0.3,
+   "discDepth": false,
+   "arcDepth": false,
+   "run": "1",
+   "label": "rehearsal",
+   "standin": false,
+   "post": true
+  },
+  "refresh": {
+   "medianIntervalMs": 8.349999999999909,
+   "hz": 119.76047904191748,
+   "frames": 121
+  },
+  "orbit": {
+   "zoom": 2.7398,
+   "targetDiameterPx": 810,
+   "limbDiameterPx": 809.9824104643159,
+   "globeRadiusPx": 544.3171966769046,
+   "cameraDistanceRadii": 3.480171503384142
+  }
+ },
+ "note": "not a GO criterion; says only whether a custom GLSL layer can follow MapLibre through globe, morph and Mercator",
+ "pointsDrawn": 1000,
+ "shaderVariantsCompiled": [
+  "globe",
+  "mercator"
+ ],
+ "densest": {
+  "lon": -77.0363998413086,
+  "lat": 38.89509963989258,
+  "pointsInCell": 17847,
+  "pointsAtCoordinate": 17641
+ },
+ "mapErrors": [],
+ "cameras": [
+  {
+   "camera": "globe",
+   "zoom": 2.7398,
+   "projectionTransition": 1,
+   "pointsInView": 783,
+   "measured": 63,
+   "notFoundWithin8px": 0,
+   "maxDistancePx": 3.934,
+   "meanDistancePx": 0.179,
+   "worst": {
+    "lon": -43.56669998168945,
+    "lat": -19.783300399780273,
+    "x": 996.7,
+    "y": 853.2,
+    "markerPixels": 170,
+    "angleFromCentreDeg": 66.52
+   }
+  },
+  {
+   "camera": "morph 10.5",
+   "zoom": 10.5,
+   "projectionTransition": 1,
+   "pointsInView": 55,
+   "measured": 33,
+   "notFoundWithin8px": 0,
+   "maxDistancePx": 0.223,
+   "meanDistancePx": 0.091,
+   "worst": {
+    "lon": -77.09970092773438,
+    "lat": 38.866798400878906,
+    "x": 589.6,
+    "y": 524.8,
+    "markerPixels": 84,
+    "angleFromCentreDeg": 0.06
+   }
+  },
+  {
+   "camera": "morph 11",
+   "zoom": 11,
+   "projectionTransition": 1,
+   "pointsInView": 51,
+   "measured": 40,
+   "notFoundWithin8px": 0,
+   "maxDistancePx": 0.209,
+   "meanDistancePx": 0.097,
+   "worst": {
+    "lon": -77.09970092773438,
+    "lat": 38.866798400878906,
+    "x": 535.6,
+    "y": 555.8,
+    "markerPixels": 81,
+    "angleFromCentreDeg": 0.06
+   }
+  },
+  {
+   "camera": "morph 11.5",
+   "zoom": 11.5,
+   "projectionTransition": 0.5,
+   "pointsInView": 44,
+   "measured": 38,
+   "notFoundWithin8px": 0,
+   "maxDistancePx": 0.344,
+   "meanDistancePx": 0.121,
+   "worst": {
+    "lon": -76.94190216064453,
+    "lat": 38.970401763916016,
+    "x": 1108.7,
+    "y": 51.4,
+    "markerPixels": 90,
+    "angleFromCentreDeg": 0.11
+   }
+  },
+  {
+   "camera": "mercator 13",
+   "zoom": 13,
+   "projectionTransition": 0,
+   "pointsInView": 29,
+   "measured": 27,
+   "notFoundWithin8px": 0,
+   "maxDistancePx": 0.229,
+   "meanDistancePx": 0.104,
+   "worst": {
+    "lon": -77.02330017089844,
+    "lat": 38.897098541259766,
+    "x": 872.6,
+    "y": 420.1,
+    "markerPixels": 87,
+    "angleFromCentreDeg": 0.01
+   }
+  }
+ ],
+ "host": {
+  "label": "rehearsal",
+  "notedUtc": "2026-11-15T17:17:49.986Z",
+  "model": "MacBook Pro",
+  "modelIdentifier": "Mac15,6",
+  "chip": "Apple M3 Pro",
+  "cores": "11 (5 Performance and 6 Efficiency)",
+  "memory": "18 GB",
+  "os": "macOS 27.0.1 (26A434)",
+  "chrome": "Google Chrome 157.0.8103.52",
+  "displays": [
+   {
+    "builtIn": true,
+    "pixels": "3024 x 1964",
+    "resolution": "1512 x 982 @ 120.00Hz",
+    "main": true,
+    "online": true
+   },
+   {
+    "builtIn": false,
+    "pixels": "3440 x 1440",
+    "resolution": "3440 x 1440 @ 85.00Hz",
+    "main": false,
+    "online": true
+   }
+  ],
+  "externalDisplayAttached": true,
+  "powerSource": "AC Power",
+  "batteryPercent": 100,
+  "lowPowerMode": false,
+  "thermal": {
+   "cpuSpeedLimit": null,
+   "schedulerLimit": null,
+   "noThermalWarning": true
+  },
+  "visibleApplications": 12,
+  "pinned": false
+ },
+ "receivedUtc": "2026-11-15T17:18:01.621Z"
+}

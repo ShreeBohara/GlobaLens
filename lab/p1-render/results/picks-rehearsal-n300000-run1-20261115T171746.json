@@ -1,0 +1,575 @@
+{
+ "kind": "picks",
+ "state": {
+  "pageCommit": "2e4e324+uncommitted",
+  "url": "http://127.0.0.1:5173/?mode=picks&n=300000&w=1440&h=900&limit=40&label=rehearsal&run=1",
+  "dateUtc": "2026-11-15T17:17:46.623Z",
+  "versions": {
+   "maplibre": "6.18.0",
+   "deck": "9.4.1",
+   "flechette": "2.8.0"
+  },
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+  "webglRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M3 Pro, Unspecified Version)",
+  "webglVendor": "Google Inc. (Apple)",
+  "devicePixelRatio": 2,
+  "mapPixelRatio": 2,
+  "screen": {
+   "width": 1512,
+   "height": 982
+  },
+  "window": {
+   "innerWidth": 1512,
+   "innerHeight": 949
+  },
+  "viewport": {
+   "width": 1440,
+   "height": 900,
+   "clipped": false
+  },
+  "drawingBuffer": {
+   "width": 2880,
+   "height": 1800
+  },
+  "antialias": true,
+  "hardwareConcurrency": 11,
+  "deviceMemory": 16,
+  "battery": {
+   "charging": true,
+   "level": 1
+  },
+  "sample": {
+   "sha256": "7a3049e458739576d07e23605fc27aa574a110755ec22727be76d229ed6d07e8",
+   "bytes": 4801706,
+   "rows": 300000,
+   "languages": 64,
+   "decodeMs": 6.400000095367432
+  },
+  "params": {
+   "mode": "picks",
+   "n": 300000,
+   "w": 1440,
+   "h": 900,
+   "dpr": null,
+   "hide": true,
+   "billboard": false,
+   "arcs": false,
+   "labels": false,
+   "arcHeight": 0.3,
+   "discDepth": false,
+   "arcDepth": false,
+   "run": "1",
+   "label": "rehearsal",
+   "standin": false,
+   "post": true
+  },
+  "refresh": {
+   "medianIntervalMs": 8.299999999999955,
+   "hz": 120.48192771084403,
+   "frames": 122
+  },
+  "orbit": {
+   "zoom": 2.7398,
+   "targetDiameterPx": 810,
+   "limbDiameterPx": 809.9824104643159,
+   "globeRadiusPx": 544.3171966769046,
+   "cameraDistanceRadii": 3.480171503384142
+  }
+ },
+ "partial": true,
+ "listSha256": "e62e1b028e6ddda69a25831f0a7663ca5bf0c024844cce199103051aa6fa9f99",
+ "picksRun": 40,
+ "correct": 40,
+ "threshold": "every run must reach 990 correct of 1,000",
+ "misses": [],
+ "emptyProbes": {
+  "run": 40,
+  "returnedSomething": 0
+ },
+ "notIdleWithin15s": 0,
+ "knownAnswerCheckFailedAtRunTime": 0,
+ "elapsedMs": 26170,
+ "voidEvents": [],
+ "mapErrors": [],
+ "rows": [
+  {
+   "i": 0,
+   "zoom": 10,
+   "x": 584.22,
+   "y": 635.19,
+   "correct": true,
+   "got": 299957,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 25,
+   "zoom": 10.05005,
+   "x": 830.15,
+   "y": 550.62,
+   "correct": true,
+   "got": 136075,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 50,
+   "zoom": 10.1001,
+   "x": 351.6,
+   "y": 554.7,
+   "correct": true,
+   "got": 103993,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 75,
+   "zoom": 10.15015,
+   "x": 612.03,
+   "y": 642.72,
+   "correct": true,
+   "got": 299865,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 100,
+   "zoom": 10.2002,
+   "x": 320.52,
+   "y": 524.48,
+   "correct": true,
+   "got": 296148,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 125,
+   "zoom": 10.25025,
+   "x": 348.72,
+   "y": 720.56,
+   "correct": true,
+   "got": 279243,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 150,
+   "zoom": 10.3003,
+   "x": 1108.08,
+   "y": 336.42,
+   "correct": true,
+   "got": 299383,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 175,
+   "zoom": 10.35035,
+   "x": 654.7,
+   "y": 734.48,
+   "correct": true,
+   "got": 299764,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 200,
+   "zoom": 10.4004,
+   "x": 1198.45,
+   "y": 352.98,
+   "correct": true,
+   "got": 299721,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 225,
+   "zoom": 10.45045,
+   "x": 372.19,
+   "y": 211.84,
+   "correct": true,
+   "got": 299979,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 250,
+   "zoom": 10.500501,
+   "x": 357.66,
+   "y": 724.22,
+   "correct": true,
+   "got": 299891,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 275,
+   "zoom": 10.550551,
+   "x": 1209.04,
+   "y": 370.64,
+   "correct": true,
+   "got": 81754,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 300,
+   "zoom": 10.600601,
+   "x": 1197.45,
+   "y": 602.41,
+   "correct": true,
+   "got": 299994,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 325,
+   "zoom": 10.650651,
+   "x": 170.33,
+   "y": 305.44,
+   "correct": true,
+   "got": 299078,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 350,
+   "zoom": 10.700701,
+   "x": 613.14,
+   "y": 395.1,
+   "correct": true,
+   "got": 299788,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 375,
+   "zoom": 10.750751,
+   "x": 249.97,
+   "y": 726.37,
+   "correct": true,
+   "got": 299962,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 400,
+   "zoom": 10.800801,
+   "x": 366.36,
+   "y": 740.84,
+   "correct": true,
+   "got": 295904,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 425,
+   "zoom": 10.850851,
+   "x": 722.59,
+   "y": 137.8,
+   "correct": true,
+   "got": 282468,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 450,
+   "zoom": 10.900901,
+   "x": 182.8,
+   "y": 495.93,
+   "correct": true,
+   "got": 299951,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 475,
+   "zoom": 10.950951,
+   "x": 1224.59,
+   "y": 210.55,
+   "correct": true,
+   "got": 299957,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 500,
+   "zoom": 11.001001,
+   "x": 722.86,
+   "y": 179.46,
+   "correct": true,
+   "got": 299627,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 525,
+   "zoom": 11.051051,
+   "x": 523.51,
+   "y": 541.23,
+   "correct": true,
+   "got": 298014,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 550,
+   "zoom": 11.101101,
+   "x": 340.79,
+   "y": 733.53,
+   "correct": true,
+   "got": 299924,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 575,
+   "zoom": 11.151151,
+   "x": 260.03,
+   "y": 660.42,
+   "correct": true,
+   "got": 299919,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 600,
+   "zoom": 11.201201,
+   "x": 569.28,
+   "y": 166.18,
+   "correct": true,
+   "got": 299916,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 625,
+   "zoom": 11.251251,
+   "x": 279.65,
+   "y": 137.86,
+   "correct": true,
+   "got": 299907,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 650,
+   "zoom": 11.301301,
+   "x": 465.07,
+   "y": 320.51,
+   "correct": true,
+   "got": 299548,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 675,
+   "zoom": 11.351351,
+   "x": 198.64,
+   "y": 176,
+   "correct": true,
+   "got": 278014,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 700,
+   "zoom": 11.401401,
+   "x": 1284.1,
+   "y": 530.97,
+   "correct": true,
+   "got": 299788,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 725,
+   "zoom": 11.451451,
+   "x": 210.66,
+   "y": 260.24,
+   "correct": true,
+   "got": 299805,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 750,
+   "zoom": 11.501502,
+   "x": 1259.24,
+   "y": 530.47,
+   "correct": true,
+   "got": 299990,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 775,
+   "zoom": 11.551552,
+   "x": 745.83,
+   "y": 673.19,
+   "correct": true,
+   "got": 286093,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 800,
+   "zoom": 11.601602,
+   "x": 600.94,
+   "y": 624.5,
+   "correct": true,
+   "got": 298442,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 825,
+   "zoom": 11.651652,
+   "x": 703.24,
+   "y": 390.93,
+   "correct": true,
+   "got": 43920,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 850,
+   "zoom": 11.701702,
+   "x": 305.8,
+   "y": 580.78,
+   "correct": true,
+   "got": 70424,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 875,
+   "zoom": 11.751752,
+   "x": 450.03,
+   "y": 118.03,
+   "correct": true,
+   "got": 294226,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 900,
+   "zoom": 11.801802,
+   "x": 818.48,
+   "y": 268.19,
+   "correct": true,
+   "got": 299909,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 925,
+   "zoom": 11.851852,
+   "x": 712.66,
+   "y": 260.39,
+   "correct": true,
+   "got": 299288,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 950,
+   "zoom": 11.901902,
+   "x": 1193.76,
+   "y": 698.7,
+   "correct": true,
+   "got": 299975,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  },
+  {
+   "i": 975,
+   "zoom": 11.951952,
+   "x": 857.86,
+   "y": 278.6,
+   "correct": true,
+   "got": 299865,
+   "idle": true,
+   "precond": true,
+   "emptyHit": null
+  }
+ ],
+ "host": {
+  "label": "rehearsal",
+  "notedUtc": "2026-11-15T17:17:17.232Z",
+  "model": "MacBook Pro",
+  "modelIdentifier": "Mac15,6",
+  "chip": "Apple M3 Pro",
+  "cores": "11 (5 Performance and 6 Efficiency)",
+  "memory": "18 GB",
+  "os": "macOS 27.0.1 (26A434)",
+  "chrome": "Google Chrome 157.0.8103.52",
+  "displays": [
+   {
+    "builtIn": true,
+    "pixels": "3024 x 1964",
+    "resolution": "1512 x 982 @ 120.00Hz",
+    "main": true,
+    "online": true
+   },
+   {
+    "builtIn": false,
+    "pixels": "3440 x 1440",
+    "resolution": "3440 x 1440 @ 85.00Hz",
+    "main": false,
+    "online": true
+   }
+  ],
+  "externalDisplayAttached": true,
+  "powerSource": "AC Power",
+  "batteryPercent": 100,
+  "lowPowerMode": false,
+  "thermal": {
+   "cpuSpeedLimit": null,
+   "schedulerLimit": null,
+   "noThermalWarning": true
+  },
+  "visibleApplications": 12,
+  "pinned": false
+ },
+ "receivedUtc": "2026-11-15T17:17:46.747Z"
+}

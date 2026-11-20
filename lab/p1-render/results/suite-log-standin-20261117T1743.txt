@@ -1,0 +1,20 @@
+2026-11-17T17:43:10Z ready: projectTile smoke test (load average { 4.24 4.16 4.15 })
+page commit: 232f507
+17:43:11 projtile run 1: mode=projtile&n=300000&w=1440&h=900
+{  "resultFile": "projtile-projtile-n300000-run1-20261117T174321.json" } 
+./run.sh: line 34:  4668 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:43:23Z projectTile smoke test ended with exit code 0
+2026-11-17T17:43:24Z ready: phone stand-in, five runs (load average { 3.82 4.07 4.11 })
+page commit: 232f507
+17:43:25 standin-6x run 1: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run1-20261117T174430.json" } 
+17:45:32 standin-6x run 2: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run2-20261117T174637.json" } 
+17:47:39 standin-6x run 3: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run3-20261117T174844.json" } 
+17:49:45 standin-6x run 4: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run4-20261117T175051.json" } 
+17:51:52 standin-6x run 5: mode=orbit&n=100000&w=412&h=915&dpr=2.625&standin=1
+{  "resultFile": "orbit-standin-6x-n100000-run5-20261117T175257.json" } 
+./run.sh: line 34:  6336 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:52:58Z phone stand-in, five runs ended with exit code 0

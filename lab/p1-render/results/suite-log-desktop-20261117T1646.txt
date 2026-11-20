@@ -1,0 +1,126 @@
+2026-11-17T16:46:06Z ready: c4 run 1 (load average { 3.96 14.51 15.34 })
+page commit: 232f507
+16:46:08 desktop-c4 run 1: mode=farside&n=300000&w=1440&h=900
+{  "resultFile": "farside-desktop-c4-n300000-run1-20261117T164722.json" } 
+desktop steps finished (c4); results are in results/
+./run.sh: line 34: 76521 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:47:23Z done: c4 run 1
+2026-11-17T16:47:24Z ready: c4 run 2 (load average { 4.45 12.32 14.43 })
+page commit: 232f507
+16:47:25 desktop-c4 run 2: mode=farside&n=300000&w=1440&h=900
+{  "resultFile": "farside-desktop-c4-n300000-run2-20261117T164832.json" } 
+desktop steps finished (c4); results are in results/
+./run.sh: line 34: 80052 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:48:33Z done: c4 run 2
+2026-11-17T16:48:34Z ready: c4 run 3 (load average { 4.14 10.60 13.62 })
+page commit: 232f507
+16:48:35 desktop-c4 run 3: mode=farside&n=300000&w=1440&h=900
+{  "resultFile": "farside-desktop-c4-n300000-run3-20261117T164941.json" } 
+desktop steps finished (c4); results are in results/
+./run.sh: line 34: 83293 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:49:43Z done: c4 run 3
+2026-11-17T16:49:43Z ready: c5 run 1 (load average { 5.85 9.52 12.95 })
+page commit: 232f507
+16:49:44 desktop-c5 run 1: mode=labels&n=300000&w=1440&h=900
+{  "resultFile": "labels-desktop-c5-n300000-run1-20261117T164955.json" } 
+desktop steps finished (c5); results are in results/
+./run.sh: line 34: 86558 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:49:56Z done: c5 run 1
+2026-11-17T16:49:56Z ready: c5 run 2 (load average { 6.89 9.55 12.90 })
+page commit: 232f507
+16:49:58 desktop-c5 run 2: mode=labels&n=300000&w=1440&h=900
+{  "resultFile": "labels-desktop-c5-n300000-run2-20261117T165006.json" } 
+desktop steps finished (c5); results are in results/
+./run.sh: line 34: 87663 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:50:07Z done: c5 run 2
+2026-11-17T16:50:08Z ready: c5 run 3 (load average { 6.65 9.41 12.81 })
+page commit: 232f507
+16:50:09 desktop-c5 run 3: mode=labels&n=300000&w=1440&h=900
+{  "resultFile": "labels-desktop-c5-n300000-run3-20261117T165018.json" } 
+desktop steps finished (c5); results are in results/
+./run.sh: line 34: 88723 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T16:50:19Z done: c5 run 3
+2026-11-17T16:50:19Z ready: c3 run 1 (load average { 6.58 9.31 12.74 })
+page commit: 232f507
+16:50:21 desktop-c3 run 1: mode=picks&n=300000&w=1440&h=900
+{  "resultFile": "picks-desktop-c3-n300000-run1-20261117T170235.json" } 
+desktop steps finished (c3); results are in results/
+./run.sh: line 34: 89776 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:02:37Z done: c3 run 1
+2026-11-17T17:02:38Z ready: c3 run 2 (load average { 4.40 4.94 7.96 })
+page commit: 232f507
+17:02:40 desktop-c3 run 2: mode=picks&n=300000&w=1440&h=900
+{  "resultFile": "picks-desktop-c3-n300000-run2-20261117T171313.json" } 
+desktop steps finished (c3); results are in results/
+./run.sh: line 34: 18411 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:13:15Z done: c3 run 2
+2026-11-17T17:13:15Z ready: c3 run 3 (load average { 5.09 4.59 6.17 })
+page commit: 232f507
+17:13:17 desktop-c3 run 3: mode=picks&n=300000&w=1440&h=900
+{  "resultFile": "picks-desktop-c3-n300000-run3-20261117T172501.json" } 
+desktop steps finished (c3); results are in results/
+./run.sh: line 34: 43003 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:25:03Z done: c3 run 3
+2026-11-17T17:25:04Z ready: dpr1.5 run 2b (load average { 5.41 4.29 4.99 })
+page commit: 232f507
+17:25:05 desktop-dpr1.5 run 2b: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run2b-20261117T172610.json" } 
+desktop steps finished (dpr1.5); results are in results/
+./run.sh: line 34: 70214 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:26:11Z done: dpr1.5 run 2b
+2026-11-17T17:27:12Z ready: dpr1.5 run 3b (load average { 2.81 3.95 4.78 })
+page commit: 232f507
+17:27:13 desktop-dpr1.5 run 3b: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run3b-20261117T172817.json" } 
+desktop steps finished (dpr1.5); results are in results/
+./run.sh: line 34: 74449 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:28:18Z done: dpr1.5 run 3b
+2026-11-17T17:29:19Z ready: dpr1.5 run 4 (load average { 3.32 3.73 4.57 })
+page commit: 232f507
+17:29:20 desktop-dpr1.5 run 4: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run4-20261117T173025.json" } 
+desktop steps finished (dpr1.5); results are in results/
+./run.sh: line 34: 78164 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:30:26Z done: dpr1.5 run 4
+2026-11-17T17:31:27Z ready: dpr1.5 run 5 (load average { 3.08 3.43 4.33 })
+page commit: 232f507
+17:31:28 desktop-dpr1.5 run 5: mode=orbit&n=300000&w=1440&h=900&dpr=1.5
+{  "resultFile": "orbit-desktop-dpr1.5-n300000-run5-20261117T173232.json" } 
+desktop steps finished (dpr1.5); results are in results/
+./run.sh: line 34: 81865 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:32:34Z done: dpr1.5 run 5
+2026-11-17T17:32:35Z ready: arcs-labels run 1 (load average { 4.23 3.68 4.35 })
+page commit: 232f507
+17:32:36 desktop-arcs-labels run 1: mode=orbit&n=300000&w=1440&h=900&arcs=1&labels=1
+{  "resultFile": "orbit-desktop-arcs-labels-n300000-run1-20261117T173340.json" } 
+desktop steps finished (arcs-labels); results are in results/
+./run.sh: line 34: 85534 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:33:41Z done: arcs-labels run 1
+2026-11-17T17:34:42Z ready: arcs-labels run 2 (load average { 2.87 3.40 4.15 })
+page commit: 232f507
+17:34:43 desktop-arcs-labels run 2: mode=orbit&n=300000&w=1440&h=900&arcs=1&labels=1
+{  "resultFile": "orbit-desktop-arcs-labels-n300000-run2-20261117T173546.json" } 
+desktop steps finished (arcs-labels); results are in results/
+./run.sh: line 34: 89262 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:35:48Z done: arcs-labels run 2
+2026-11-17T17:36:49Z ready: arcs-labels run 3 (load average { 3.28 3.38 4.03 })
+page commit: 232f507
+17:36:50 desktop-arcs-labels run 3: mode=orbit&n=300000&w=1440&h=900&arcs=1&labels=1
+{  "resultFile": "orbit-desktop-arcs-labels-n300000-run3-20261117T173754.json" } 
+desktop steps finished (arcs-labels); results are in results/
+./run.sh: line 34: 92955 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:37:56Z done: arcs-labels run 3
+2026-11-17T17:38:57Z ready: arcs-labels run 4 (load average { 2.64 3.31 3.93 })
+page commit: 232f507
+17:38:58 desktop-arcs-labels run 4: mode=orbit&n=300000&w=1440&h=900&arcs=1&labels=1
+{  "resultFile": "orbit-desktop-arcs-labels-n300000-run4-20261117T174004.json" } 
+desktop steps finished (arcs-labels); results are in results/
+./run.sh: line 34: 96677 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:40:05Z done: arcs-labels run 4
+2026-11-17T17:41:06Z ready: arcs-labels run 5 (load average { 3.12 3.38 3.87 })
+page commit: 232f507
+17:41:07 desktop-arcs-labels run 5: mode=orbit&n=300000&w=1440&h=900&arcs=1&labels=1
+{  "resultFile": "orbit-desktop-arcs-labels-n300000-run5-20261117T174214.json" } 
+desktop steps finished (arcs-labels); results are in results/
+./run.sh: line 34:   572 Terminated: 15          node serve.mjs --port "$PORT" --host-state "$STATE" > data/.server.log 2>&1
+2026-11-17T17:42:15Z done: arcs-labels run 5
