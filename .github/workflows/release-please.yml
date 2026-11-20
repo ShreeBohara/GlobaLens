@@ -1,0 +1,44 @@
+# release-please (P1 task 5, docs/adr/0011-ci-toolchain.md). On every push to main it keeps one
+# release pull request up to date: the changelog since the last release, and the version that
+# .github/release-please-config.json sets with `release-as` (the current phase, v3.0.0-pN).
+# Merging that pull request, at the phase's close, tags the release.
+#
+# Two settings are the owner's: Actions must be allowed to create pull requests, and a pull
+# request opened with this workflow's token starts no workflows, so `ci-ok` does not run on it
+# by itself (ADR-0011 says how to run it).
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: release-please
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write # the release branch, the tag and the GitHub release
+      issues: write # labels on the release pull request
+      pull-requests: write # open and update the release pull request
+    steps:
+      - name: Harden the runner
+        uses: step-security/harden-runner@1d88384fd173af6ecb012dfd0264a306b711241a # v2.22.4
+        with:
+          egress-policy: block
+          disable-telemetry: true
+          allowed-endpoints: >-
+            api.github.com:443
+            github.com:443
+
+      - name: Update the release pull request, or tag the release it merged
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: .github/release-please-config.json
+          manifest-file: .github/release-please-manifest.json
