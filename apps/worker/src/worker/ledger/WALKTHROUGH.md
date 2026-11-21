@@ -21,14 +21,18 @@ Two mechanisms carry it:
 
 | File | What is in it |
 |---|---|
-| `fence.py` | Every SQL statement of the ledger: enqueue, lease, and the fenced commits |
+| `fence.py` | Every SQL statement of tier 1: enqueue, lease, and the fenced commits |
 | `keys.py` | Object keys derived from content |
 | `backoff.py` | How long a failed file waits |
 | `tier1.py` | `walk`: one lease taking one file through fetch, verify and load |
+| `publish.py` | The publisher: its lock, its pass number, the ready rule, `run_pass`, and the commit that names the pass |
 
 Outside this folder, and not part of the kernel: `worker/poller.py` (enqueues files),
 `worker/feed.py` (GDELT's listings, HTTP), `worker/lake.py` (the Parquet bytes),
-`worker/store.py` (the object store), `worker/__main__.py` (the processes).
+`worker/store.py` (the object store), `worker/__main__.py` (the processes), and for the
+publisher `worker/dataplane.py` (what a pass writes), `worker/shards.py` and
+`worker/manifest.py` (the bytes of the shards and the JSON), `worker/cells.py` (H3 base cells)
+and `worker/publisher.py` (the process that runs the passes).
 
 ## The row and its states
 
@@ -44,10 +48,12 @@ stateDiagram-v2
   fetched --> listed: release, when the size or MD5 differs
   listed --> gap: to_gap, when it still fails 7 days after it was listed
   verified --> dead: to_dead, when it cannot be opened or over 10% of its lines fail
+  loaded --> published: publish.commit, by the newest pass, after its now.json
 ```
 
-`loaded → published` is the publisher's (task 11). `loaded`, `gap` and `dead` end tier 1: the
-lease statement never picks them.
+`loaded`, `gap` and `dead` end tier 1: the lease statement never picks them. `loaded →
+published` is the publisher's (`publish.py`, below), and nothing moves a row out of
+`published`.
 
 | Transition | Done first, outside the database | Written by the commit |
 |---|---|---|
@@ -207,7 +213,61 @@ each has a test. They are listed so that the review can disagree with them.
    ago that fails its next try becomes a gap, even if the workers were down for those 7 days and
    that try was its first.
 
+The publisher's (task 11):
+
+9. The fence is the pass number, in both statements of the commit, plus a newest-pass check
+   just before `now.json`, with a second, transaction-level lock (`SERIAL`) ordering numbers
+   and commits. The design note gives the publisher an advisory lock; the lock is kept, as what
+   decides who publishes, but safety does not rest on it.
+10. A pass reads the ledger after it takes its number, as §7.5 orders the steps, and once
+    before, to decide whether anything is due without burning a number.
+11. A stamp is ready at once when the other stream is `gap`, `dead` or already `published`, not
+    only when both are loaded or after 15 minutes.
+12. An interval older than the window (the 24 closed hours before the hourly cut) is committed
+    as `published` with no objects: no reader would reach them.
+13. The hourly cut is at 15 past the hour, and an interval published at the cut's very instant
+    waits for the next cut, so that the data plane stays a function of the ledger.
+
 ## Known limits
+
+- **The pass number fences a stalled publisher's commit, not its PUT of `now.json`.** Say a
+  publisher stalls (a pause, or a PUT still in flight) after it has checked that its pass is
+  the newest and before its `now.json` has landed, and a newer pass runs meanwhile and writes
+  its own. Then the stalled publisher's `now.json` lands over the newer one: an older state,
+  complete (everything it names exists), but without what the newer pass published. It stays
+  until the next pass writes `now.json` again. The database is not touched: the stalled pass's
+  commit is refused. The browser never steps back to an older `seq`, but a client that starts
+  cold in that window reads the older state. §7.5 accepts this for P1: `now.json` is a plain
+  PUT, there is one publisher on one node, and the lock keeps a second one out while the
+  first one's connection lives, so a newer pass can only run if the first one's session has
+  ended under it. P2's conditional PUT and ledger epoch close it.
+
+  What the tests cover, case by case:
+
+  | A publisher stalls… | What happens | Covered by |
+  |---|---|---|
+  | …before its newest-pass check, while a newer pass takes a number | The check fails; no `now.json`, no commit | `test_a_pass_that_is_overtaken_writes_no_now_json`; the property test (5a, 5c) |
+  | …after its `now.json` landed, before its commit | Its commit is refused; the newer pass's `now.json` comes later and wins | `test_a_pass_overtaken_after_now_json_does_not_commit`; the property test (5a, 5c, and the run without the fence) |
+  | …between its check and the moment its `now.json` lands | Its commit is refused, but its older `now.json` lands over the newer one until the next pass | `test_known_limit_a_now_json_put_that_lands_after_a_newer_pass_goes_back_until_the_next`, which shows it happening. **Not** the property test: it steps whole yields, and there is no yield between the check and the PUT, so its 5a and 5e cannot catch this case |
+  | …and its session ends, so another publisher takes the lock | As the three rows above, by where it stalled; a dead connection fails the check and the commit | The property test's rogue publishers stand in for it (they skip the lock) |
+- **One unreadable lake file stops publishing.** The plan is built after the pass has taken its
+  number, from the lake files of every ready interval. If one is missing, damaged or of another
+  schema version, the pass raises, the process logs it and tries again 30 seconds later, and
+  every try burns a number. Nothing is published until someone looks; the dead-man ping stops
+  with the commits, so Healthchecks.io pages after its 60-minute grace. A per-interval way to set
+  one file aside, as tier 1's `dead` does, is not built. No row the parser kept can do this:
+  `worker/shards.py`'s `read_articles` turns every such row into an article.
+- **The write ceilings hold for one unit per stamp and one hour per cut.** A pass that publishes
+  a stamp whose two streams are ready together writes at most 64 objects; with tier 1's six,
+  70, under the plan's 72 per interval. A pass at the cut that compacts one hour writes at most
+  65. Late data costs more: a stream published on its own is a second unit, with its own point
+  shard and title shards; and a unit of an hour that is already compacted makes the next cut
+  compact that hour again, writing every title object whose rows changed. A cut after an outage
+  compacts every hour that changed. The measured counts are in `metrics/ledger.jsonl`
+  (`r2_writes_per_interval`, whose detail has the largest pass).
+- **The fence lives in one database.** A second publisher on another database (P2's promoted
+  standby) has its own `publish_pass`, and the pass number fences nothing across the two. That is
+  what P2's ledger epoch is for.
 
 - **A file enqueued with no listing can only become a gap.** When the poller fills in stamps it
   missed, a stamp that its one read of the master list does not show is enqueued with no size
@@ -218,6 +278,91 @@ each has a test. They are listed so that the review can disagree with them.
   ledger row without a token), or let the worker that holds the row look the listing up and
   commit it under its token. The hourly reconciler of Phase 3 is the plan's own answer.
 - **A wrong first listing is just as sticky**, for the same reason.
+
+## `publish.py`
+
+One process publishes. It runs passes; a pass turns the `loaded` intervals that are ready into
+the data plane under `cdn/` and then commits them as `published`.
+
+**The lock decides who publishes; the pass number is the fence.** `lock` is
+`pg_try_advisory_lock` on one fixed key, taken by the process on its own connection, for its
+session. A second process gets `false` and exits (`worker/publisher.py`, status 3). If the
+publisher dies, its connection goes and the lock with it.
+
+The lock is not what makes publishing safe. Tier 1 is fenced by the row's token, but a
+`loaded` row carries none: `to_loaded` cleared it. So the publisher's token is its pass
+number. Both statements of its commit end in `PUBLISH_WHERE`:
+
+```sql
+   and %(seq)s = (select max(seq) from ingest.publish_pass)
+```
+
+A pass whose number is no longer the largest changes 0 rows, exactly as a stale lease token
+does, and for the same reason: the check and the write are one statement. `CLAUDE.md`'s ledger
+rule says this in one clause.
+
+One difference from tier 1 needs a second lock. Tier 1's check is on the row it writes: if
+another transaction changes that row first, PostgreSQL waits for it and evaluates the `where`
+again against the new version. The publisher's check reads another table, `publish_pass`, and a
+statement reads another table as it was when the statement began: a number taken by another
+session a moment later would not be seen. So `take_seq` and `commit` each take
+`pg_advisory_xact_lock(SERIAL)` first, a lock held to the end of their transaction. A number
+cannot be taken while a commit is checking, and a commit cannot check while a number is being
+taken. `test_no_number_is_taken_while_a_commit_is_checking` holds the lock and shows `take_seq`
+waiting for it.
+
+That works only at READ COMMITTED, where each statement reads what was committed before it
+began, so the statements after the lock see every number taken before the lock was granted.
+At REPEATABLE READ every statement of a transaction reads the snapshot of its first one, which
+here is taken before the wait. PostgreSQL's default is READ COMMITTED; both transactions state
+it anyway, as their first statement, and `worker/db.py` makes it the session's default for
+every worker connection. `test_the_fence_holds_on_a_connection_whose_default_is_repeatable_read`
+sets the stricter level on the connection and shows the fence still refusing.
+
+**A pass** (`run_pass`), step by step:
+
+1. Look: is any interval ready, or has an hourly cut passed since this process last committed
+   (`DataPlane.due`)? If not, return `IDLE`. No number is taken, so an idle publisher writes
+   nothing to `publish_pass`.
+2. `take_seq`: in one transaction, READ COMMITTED, `SERIAL`, then
+   `insert … select coalesce(max(seq), 0) + 1 … returning seq`. The table is never deleted from (the worker role has no `delete`) and its
+   primary key refuses a number twice, so a number is never taken again. A pass that dies after
+   this has burned its number.
+3. Read the ledger again, now that it has its number: `ready` and `published`. The order
+   matters. Any commit that lands after this read comes from a pass that was the newest when it
+   committed, so its number is larger than this one, and its own `now.json` comes after this
+   pass's. Reading before taking the number would let a pass miss a commit and then write a
+   `now.json` without it.
+4. PUT every object of the plan (`worker/dataplane.py`), in the order the plan gives: shards and
+   compactions, title indexes, the hourly manifest, the pass manifest. Each object names only
+   objects before it. Each key must end in the hash of its bytes (`is_content_key`); a key that
+   does not is refused before anything is written. An object already in the store is not PUT
+   again: `exists` is a HEAD, a PUT is a Class A write.
+5. `is_newest`, then PUT `now.json`. No yield between the two: see "Known limits".
+6. `commit`: in one transaction, READ COMMITTED, `SERIAL`, then the ready intervals become
+   `published` with `seq` and `published_at`, and the pass row gets `manifest_key`,
+   `finished_at` and `objects` (its PUTs by object class, its HEADs, the objects it skipped).
+   If the first statement changes fewer rows than there are intervals, or the second changes no
+   row, the transaction rolls back and the pass returns `FENCED`: a later pass exists, or an
+   interval was no longer `loaded`.
+
+**The ready rule** (`ready`): a `loaded` interval is ready when the other stream of its stamp
+has finished one way or another (`loaded`, `published`, `gap` or `dead`), or when it has waited
+`READY_WAIT`, 15 minutes, since it loaded. Two loaded streams of one stamp are ready together and
+published as one unit; a late stream is published on its own in a later pass.
+
+**What a crash leaves**, at each place a pass can die:
+
+| Dies | `now.json` names | The intervals | The next pass |
+|---|---|---|---|
+| Before its number | the last pass's manifest | `loaded` | runs as if nothing happened |
+| After its number, before `now.json` | the last pass's manifest, whose objects all exist | `loaded` | takes the next number; objects already PUT are found and skipped |
+| Between `now.json` and the commit | this pass's manifest, whose objects all exist | `loaded` | publishes them again under the next number, with the same shard keys |
+| After the commit | this pass's manifest | `published` | nothing to redo |
+
+Everything a pass writes except `now.json` is stored under the hash of its bytes, and the same
+ledger gives the same bytes (`worker/dataplane.py`). So a repeated pass writes the same objects
+to the same keys, and a crashed pass's objects are garbage, not corruption.
 
 ## The questions of §7.8
 
@@ -255,12 +400,20 @@ wrote the same bytes to the same key as the winner. If the two ran different cod
 bytes went to a different key that no row names: garbage, not corruption. The ledger row names
 the key that counts.
 
-**Why does `now.json` go last, and what is a burned `seq`?** Both belong to the publisher, which
-is task 11 and has no code yet. The design note's answers (§7.5): `now.json` is the only pointer
-that changes, so it is written after everything it names exists, and a crash before it leaves
-readers on the previous, complete state. A pass takes its number in a transaction of its own
-before it writes anything; if the pass then dies, the number is spent, so `seq` has gaps and
-never repeats or goes back.
+**Why does `now.json` go last?** It is the only object that is written over; everything else
+is new under a new key. A reader starts from it and follows what it names. Written last, it
+only ever names objects that exist, so a crash anywhere before it leaves readers on the last
+complete pass, and a crash after it leaves them on this pass, also complete. The commit comes
+after it because the ledger must never say `published` about something no reader can reach.
+`test_now_json_is_the_last_put_and_what_it_names_is_already_there` checks the order, and the
+property test's invariant 5d checks it after every step of every history.
+
+**What is a burned `seq`?** A pass takes its number in a transaction of its own, before it
+writes anything (`take_seq`). If the pass dies, the number stays taken and unfinished in
+`publish_pass`: it is burned. The next pass takes the number after it, so `seq` has gaps and
+never repeats or goes back. That is what lets the browser ignore any `now.json` whose `seq` is
+not above the last one it saw. `test_a_burned_seq_is_never_taken_again` burns one and checks
+the next pass.
 
 **What would the tests miss?**
 
@@ -275,7 +428,11 @@ never repeats or goes back.
 - Two databases. A promoted standby and a revived old primary are Phase 2's problem, and the
   ledger epoch is its answer.
 - Size. A history has three workers, two streams and three stamps.
-- Whether amd64 and arm64 write the same Parquet bytes (ADR-0010).
+- Whether amd64 and arm64 write the same Parquet bytes (ADR-0010), or the same Arrow bytes:
+  the shards round a sine and a cosine, and a last-bit difference between two machines' maths
+  libraries could move a point by one quantization step and change a shard's key.
+- An object store that loses an object. The publisher asks `exists` and skips what it finds; it
+  never reads an object back to check it.
 
 ## The tests
 
@@ -286,6 +443,8 @@ never repeats or goes back.
 | `tests/pg/test_tier1.py` | Whole walks: no faults, 404, mismatch, a death at each point, a pause past the lease at each point, gap, broken lines, dead |
 | `tests/pg/test_poller.py` | The poller against the database, with GDELT as a dict |
 | `tests/pg/test_histories.py` | The property test, below |
+| `tests/pg/test_publish.py` | The publisher against PostgreSQL 18: the lock, a burned `seq`, `SERIAL`, the ready rule, `now.json` last, a crash between `now.json` and the commit, the fence before `now.json` and in the commit, the known limit (a `now.json` that lands after a newer pass's), a key that is not its hash, the hourly cut, a late stream, the process's exit statuses |
+| `tests/pg/test_publish_histories.py` | The publisher's property test, below |
 
 The tests under `tests/pg/` need Docker and run with `mise run test` or `mise run test:ledger`.
 They use the container harness of the SQL tests (`db/tests/pg`), loaded by path.
@@ -308,6 +467,34 @@ every step, and again once a clean worker has finished everything a week later, 
    No key is ever written twice with different bytes.
 
 It also checks that every lease went to the newest row that was ready.
+
+**The publisher's property test** generates 300 histories (`GL_PUBLISH_HISTORIES`). A history
+loads intervals, ends some streams as `gap` or `dead`, moves the clock across the ready wait and
+the hourly cut, starts publishers, steps their passes, runs a pass on to just before its commit,
+and kills publishers anywhere, between `now.json` and the commit included. Proper publishers take
+the lock, and a second one must be refused while the first lives. Rogue publishers skip the
+lock, as a bug or a second process with another key would: the pass number has to make them
+harmless. After every step it checks invariant 5 of the design note and what follows from it:
+
+- 5a. `now.json`'s `seq` never goes down.
+- 5b. A published interval stays published, under the `seq` its commit gave it.
+- 5c. A commit succeeds only while its pass is the newest, and a commit that fails changes
+  nothing.
+- 5d. Everything `now.json` reaches is in the store; every object was written after everything
+  it names; every key is the hash of its bytes, and no key is given other bytes.
+- 5e. Every published interval in the window is reachable from `now.json` through two
+  manifests, and nothing that was never loaded is.
+- 5f. Every published interval names a pass that finished.
+
+At the end one clean publisher publishes everything, every loaded interval must be published
+exactly once, and a fresh publisher given the final ledger must write the same pass manifest and
+the same `now.json`, byte for byte: the data plane is a function of the ledger.
+
+Its run that must fail removes `PUBLISH_WHERE` from the commit. Hypothesis finds a violation of
+5c and shrinks it to a history of about ten steps with the same plot each time: an interval is
+loaded and becomes ready; one publisher runs its pass up to its commit (pass 1); another
+publisher, rogue or proper, runs a pass up to its own commit (pass 2) and dies there; the first
+one commits pass 1. With the fence, that commit changes 0 rows.
 
 **The run that must fail.** The last test removes the fence line from `COMMIT_WHERE` and runs
 the same histories. They fail on invariant 3, and Hypothesis shrinks the failure to a history
@@ -339,6 +526,12 @@ GL_DATABASE_URL=postgresql://worker@127.0.0.1:5432/globalens GL_STORE_DIR=/somew
 ```bash
 GL_DATABASE_URL=postgresql://worker@127.0.0.1:5432/globalens GL_STORE_DIR=/somewhere/store uv run python apps/worker/tools/frozen_worker.py --seconds 330
 ```
+
+```bash
+GL_DATABASE_URL=postgresql://worker@127.0.0.1:5432/globalens GL_STORE_DIR=/somewhere/store uv run python -m worker publish
+```
+
+A second `publish` beside the first exits at once with status 3.
 
 The last one works like any worker until a file it has downloaded and stored is about to be
 committed as `fetched`. There it stops its own process with SIGSTOP, and a helper wakes it five

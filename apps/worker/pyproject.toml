@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "The ingest worker: poller, fenced ledger, publisher (P1 tasks 10 and 11)."
 license = "Apache-2.0"
 requires-python = ">=3.13,<3.14"
-dependencies = ["globalens-gdelt", "psycopg[binary]==3.3.8", "pyarrow==26.0.1"]
+dependencies = ["globalens-gdelt", "h3==4.5.0", "psycopg[binary]==3.3.8", "pyarrow==26.0.1"]
 
 [build-system]
 requires = ["uv_build>=0.13.7,<0.14"]

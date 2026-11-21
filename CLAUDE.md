@@ -31,7 +31,8 @@ mise run dev | check (lint+types+unit) | test | e2e | eval:quick | bench:<name> 
   thinking explicitly disabled on bulk routes (Haiku: effort <= high); explicit effort; structured outputs (output_config.format);
   no prefill; refusals handled; no temperature/top_p/top_k (API 2026-10-21); never echo cited text into user turns;
   count tokens with the target model.
-- Ledger writes commit only with the current lease_token. Order-dependent (tier-2) code runs only in the ordered consumer.
+- Ledger writes commit only with the current lease_token; the publisher, whose rows carry none, names its pass number,
+  which must be the newest. Order-dependent (tier-2) code runs only in the ordered consumer.
   Model work (translation, embedding, MiniCheck) is requested as enrichment jobs; tier 2 never calls a model inline.
 - Both nodes: every image builds for amd64 and arm64; nothing may assume one architecture or that the free node is present.
 - Migrations are expand/contract: no destructive DDL in the release whose code needs it.

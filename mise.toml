@@ -61,6 +61,11 @@ description = "GKG parse throughput on one core. Pass real GKG files or folders 
 depends = ["install"]
 run = "uv run --no-sync python bench/parse_bench.py"
 
+[tasks."bench:data-plane"]
+description = "The data plane's bytes and R2 writes against the P1 budgets: `measure` a folder store, or `replay` a fixture day first. Arguments after --."
+depends = ["install"]
+run = "uv run --no-sync python bench/data_plane.py"
+
 [tasks."tofu:plan"]
 description = "Read-only plan of every stack under infra/live. Never applies."
 run = """
